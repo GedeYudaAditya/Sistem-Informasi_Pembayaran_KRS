@@ -1,0 +1,546 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #7905ca;
+}
+
+.container {
+	height: 100vh;
+	width: 100vw;
+	overflow-x: hidden;
+	overflow-y: auto;
+	display: flex;
+	position: relative;
+	background: transparent;
+	animation: gradient_animation 30s ease-in-out;
+	animation-iteration-count: infinite;
+	font-family: "Poppins", sans-serif;
+	color: whitesmoke;
+}
+
+.main-content {
+	width: 50vw;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	justify-items: center;
+	font-size: 1.2rem;
+}
+
+header .logo {
+	display: flex;
+	flex-direction: column;
+	justify-items: center;
+	animation-name: imgScale;
+	animation-duration: 1.5s;
+	animation-fill-mode: both;
+	animation-play-state: paused;
+}
+
+header .logo img {
+	height: 15rem;
+	margin: auto;
+	border-radius: 100%;
+	box-shadow: 8px 4px 8px 0 rgba(0, 0, 0, 0.2);
+	animation-name: imgRotate;
+	animation-duration: 1.5s;
+	animation-fill-mode: both;
+	animation-play-state: paused;
+}
+
+header .text {
+	text-align: center;
+	margin-top: 1rem;
+	animation-name: textPop;
+	animation-duration: 0.8s;
+	animation-fill-mode: both;
+	animation-delay: 1.5s;
+	animation-play-state: paused;
+}
+
+header .text h1 {
+	font-weight: 700;
+	font-size: 1.8rem;
+}
+
+header .text h4 {
+	font-size: 20px;
+	font-weight: 400;
+}
+
+main .link {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	background-color: rgba(0, 0, 0, 0.3);
+	width: unset;
+	width: 25rem;
+	margin: 2rem auto 0;
+	padding: 0.3rem 0;
+	border-radius: 2rem;
+	color: #020047;
+	box-shadow: 8px 4px 8px 0 rgba(0, 0, 0, 0.1);
+	animation-name: linkShow;
+	animation-duration: 0.8s;
+	animation-fill-mode: both;
+	animation-delay: 2.1s;
+	animation-play-state: paused;
+}
+
+a {
+	text-decoration: none;
+}
+
+.link a {
+	width: 3.5rem;
+	height: 3.5rem;
+	background-color: rgb(255, 255, 255);
+	border-radius: 2rem;
+	text-align: center;
+	font-size: 16px;
+	box-sizing: border-box;
+	color: inherit;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+}
+
+.link a i {
+	font-size: 2rem;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	pointer-events: all;
+	transition: 0.5s;
+}
+
+.link a:hover {
+	color: whitesmoke;
+	background-color: #020047;
+}
+
+.link a:hover>h5 {
+	opacity: 1;
+}
+
+.link a.more {
+	color: whitesmoke;
+	background-color: #020047;
+}
+
+.link a.more:hover {
+	background-color: whitesmoke;
+	color: #020047;
+}
+
+.link a h5 {
+	position: absolute;
+	text-align: center;
+	bottom: -1.5rem;
+	width: 100%;
+	color: whitesmoke;
+	opacity: 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	font-weight: 400;
+}
+
+.more-content {
+	height: 100vh;
+	width: 50vw;
+	background-color: white;
+	position: absolute;
+	display: grid;
+	grid-template-columns: 1fr 8fr;
+	transform: translateX(110vw);
+	transition: transform 0.7s;
+	will-change: transform;
+}
+
+.more-content .back {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+}
+
+.more-content .back a {
+	font-size: 2rem;
+	color: white;
+	background-color: #020047;
+	width: 3.5rem;
+	height: 3.5rem;
+	border-radius: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: translateX(-50%);
+	transition: 0.5s;
+}
+
+.more-content .back a:hover {
+	background-color: #8235c9;
+	color: #020047;
+	box-shadow: 8px 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.more-content .tag {
+	font-size: 2rem;
+	margin: 3rem 0 2rem;
+	color: #020047;
+}
+
+.more-content .content {
+	overflow: auto;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	font-weight: 400;
+}
+
+.more-content .link-all {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	row-gap: 1.5rem;
+	width: 90%;
+}
+
+.link-all a {
+	width: 7rem;
+	height: 8rem;
+	background-color: #020047;
+	border-radius: 1.5rem;
+	text-align: center;
+	font-size: 16px;
+	box-sizing: border-box;
+	color: inherit;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 8px 4px 8px 0 rgba(0, 0, 0, 0.1);
+	font-weight: 400;
+	transition: 0.5s;
+}
+
+.link-all a:hover {
+	background-color: #8235c9;
+	box-shadow: 8px 4px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+.link-all a i {
+	font-size: 3rem;
+	display: flex;
+	height: 70%;
+	align-items: center;
+	justify-content: center;
+	pointer-events: all;
+	transition: 0.5s;
+}
+
+.link-all a h5 {
+	font-weight: 400;
+}
+
+.swipe {
+	opacity: 0;
+	position: absolute;
+	pointer-events: none;
+	z-index: -999;
+}
+
+/* more content */
+
+.container.show-more .main-content main .link {
+	position: absolute;
+	opacity: 0;
+	pointer-events: all;
+	animation: none;
+}
+
+/* loader */
+
+.loader {
+	display: hidden;
+	z-index: -9999;
+	opacity: 0;
+	pointer-events: none;
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+}
+
+.loader.active {
+	opacity: 1;
+	pointer-events: all;
+	font-family: "Karla", sans-serif;
+	font-size: 16px;
+	height: 100vh;
+	width: 100vw;
+	position: fixed;
+	color: white;
+	background-color: #5e5e5e;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	display: flex;
+}
+
+.loader.active .item {
+	margin: auto;
+	text-align: center;
+}
+
+.loader.active .item img {
+	width: 15rem;
+}
+
+.background {
+	z-index: -1;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	position: absolute;
+}
+
+.background img {
+	width: 100vw;
+	height: 100vh;
+}
+
+/* responsive */
+
+@media screen and (max-width: 550px) {
+	.container {
+		display: block;
+		width: 100vw;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+
+	.container main {
+		position: absolute;
+		display: hidden;
+		opacity: 0;
+	}
+
+	.container main .link a {
+		pointer-events: none;
+	}
+
+	.container main .link a i {
+		pointer-events: none;
+	}
+
+	.container header {
+		width: 100vw;
+		margin: auto;
+	}
+
+	header .logo img {
+		height: 11rem;
+	}
+
+	header .text h1 {
+		font-size: 1.5rem;
+	}
+
+	header .text h4 {
+		font-size: 1.2rem;
+	}
+
+	.container .main-content {
+		width: unset;
+		height: 100vh;
+		position: fixed;
+	}
+
+	.container .more-content {
+		width: 100vw;
+		height: auto;
+		transform: none;
+		opacity: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		opacity: 1;
+		border-top-left-radius: 3rem;
+		border-top-right-radius: 3rem;
+		overflow: auto;
+		transform: translateY(-15vh);
+		background-color: transparent;
+	}
+
+	.more-content .back {
+		pointer-events: none;
+		z-index: -99;
+	}
+
+	.more-content .back a {
+		position: absolute;
+		display: hidden;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.more-content .content {
+		width: 100vw;
+		height: auto;
+		margin: auto;
+		overflow: auto;
+		background-color: white;
+		padding-top: 1rem;
+	}
+
+	.content .link-all {
+		grid-template-columns: 1fr 1fr;
+		justify-items: center;
+		margin: auto;
+		width: 80vw;
+		padding-bottom: 2rem;
+	}
+
+	.content .tag {
+		text-align: center;
+	}
+
+	.link-all a {
+		margin: auto;
+		width: 8rem;
+		height: 9.5rem;
+	}
+
+	.swipe {
+		opacity: 1;
+		pointer-events: all;
+		z-index: 99;
+		position: static;
+		width: 100vw;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 2rem;
+	}
+
+	.swipe img {
+		width: 3rem;
+		height: 2rem;
+		transition: 0.2s;
+	}
+
+	.background img {
+		width: unset;
+	}
+}
+
+@media screen and (max-height: 720px) and (max-width: 410px) {
+	.background img {
+		height: unset;
+		width: 100vw;
+	}
+}
+
+/* Animation */
+
+@keyframes gradient_animation {
+	0% {
+		background-position: 0 50%;
+	}
+
+	40% {
+		background-position: 100% 50%;
+	}
+
+	80% {
+		background-position: 50% 50%;
+	}
+
+	100% {
+		background-position: 0 50%;
+	}
+}
+
+@keyframes imgScale {
+	from {
+		transform: scale(3);
+	}
+
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes imgRotate {
+	from {
+		transform: rotate(45deg);
+	}
+
+	to {
+		transform: rotate(0);
+	}
+}
+
+@keyframes textPop {
+	from {
+		transform: scale(0);
+	}
+
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes linkShow {
+	from {
+		transform: translateY(-2rem);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes sideContent {
+	from {
+		transform: translateX(0%);
+	}
+
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+@keyframes sideContentItems {
+	from {
+		transform: translateX(110vw);
+	}
+
+	to {
+		transform: translateX(50vw);
+	}
+}
+
+@keyframes sideBack {
+	from {
+		transform: translateX(-50%);
+	}
+
+	to {
+		transform: translateX(0%);
+	}
+}
+
+@keyframes sideContentItemsBack {
+	from {
+		transform: translateX(50vw);
+	}
+
+	to {
+		transform: translateX(110vw);
+	}
+}

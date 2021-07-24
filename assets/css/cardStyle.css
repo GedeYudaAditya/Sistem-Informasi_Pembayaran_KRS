@@ -1,0 +1,26 @@
+@media (min-width:576px) {
+	.t-cards {
+		height: unset;
+	}
+}
+
+@media (min-width:768px) {
+	.t-cards {
+		height: 17rem;
+		overflow: hidden;
+	}
+}
+
+@media (min-width:992px) {
+	.t-cards {
+		height: 17rem;
+		overflow: hidden;
+	}
+}
+
+@media (min-width:1200px) {
+	.t-cards {
+		height: 17rem;
+		overflow: hidden;
+	}
+}
