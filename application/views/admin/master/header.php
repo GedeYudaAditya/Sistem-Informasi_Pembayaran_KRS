@@ -159,6 +159,7 @@
 									<h6 class="collapse-header">Daftar Fitur:</h6>
 									<a class="collapse-item" href="<?= base_url() ?>krs/">Data Mahasiswa</a>
 									<a class="collapse-item" href="<?= base_url() ?>krs/tambah_Mahasiswa">Tambah Mahasiswa</a>
+									<a class="collapse-item" href="<?= base_url() ?>krs/tambah_tahun">Tambah Tahun</a>
 								</div>
 							</div>
 							</li>

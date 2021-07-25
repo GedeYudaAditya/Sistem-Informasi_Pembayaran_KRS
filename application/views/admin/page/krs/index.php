@@ -3,7 +3,10 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">List Data :</h6>
-            <a class="btn btn-sm btn-primary shadow-sm" href="<?= base_url('siswa/tambahsiswa'); ?>"><i class="fas fa-user-plus fa-sm"></i> Tambah Siswa</a>
+            <div>
+                <a class="btn btn-sm btn-primary shadow-sm" href="<?= base_url('krs/tambah_Mahasiswa'); ?>"><i class="fas fa-user-plus fa-sm"></i> Tambah Siswa</a>
+                <a class="btn btn-sm btn-secondary shadow-sm" href="<?= base_url('siswa/tambahsiswa'); ?>"><i class="fas fa-plus fa-sm"></i> Tambah Tahun</a>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
