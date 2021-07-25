@@ -14,9 +14,26 @@ class Krs extends CI_Controller
             $this->data['ckeditor'] = "krs";
 
             $this->data['group'] = $this->ion_auth_model->getGroup($id);
-
+            $data['siswa'] = array(
+                [
+                    'nama' => 'Yuda',
+                    'nim' => '2015051003',
+                    'prodi' => 'PTI',
+                    'status' => 'Lunas',
+                    'tahun' => '2021',
+                    'smtr' => 'Genap'
+                ],
+                [
+                    'nama' => 'Anom',
+                    'nim' => '2015051038',
+                    'prodi' => 'PTI',
+                    'status' => 'Lunas',
+                    'tahun' => '2021',
+                    'smtr' => 'Genap'
+                ]
+            );
             $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/index", $this->data);
+            $this->load->view("admin/page/krs/index", $data);
             $this->load->view("admin/master/footer", $this->data);
         }
     }
