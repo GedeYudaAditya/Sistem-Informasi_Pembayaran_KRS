@@ -151,6 +151,32 @@
 	                    </div>
 	                </div>
 	                </li>
+
+					<!-- Sistem Cek pembayaran KRS -->
+	                <?php
+							if ($active == "6") {
+								echo '<li class="nav-item active">';
+							} else {
+								echo '<li class="nav-item">';
+							}
+							?>
+	                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
+	                    aria-expanded="true" aria-controls="collapseUtilities">
+	                    <i class="fas fa-calendar-day"></i>
+	                    <span>KRS</span>
+	                </a>
+	                <div id="collapseFive" class="collapse" aria-labelledby="headingUtilities"
+	                    data-parent="#accordionSidebar">
+	                    <div class="bg-white py-2 collapse-inner rounded">
+	                        <h6 class="collapse-header">Daftar Fitur:</h6>
+	                        <a class="collapse-item" href="<?= base_url() ?>integer/kegiatan">Data Mahasiswa</a>
+	                        <a class="collapse-item" href="<?= base_url() ?>integer/lomba">Tambah Mahasiswa</a>
+	                    </div>
+	                </div>
+	                </li>
+					<!-- End of Cek pembayaran KRS -->
+
+
 	                <?php } ?>
 	                <?php
 						if ($active == "10") {
