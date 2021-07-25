@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-lg">
                     <div class="form-group">
-                        <label for="status">Prodi</label>
+                        <label for="status">Status</label>
                         <select class="custom-select form-control" id="status" name="status" type="text">
                             <option value="">-- Pilih Status --</option> -->
                             <option value="Lunas">Lunas</option>
