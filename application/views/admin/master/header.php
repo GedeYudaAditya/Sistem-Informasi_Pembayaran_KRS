@@ -144,7 +144,7 @@
 
 							<!-- Sistem Cek pembayaran KRS -->
 							<?php
-							if ($active == "6") {
+							if ($active == "11") {
 								echo '<li class="nav-item active">';
 							} else {
 								echo '<li class="nav-item">';

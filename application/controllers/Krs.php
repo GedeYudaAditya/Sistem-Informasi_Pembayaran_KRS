@@ -8,7 +8,7 @@ class Krs extends CI_Controller
             redirect('krs');
         } else {
             $this->data['title'] = "KRS - Data Mahasiswa";
-            $this->data['active'] = "6";
+            $this->data['active'] = "11";
             $id = $_SESSION['user_id'];
             $this->data['flip'] = "false";
             $this->data['ckeditor'] = "krs";
@@ -27,7 +27,7 @@ class Krs extends CI_Controller
             redirect('krs');
         } else {
             $this->data['title'] = "KRS - Tambah Data Mahasiswa";
-            $this->data['active'] = "6";
+            $this->data['active'] = "11";
             $id = $_SESSION['user_id'];
             $this->data['flip'] = "false";
             $this->data['ckeditor'] = "krs";
