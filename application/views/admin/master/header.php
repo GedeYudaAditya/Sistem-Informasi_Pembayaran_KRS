@@ -144,14 +144,14 @@
 
 							<!-- Sistem Cek pembayaran KRS -->
 							<?php
-							if ($active == "6") {
+							if ($active == "11") {
 								echo '<li class="nav-item active">';
 							} else {
 								echo '<li class="nav-item">';
 							}
 							?>
 							<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseUtilities">
-								<i class="fas fa-calendar-day"></i>
+								<i class="fas fa-id-card"></i>
 								<span>KRS</span>
 							</a>
 							<div id="collapseFive" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -159,6 +159,7 @@
 									<h6 class="collapse-header">Daftar Fitur:</h6>
 									<a class="collapse-item" href="<?= base_url() ?>krs/">Data Mahasiswa</a>
 									<a class="collapse-item" href="<?= base_url() ?>krs/tambah_Mahasiswa">Tambah Mahasiswa</a>
+									<a class="collapse-item" href="<?= base_url() ?>krs/tambah_tahun">Tambah Tahun</a>
 								</div>
 							</div>
 							</li>
