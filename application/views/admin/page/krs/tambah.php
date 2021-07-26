@@ -49,10 +49,15 @@
                 <div class="col-lg">
                     <div class="form-group">
                         <label for="tahun">Tahun</label>
-                        <input type="text" class="form-control" id="tahun" name="tahun" maxlength="16" value="<?= set_value('tahun'); ?>">
+                        <select class="custom-select form-control" id="tahun" name="tahun" type="text">
+                            <option value="">-- Pilih Tahun --</option> -->
+                            <?php foreach ($prodi as $pr) : ?>
+                                <option value="<?= $pr['id']; ?>"><?= $pr['prodi']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
                         <?= form_error('tahun', '<small class="text-danger pl-3">', '</small>'); ?>
                     </div>
-                    <div class="form-group mt-3">
+                    <div class="form-group">
                         <label for="smtr">Semester</label>
                         <select class="custom-select form-control" id="smtr" name="smtr" type="text">
                             <option value="">-- Pilih Semester --</option> -->

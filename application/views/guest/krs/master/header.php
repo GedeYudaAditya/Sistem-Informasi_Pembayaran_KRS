@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/all.min.css">
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/krs.css">
-    <title><?= $title ?></title>
+    <title>KRS HMJ TI :. <?= $title ?></title>
+    <script src="<?= base_url() ?>assets/js/jquery/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
