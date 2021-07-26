@@ -39,4 +39,14 @@ class Krs extends CI_Controller
             $this->load->view("admin/master/footer", $this->data);
         }
     }
+
+    // BAGIAN CLIENT SIDE
+    public function Home()
+    {
+        $data['title'] = "Home";
+        $this->load->view("guest/krs/master/header", $data);
+        $this->load->view("guest/krs/page/index", $data);
+        $this->load->view("guest/krs/master/footer", $data);
+    }
+    // END CLIENT SIDE
 }
