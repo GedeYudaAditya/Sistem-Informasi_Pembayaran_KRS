@@ -151,7 +151,7 @@
 							}
 							?>
 							<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseUtilities">
-								<i class="fas fa-calendar-day"></i>
+								<i class="fas fa-id-card"></i>
 								<span>KRS</span>
 							</a>
 							<div id="collapseFive" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
