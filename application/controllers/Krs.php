@@ -48,12 +48,23 @@ class Krs extends CI_Controller
             $id = $_SESSION['user_id'];
             $this->data['flip'] = "false";
             $this->data['ckeditor'] = "krs";
+            $this->load->model('All_model');
+            $data['th'] = $this->All_model->getThn();
 
             $this->data['group'] = $this->ion_auth_model->getGroup($id);
 
             $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/tambah", $this->data);
+            $this->load->view("admin/page/krs/tambah", $data);
             $this->load->view("admin/master/footer", $this->data);
+
+            if ($this->input->post('submit') === '') {
+
+                if ($this->All_model->addThn($data)) {
+                    redirect('krs');
+                } else {
+                    redirect('krs/tambah_tahun');
+                }
+            }
         }
     }
 
@@ -68,13 +79,34 @@ class Krs extends CI_Controller
             $id = $_SESSION['user_id'];
             $this->data['flip'] = "false";
             $this->data['ckeditor'] = "krs";
+            $data['siswa'] = $this->All_model->getThn();
 
             $this->data['group'] = $this->ion_auth_model->getGroup($id);
-
+            $this->load->model('All_model');
             $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/tahun", $this->data);
+            $this->load->view("admin/page/krs/tahun", $data);
             $this->load->view("admin/master/footer", $this->data);
+
+            if ($this->input->post('submit') === '') {
+                $data = [
+                    'id-th' => '',
+                    'tahun' => $this->input->post('tahun', true),
+                    'ket' => $this->input->post('ket', true)
+                ];
+                if ($this->All_model->addThn($data)) {
+                    redirect('krs');
+                } else {
+                    redirect('krs/tambah_tahun');
+                }
+            }
         }
+    }
+
+    public function hapus_thn($id)
+    {
+        $this->load->model('All_model');
+        $this->All_model->delThn($id);
+        redirect('krs/tambah_tahun');
     }
 
     // BAGIAN CLIENT SIDE

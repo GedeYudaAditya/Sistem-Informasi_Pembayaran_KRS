@@ -51,8 +51,8 @@
                         <label for="tahun">Tahun</label>
                         <select class="custom-select form-control" id="tahun" name="tahun" type="text">
                             <option value="">-- Pilih Tahun --</option> -->
-                            <?php foreach ($prodi as $pr) : ?>
-                                <option value="<?= $pr['id']; ?>"><?= $pr['prodi']; ?></option>
+                            <?php foreach ($th as $t) : ?>
+                                <option value="<?= $t['id-th']; ?>"><?= $t['tahun']; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <?= form_error('tahun', '<small class="text-danger pl-3">', '</small>'); ?>
@@ -72,7 +72,7 @@
             <div class="row">
                 <div class="col-lg">
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary" name="submit">Simpan</button>
                         <a class="btn btn-outline-secondary ml-2" role="button" href="<?= base_url('siswa'); ?>">Batal</a>
                     </div>
                 </div>

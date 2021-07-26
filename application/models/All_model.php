@@ -1380,7 +1380,6 @@ class All_model extends CI_Model
 			unlink('assets/upload/Folder_etika/' . $data['foto']);
 		}
 		return true;
-		
 	}
 	public function getAllPemilih($id_kegiatan)
 	{
@@ -1390,9 +1389,9 @@ class All_model extends CI_Model
 	{
 		return $this->db->where("id_kegiatan=" . $id_kegiatan)->order_by('nim', 'ASC')->get('s5_pemilih')->num_rows();
 	}
-	public function inputPemilihExcel($data,$id_kegiatan)
+	public function inputPemilihExcel($data, $id_kegiatan)
 	{
-		return $this->db->where('id_kegiatan='.$id_kegiatan)->insert_batch('s5_pemilih', $data);
+		return $this->db->where('id_kegiatan=' . $id_kegiatan)->insert_batch('s5_pemilih', $data);
 	}
 	public function resetAllPemilih($id_kegiatan)
 	{
@@ -1432,17 +1431,17 @@ class All_model extends CI_Model
 	{
 		return $this->db->where('id_pemilih=' . $id_pemilih)->get('s5_pemilih')->result_array();
 	}
-	public function cekNimPemilihWhere($nim,$id_kegiatan)
+	public function cekNimPemilihWhere($nim, $id_kegiatan)
 	{
-		return $this->db->where('nim=' . "'$nim'")->where('id_kegiatan ='.$id_kegiatan)->get('s5_pemilih')->num_rows();
+		return $this->db->where('nim=' . "'$nim'")->where('id_kegiatan =' . $id_kegiatan)->get('s5_pemilih')->num_rows();
 	}
 	public function cekNamaPemilihWhere($nama, $id_kegiatan)
 	{
-		return $this->db->where('nama_pemilih=' . "'$nama'")->where('id_kegiatan ='.$id_kegiatan)->get('s5_pemilih')->num_rows();
+		return $this->db->where('nama_pemilih=' . "'$nama'")->where('id_kegiatan =' . $id_kegiatan)->get('s5_pemilih')->num_rows();
 	}
 	public function cekEmailPemilihWhere($email, $id_kegiatan)
 	{
-		return $this->db->where('email=' . "'$email'")->where('id_kegiatan ='.$id_kegiatan)->get('s5_pemilih')->num_rows();
+		return $this->db->where('email=' . "'$email'")->where('id_kegiatan =' . $id_kegiatan)->get('s5_pemilih')->num_rows();
 	}
 	public function hapusPemilih($id_pemilih)
 	{
@@ -1583,9 +1582,9 @@ class All_model extends CI_Model
 		);
 		return $this->db->where('id_pemilih=' . $id_pemilih)->update('s5_pemilih', $query);
 	}
-	public function createAllToken($data,$id_kegiatan)
+	public function createAllToken($data, $id_kegiatan)
 	{
-		return $this->db->where('id_kegiatan='.$id_kegiatan)->update_batch('s5_pemilih', $data, 'id_pemilih');
+		return $this->db->where('id_kegiatan=' . $id_kegiatan)->update_batch('s5_pemilih', $data, 'id_pemilih');
 	}
 
 	public function getUserCekHakPilih($prodi, $nim)
@@ -1627,7 +1626,7 @@ class All_model extends CI_Model
 	{
 		return $this->db->where('semester=' . "'$data[semester]'")->where('nim=' . "'$data[nim]'")->where('prodi=' . "'$prodi'")->where(
 			'nama_pemilih =' .
-			"'$data[name]'"
+				"'$data[name]'"
 		)->where('id_kegiatan=' . $id_kegiatan)->get('s5_pemilih')->result_array();
 	}
 	public function countAllSudahMemilih($id_kegiatan)
@@ -2104,4 +2103,54 @@ class All_model extends CI_Model
 	// **************************************************************
 	// End Upload File
 	// **************************************************************
+
+	// **************************************************************
+	// Start KRS system
+	// **************************************************************
+
+	public function addThn($data)
+	{
+		$this->db->insert('s6_tahun-krs', $data);
+		return true;
+	}
+
+	public function delThn($id)
+	{
+		$this->db->where('id-th', $id);
+		$this->db->delete('s6_tahun-krs');
+	}
+
+	public function getThn()
+	{
+		return $query = $this->db->get('s6_tahun-krs')->result_array();
+	}
+
+	public function addData()
+	{
+		$data = array(
+			'nim' => $this->input->post('nim', true),
+			'nama' => $this->input->post('nama', true),
+			'prodi' => $this->input->post('prodi', true),
+			'status' => $this->input->post('status', true),
+			'id-th' => $this->input->post('id-th', true)
+		);
+
+		$this->db->insert('s6_data-mahasiswa', $data);
+		return true;
+	}
+
+	public function getDatas()
+	{
+	}
+
+	public function addSmtr()
+	{
+		$data = array(
+			'id-th' => '',
+			'tahun' => $this->input->post('tahun', true),
+			'ket' => $this->input->post('ket', true)
+		);
+
+		$this->db->insert('s6_tahun-krs', $data);
+	}
 }

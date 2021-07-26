@@ -1,8 +1,8 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-primary"><?= $title; ?></h1>
+
     <div class="card shadow mb-4">
         <a href="#th" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="th">
             <h6 class="m-0 font-weight-bold text-primary">Form Tambah Tahun</h6>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-lg">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary" name="submit">Simpan</button>
                             <a class="btn btn-outline-secondary ml-2" role="button" href="<?= base_url('siswa'); ?>">Batal</a>
                         </div>
                     </div>
@@ -56,9 +56,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($siswa as $s) : ?>
+                        <?php $no = 1;
+                        foreach ($siswa as $s) : ?>
                             <tr>
-                                <th scope="row"><?= $s['no']; ?></th>
+                                <th scope="row"><?= $no; ?></th>
                                 <th scope="row"><?= $s['tahun']; ?></th>
                                 <th scope="row"><?= $s['ket']; ?></th>
                                 <td class="text-center">
@@ -66,12 +67,13 @@
                                         <i class="fas fa-edit fa-sm"></i> edit
                                     </a>
 
-                                    <a href="<?= base_url('siswa/hapussiswa/' . $s['no']); ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?');">
+                                    <a href="<?= base_url('krs/hapus_thn/' . $s['id-th']); ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?');">
                                         <i class="far fa-trash-alt fa-sm"></i> delete
                                     </a>
                                 </td>
                             </tr>
-                        <?php endforeach; ?>
+                        <?php $no++;
+                        endforeach; ?>
                     </tbody>
                 </table>
             </div>
