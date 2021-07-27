@@ -13,12 +13,12 @@
                 <div class="col-lg">
                     <div class="form-group">
                         <label for="nim">NIM Mahasiswa</label>
-                        <input type="text" class="form-control" id="nim" name="nim" maxlength="16" value="<?= set_value('nim'); ?>">
+                        <input type="text" class="form-control" id="nim" name="nim" maxlength="10" value="<?= set_value('nim'); ?>">
                         <?= form_error('nim', '<small class="text-danger pl-3">', '</small>'); ?>
                     </div>
                     <div class="form-group">
                         <label for="nama">Nama Mahasiswa</label>
-                        <input type="text" class="form-control" id="nama" name="nama" maxlength="16" value="<?= set_value('nama'); ?>">
+                        <input type="text" class="form-control" id="nama" name="nama" value="<?= set_value('nama'); ?>">
                         <?= form_error('nama', '<small class="text-danger pl-3">', '</small>'); ?>
                     </div>
                 </div>
@@ -36,10 +36,10 @@
                     </div>
 
                     <div class="form-group mt-3">
-                        <label for="prodi_id">Prodi</label>
-                        <select class="custom-select form-control" id="prodi_id" name="prodi_id" type="text">
+                        <label for="prodi">Prodi</label>
+                        <select class="custom-select form-control" id="prodi" name="prodi" type="text">
                             <option value="">-- Pilih Prodi --</option> -->
-                            <?php foreach ($prodi as $pr) : ?>
+                            <?php foreach ($prodis as $pr) : ?>
                                 <option value="<?= $pr['id']; ?>"><?= $pr['prodi']; ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -61,9 +61,8 @@
                         <label for="smtr">Semester</label>
                         <select class="custom-select form-control" id="smtr" name="smtr" type="text">
                             <option value="">-- Pilih Semester --</option> -->
-                            <?php foreach ($prodi as $pr) : ?>
-                                <option value="<?= $pr['id']; ?>"><?= $pr['prodi']; ?></option>
-                            <?php endforeach; ?>
+                            <option value="Ganjil">Ganjil</option>
+                            <option value="Genap">Genap</option>
                         </select>
                         <?= form_error('smtr', '<small class="text-danger pl-3">', '</small>'); ?>
                     </div>

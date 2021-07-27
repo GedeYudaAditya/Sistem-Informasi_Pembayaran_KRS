@@ -14,24 +14,9 @@ class Krs extends CI_Controller
             $this->data['ckeditor'] = "krs";
 
             $this->data['group'] = $this->ion_auth_model->getGroup($id);
-            $data['siswa'] = array(
-                [
-                    'nama' => 'Yuda',
-                    'nim' => '2015051003',
-                    'prodi' => 'PTI',
-                    'status' => 'Lunas',
-                    'tahun' => '2021',
-                    'smtr' => 'Genap'
-                ],
-                [
-                    'nama' => 'Anom',
-                    'nim' => '2015051038',
-                    'prodi' => 'PTI',
-                    'status' => 'Lunas',
-                    'tahun' => '2021',
-                    'smtr' => 'Genap'
-                ]
-            );
+            $this->load->model('All_model');
+            //var_dump($this->All_model->getingAll());
+            $data['siswa'] = $this->All_model->getingAll();
             $this->load->view("admin/master/header", $this->data);
             $this->load->view("admin/page/krs/index", $data);
             $this->load->view("admin/master/footer", $this->data);
@@ -48,9 +33,27 @@ class Krs extends CI_Controller
             $id = $_SESSION['user_id'];
             $this->data['flip'] = "false";
             $this->data['ckeditor'] = "krs";
+
             $this->load->model('All_model');
             $data['th'] = $this->All_model->getThn();
-
+            $data['prodis'] = [
+                [
+                    'id' => 'PTI',
+                    'prodi' => 'Pendidikan Teknik Informatika'
+                ],
+                [
+                    'id' => 'SI',
+                    'prodi' => 'Sistem Informatika'
+                ],
+                [
+                    'id' => 'ilkom',
+                    'prodi' => 'Ilmu Komputer'
+                ],
+                [
+                    'id' => 'MI',
+                    'prodi' => 'Manajemen Informasi'
+                ]
+            ];
             $this->data['group'] = $this->ion_auth_model->getGroup($id);
 
             $this->load->view("admin/master/header", $this->data);
@@ -59,10 +62,11 @@ class Krs extends CI_Controller
 
             if ($this->input->post('submit') === '') {
 
-                if ($this->All_model->addThn($data)) {
+                if ($this->All_model->addData()) {
+                    $this->All_model->addSmtr();
                     redirect('krs');
                 } else {
-                    redirect('krs/tambah_tahun');
+                    redirect('krs/tambah_Mahasiswa');
                 }
             }
         }
@@ -107,6 +111,13 @@ class Krs extends CI_Controller
         $this->load->model('All_model');
         $this->All_model->delThn($id);
         redirect('krs/tambah_tahun');
+    }
+
+    public function hapus_smtr($id)
+    {
+        $this->load->model('All_model');
+        $this->All_model->delSmtr($id);
+        redirect('krs/');
     }
 
     // BAGIAN CLIENT SIDE

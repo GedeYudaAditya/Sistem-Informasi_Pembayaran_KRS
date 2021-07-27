@@ -36,7 +36,7 @@
                                         <i class="fas fa-edit fa-sm"></i> edit
                                     </a>
 
-                                    <a href="<?= base_url('siswa/hapussiswa/' . $s['nik']); ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?');">
+                                    <a href="<?= base_url('krs/hapus_smtr/' . $s['id-smtr']); ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?');">
                                         <i class="far fa-trash-alt fa-sm"></i> delete
                                     </a>
                                 </td>

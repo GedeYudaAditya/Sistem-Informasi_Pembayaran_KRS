@@ -2108,6 +2108,15 @@ class All_model extends CI_Model
 	// Start KRS system
 	// **************************************************************
 
+	public function getingAll()
+	{
+		$this->db->select('*');
+		$this->db->from('s6_tahun-krs');
+		$this->db->join('s6_smtr', 's6_smtr.id-th = s6_tahun-krs.id-th');
+		$this->db->join('s6_data-mahasiswa', 's6_data-mahasiswa.nim = s6_smtr.nim');
+
+		return $this->db->get()->result_array();
+	}
 	public function addThn($data)
 	{
 		$this->db->insert('s6_tahun-krs', $data);
@@ -2122,7 +2131,7 @@ class All_model extends CI_Model
 
 	public function getThn()
 	{
-		return $query = $this->db->get('s6_tahun-krs')->result_array();
+		return $this->db->get('s6_tahun-krs')->result_array();
 	}
 
 	public function addData()
@@ -2130,9 +2139,7 @@ class All_model extends CI_Model
 		$data = array(
 			'nim' => $this->input->post('nim', true),
 			'nama' => $this->input->post('nama', true),
-			'prodi' => $this->input->post('prodi', true),
-			'status' => $this->input->post('status', true),
-			'id-th' => $this->input->post('id-th', true)
+			'prodi' => $this->input->post('prodi', true)
 		);
 
 		$this->db->insert('s6_data-mahasiswa', $data);
@@ -2141,16 +2148,40 @@ class All_model extends CI_Model
 
 	public function getDatas()
 	{
+		return $this->db->get('s6_data-mahasiswa')->result_array();
+	}
+
+	public function delData($id)
+	{
+		// $this->db->where('nim', $id);
+		// $this->db->delete('s6_tahun-krs');
 	}
 
 	public function addSmtr()
 	{
 		$data = array(
-			'id-th' => '',
-			'tahun' => $this->input->post('tahun', true),
-			'ket' => $this->input->post('ket', true)
+			'id-smtr' => '',
+			'smtr' => $this->input->post('smtr', true),
+			'status' => $this->input->post('status', true),
+			'nim' => $this->input->post('nim', true),
+			'id-th' => $this->input->post('tahun', true)
 		);
 
-		$this->db->insert('s6_tahun-krs', $data);
+		$this->db->insert('s6_smtr', $data);
 	}
+
+	public function getSmtr()
+	{
+		return $this->db->get('s6_smtr')->result_array();
+	}
+
+	public function delSmtr($id)
+	{
+		$this->db->where('id-smtr', $id);
+		$this->db->delete('s6_smtr');
+	}
+
+	// **************************************************************
+	// End KRS system
+	// **************************************************************
 }
