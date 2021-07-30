@@ -1380,7 +1380,6 @@ class All_model extends CI_Model
 			unlink('assets/upload/Folder_etika/' . $data['foto']);
 		}
 		return true;
-		
 	}
 	public function getAllPemilih($id_kegiatan)
 	{
@@ -1390,9 +1389,9 @@ class All_model extends CI_Model
 	{
 		return $this->db->where("id_kegiatan=" . $id_kegiatan)->order_by('nim', 'ASC')->get('s5_pemilih')->num_rows();
 	}
-	public function inputPemilihExcel($data,$id_kegiatan)
+	public function inputPemilihExcel($data, $id_kegiatan)
 	{
-		return $this->db->where('id_kegiatan='.$id_kegiatan)->insert_batch('s5_pemilih', $data);
+		return $this->db->where('id_kegiatan=' . $id_kegiatan)->insert_batch('s5_pemilih', $data);
 	}
 	public function resetAllPemilih($id_kegiatan)
 	{
@@ -1432,17 +1431,17 @@ class All_model extends CI_Model
 	{
 		return $this->db->where('id_pemilih=' . $id_pemilih)->get('s5_pemilih')->result_array();
 	}
-	public function cekNimPemilihWhere($nim,$id_kegiatan)
+	public function cekNimPemilihWhere($nim, $id_kegiatan)
 	{
-		return $this->db->where('nim=' . "'$nim'")->where('id_kegiatan ='.$id_kegiatan)->get('s5_pemilih')->num_rows();
+		return $this->db->where('nim=' . "'$nim'")->where('id_kegiatan =' . $id_kegiatan)->get('s5_pemilih')->num_rows();
 	}
 	public function cekNamaPemilihWhere($nama, $id_kegiatan)
 	{
-		return $this->db->where('nama_pemilih=' . "'$nama'")->where('id_kegiatan ='.$id_kegiatan)->get('s5_pemilih')->num_rows();
+		return $this->db->where('nama_pemilih=' . "'$nama'")->where('id_kegiatan =' . $id_kegiatan)->get('s5_pemilih')->num_rows();
 	}
 	public function cekEmailPemilihWhere($email, $id_kegiatan)
 	{
-		return $this->db->where('email=' . "'$email'")->where('id_kegiatan ='.$id_kegiatan)->get('s5_pemilih')->num_rows();
+		return $this->db->where('email=' . "'$email'")->where('id_kegiatan =' . $id_kegiatan)->get('s5_pemilih')->num_rows();
 	}
 	public function hapusPemilih($id_pemilih)
 	{
@@ -1583,9 +1582,9 @@ class All_model extends CI_Model
 		);
 		return $this->db->where('id_pemilih=' . $id_pemilih)->update('s5_pemilih', $query);
 	}
-	public function createAllToken($data,$id_kegiatan)
+	public function createAllToken($data, $id_kegiatan)
 	{
-		return $this->db->where('id_kegiatan='.$id_kegiatan)->update_batch('s5_pemilih', $data, 'id_pemilih');
+		return $this->db->where('id_kegiatan=' . $id_kegiatan)->update_batch('s5_pemilih', $data, 'id_pemilih');
 	}
 
 	public function getUserCekHakPilih($prodi, $nim)
@@ -1627,7 +1626,7 @@ class All_model extends CI_Model
 	{
 		return $this->db->where('semester=' . "'$data[semester]'")->where('nim=' . "'$data[nim]'")->where('prodi=' . "'$prodi'")->where(
 			'nama_pemilih =' .
-			"'$data[name]'"
+				"'$data[name]'"
 		)->where('id_kegiatan=' . $id_kegiatan)->get('s5_pemilih')->result_array();
 	}
 	public function countAllSudahMemilih($id_kegiatan)
@@ -2103,5 +2102,153 @@ class All_model extends CI_Model
 	}
 	// **************************************************************
 	// End Upload File
+	// **************************************************************
+
+
+
+	// **************************************************************
+	// Start KRS system
+	// **************************************************************
+
+	public function getingAll()
+	{
+		$this->db->select('*');
+		$this->db->from('s6_tahun-krs');
+		$this->db->join('s6_smtr', 's6_smtr.id-th = s6_tahun-krs.id-th');
+		$this->db->join('s6_data-mahasiswa', 's6_data-mahasiswa.nim = s6_smtr.nim');
+
+		return $this->db->get()->result_array();
+	}
+	public function addThn($data)
+	{
+		$this->db->insert('s6_tahun-krs', $data);
+		return true;
+	}
+
+	public function delThn($id)
+	{
+		$this->db->where('id-th', $id);
+		$this->db->delete('s6_tahun-krs');
+	}
+
+	public function getThn()
+	{
+		return $this->db->get('s6_tahun-krs')->result_array();
+	}
+
+	public function updThn($data, $id)
+	{
+		$this->db->where('id-th', $id);
+		$this->db->update('s6_tahun-krs', $data);
+	}
+
+	public function getoneThn($id)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_tahun-krs');
+		$this->db->where('id-th', $id);
+		return $this->db->get()->result_array();
+	}
+
+	public function addData()
+	{
+		$data = array(
+			'nim' => $this->input->post('nim', true),
+			'nama' => $this->input->post('nama', true),
+			'prodi' => $this->input->post('prodi', true)
+		);
+
+		$this->db->insert('s6_data-mahasiswa', $data);
+		return true;
+	}
+
+	public function getMahasiswaById($id)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_data-mahasiswa');
+		//$this->db->join('s6_data-mahasiswa', 's6_data-mahasiswa.nim = s6_smtr.nim');
+		$this->db->where('nim', $id);
+		return $this->db->get()->result_array();
+	}
+
+	public function updData($id)
+	{
+		$data = array(
+			'nim' => $this->input->post('nim', true),
+			'nama' => $this->input->post('nama', true),
+			'prodi' => $this->input->post('prodi', true)
+		);
+
+		$this->db->where('nim', $id);
+		$this->db->update('s6_data-mahasiswa', $data);
+
+		return true;
+	}
+
+	public function getDatas()
+	{
+		return $this->db->get('s6_data-mahasiswa')->result_array();
+	}
+
+	public function delData($id)
+	{
+		$this->db->where('nim', $id);
+		$this->db->delete('s6_tahun-krs');
+	}
+
+	public function addSmtr()
+	{
+		$data = array(
+			'id-smtr' => '',
+			'smtr' => $this->input->post('smtr', true),
+			'status' => $this->input->post('status', true),
+			'nim' => $this->input->post('nim', true),
+			'id-th' => $this->input->post('tahun', true)
+		);
+
+		$this->db->insert('s6_smtr', $data);
+	}
+
+	public function updSmtr($nim, $th, $smt)
+	{
+		$data = array(
+			'id-smtr' => $this->input->post('id-smtr', true),
+			'smtr' => $this->input->post('smtr', true),
+			'status' => $this->input->post('status', true),
+			'nim' => $this->input->post('nim', true),
+			'id-th' => $this->input->post('tahun', true)
+		);
+
+		$where = [
+			'nim' => $nim,
+			'smtr' => $smt,
+			'id-th' => $th
+		];
+
+		$this->db->where($where);
+		$this->db->update('s6_smtr', $data);
+	}
+
+	public function getSmtr($nim, $th, $smt)
+	{
+		$where = [
+			'nim' => $nim,
+			'smtr' => $smt,
+			'id-th' => $th
+		];
+		$this->db->select('*');
+		$this->db->from('s6_smtr');
+		$this->db->where($where);
+		return $this->db->get()->result_array();
+	}
+
+	public function delSmtr($id)
+	{
+		$this->db->where('id-smtr', $id);
+		$this->db->delete('s6_smtr');
+	}
+
+	// **************************************************************
+	// End KRS system
 	// **************************************************************
 }
