@@ -26,7 +26,7 @@
                     <div class="col-lg">
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" name="submit">Simpan</button>
-                            <a class="btn btn-outline-secondary ml-2" role="button" href="<?= base_url('siswa'); ?>">Batal</a>
+                            <a class="btn btn-outline-secondary ml-2" role="button" href="#th" data-toggle="collapse" aria-expanded="true" aria-controls="tahun">Batal</a>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                                 <th scope="row"><?= $s['tahun']; ?></th>
                                 <th scope="row"><?= $s['ket']; ?></th>
                                 <td class="text-center">
-                                    <a href="#editModal<?= $s['no']; ?>" class="badge badge-warning mr-1" data-toggle="modal">
+                                    <a href="<?= base_url(); ?>krs/ubahTahun/<?= $s['id-th'] ?>" class="badge badge-warning mr-1">
                                         <i class="fas fa-edit fa-sm"></i> edit
                                     </a>
 

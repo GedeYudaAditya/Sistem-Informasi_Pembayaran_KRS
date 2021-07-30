@@ -2104,6 +2104,8 @@ class All_model extends CI_Model
 	// End Upload File
 	// **************************************************************
 
+
+
 	// **************************************************************
 	// Start KRS system
 	// **************************************************************
@@ -2134,6 +2136,20 @@ class All_model extends CI_Model
 		return $this->db->get('s6_tahun-krs')->result_array();
 	}
 
+	public function updThn($data, $id)
+	{
+		$this->db->where('id-th', $id);
+		$this->db->update('s6_tahun-krs', $data);
+	}
+
+	public function getoneThn($id)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_tahun-krs');
+		$this->db->where('id-th', $id);
+		return $this->db->get()->result_array();
+	}
+
 	public function addData()
 	{
 		$data = array(
@@ -2146,6 +2162,29 @@ class All_model extends CI_Model
 		return true;
 	}
 
+	public function getMahasiswaById($id)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_data-mahasiswa');
+		//$this->db->join('s6_data-mahasiswa', 's6_data-mahasiswa.nim = s6_smtr.nim');
+		$this->db->where('nim', $id);
+		return $this->db->get()->result_array();
+	}
+
+	public function updData($id)
+	{
+		$data = array(
+			'nim' => $this->input->post('nim', true),
+			'nama' => $this->input->post('nama', true),
+			'prodi' => $this->input->post('prodi', true)
+		);
+
+		$this->db->where('nim', $id);
+		$this->db->update('s6_data-mahasiswa', $data);
+
+		return true;
+	}
+
 	public function getDatas()
 	{
 		return $this->db->get('s6_data-mahasiswa')->result_array();
@@ -2153,8 +2192,8 @@ class All_model extends CI_Model
 
 	public function delData($id)
 	{
-		// $this->db->where('nim', $id);
-		// $this->db->delete('s6_tahun-krs');
+		$this->db->where('nim', $id);
+		$this->db->delete('s6_tahun-krs');
 	}
 
 	public function addSmtr()
@@ -2170,9 +2209,37 @@ class All_model extends CI_Model
 		$this->db->insert('s6_smtr', $data);
 	}
 
-	public function getSmtr()
+	public function updSmtr($nim, $th, $smt)
 	{
-		return $this->db->get('s6_smtr')->result_array();
+		$data = array(
+			'id-smtr' => $this->input->post('id-smtr', true),
+			'smtr' => $this->input->post('smtr', true),
+			'status' => $this->input->post('status', true),
+			'nim' => $this->input->post('nim', true),
+			'id-th' => $this->input->post('tahun', true)
+		);
+
+		$where = [
+			'nim' => $nim,
+			'smtr' => $smt,
+			'id-th' => $th
+		];
+
+		$this->db->where($where);
+		$this->db->update('s6_smtr', $data);
+	}
+
+	public function getSmtr($nim, $th, $smt)
+	{
+		$where = [
+			'nim' => $nim,
+			'smtr' => $smt,
+			'id-th' => $th
+		];
+		$this->db->select('*');
+		$this->db->from('s6_smtr');
+		$this->db->where($where);
+		return $this->db->get()->result_array();
 	}
 
 	public function delSmtr($id)
