@@ -2248,6 +2248,16 @@ class All_model extends CI_Model
 		$this->db->delete('s6_smtr');
 	}
 
+	public function getSmtrWithTahunKRS($nim)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_smtr');
+		$this->db->join('s6_tahun-krs', 's6_tahun-krs.id-th = s6_smtr.id-th');
+		$this->db->where('nim', $nim);
+
+		return $this->db->get()->result_array();
+	}
+
 	// **************************************************************
 	// End KRS system
 	// **************************************************************

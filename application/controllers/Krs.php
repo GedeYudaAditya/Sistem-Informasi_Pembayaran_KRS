@@ -226,6 +226,22 @@ class Krs extends CI_Controller
     // BAGIAN CLIENT SIDE
     public function Home()
     {
+        $nim = $this->input->post('nim');
+        $tahun = $this->input->post('tahun');
+        $smtr = $this->input->post('semester');
+
+        $this->load->model('All_model');
+        $dtMhs = $this->All_model->getSmtrWithTahunKRS($nim);
+        $data['mhs'] = $this->All_model->getMahasiswaById($nim);
+        $data['tahun'] = $this->All_model->getThn();
+
+        // var_dump($dtMhs);
+        foreach ($dtMhs as $m) {
+            if (($tahun == $m['tahun']) && ($smtr == $m['smtr'])) {
+                $data['check'] = $m;
+            }
+        }
+
         $data['title'] = "Home";
         $this->load->view("guest/krs/master/header", $data);
         $this->load->view("guest/krs/page/index", $data);
