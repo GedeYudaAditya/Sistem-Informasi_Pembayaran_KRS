@@ -16,6 +16,20 @@ class Krs extends CI_Controller
             $this->data['group'] = $this->ion_auth_model->getGroup($id);
             $this->load->model('All_model');
             $data['th'] = $this->All_model->getThn();
+            $data['info'] = $this->All_model->infos();
+            //var_dump($data['info']);
+            if (empty($data['info'])) {
+                $data = [
+                    'id-info' => 1,
+                    'info' => 'Data update kosong',
+                    'ket' => 'Tidak ada yang di ubah sebelumnya'
+                ];
+                $this->All_model->defaultInfo($data);
+                $data['info'] = $this->All_model->infos();
+                $data['infos'] = false;
+            } else {
+                $data['infos'] = true;
+            }
             $data['prodis'] = [
                 [
                     'id' => 'PTI',
@@ -83,6 +97,12 @@ class Krs extends CI_Controller
 
                 if ($this->All_model->addData()) {
                     $this->All_model->addSmtr();
+                    $info = [
+                        'id-info' => 1,
+                        'info' => date('j F Y'),
+                        'ket' => date('G \: i \: s')
+                    ];
+                    $this->All_model->updInfo($info);
                     redirect('krs');
                 } else {
                     redirect('krs/tambah_Mahasiswa');
@@ -133,6 +153,12 @@ class Krs extends CI_Controller
 
             if ($this->All_model->updData($id)) {
                 $this->All_model->updSmtr($id, $th, $smtr);
+                $info = [
+                    'id-info' => 1,
+                    'info' => date('j F Y'),
+                    'ket' => date('G \: i \: s')
+                ];
+                $this->All_model->updInfo($info);
                 redirect('krs');
             } else {
                 redirect('krs/getUbah/' . $id . '/' . $th . '/' . $smtr);
@@ -167,6 +193,12 @@ class Krs extends CI_Controller
                 ];
                 if ($this->All_model->addThn($data)) {
                     redirect('krs');
+                    $info = [
+                        'id-info' => 1,
+                        'info' => date('j F Y'),
+                        'ket' => date('G \: i \: s')
+                    ];
+                    $this->All_model->updInfo($info);
                 } else {
                     redirect('krs/tambah_tahun');
                 }
@@ -201,6 +233,12 @@ class Krs extends CI_Controller
                     'ket' => $this->input->post('ket', true)
                 ];
                 if ($this->All_model->updThn($data, $tahun)) {
+                    $info = [
+                        'id-info' => 1,
+                        'info' => date('j F Y'),
+                        'ket' => date('G \: i \: s')
+                    ];
+                    $this->All_model->updInfo($info);
                     redirect('krs');
                 } else {
                     redirect('krs/tambah_tahun');
@@ -213,6 +251,12 @@ class Krs extends CI_Controller
     {
         $this->load->model('All_model');
         $this->All_model->delThn($id);
+        $info = [
+            'id-info' => 1,
+            'info' => date('j F Y'),
+            'ket' => date('G \: i \: s')
+        ];
+        $this->All_model->updInfo($info);
         redirect('krs/tambah_tahun');
     }
 
@@ -220,8 +264,55 @@ class Krs extends CI_Controller
     {
         $this->load->model('All_model');
         $this->All_model->delSmtr($id);
+        $info = [
+            'id-info' => 1,
+            'info' => date('j F Y'),
+            'ket' => date('G \: i \: s')
+        ];
+        $this->All_model->updInfo($info);
         redirect('krs/');
     }
+
+    // public function update_info()
+    // {
+    //     if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(group)) {
+    //         redirect('krs');
+    //     } else {
+    //         $this->data['title'] = "KRS - Update info";
+    //         $this->data['active'] = "11";
+    //         $id = $_SESSION['user_id'];
+    //         $this->data['flip'] = "false";
+    //         $this->data['ckeditor'] = "krs";
+    //         $this->load->model('All_model');
+    //         $datas['info'] = $this->All_model->infos();
+    //         if (isset($data['info']) == null) {
+    //             $data = [
+    //                 'id-info' => '1',
+    //                 'info' => 'Belum ada info terupdate',
+    //                 'ket' => 'Klik edit untuk isi info'
+    //             ];
+    //             $this->All_model->defaultInfo($data);
+    //         }
+
+    //         $this->data['group'] = $this->ion_auth_model->getGroup($id);
+    //         $this->load->view("admin/master/header", $this->data);
+    //         $this->load->view("admin/page/krs/updateInfo", $datas);
+    //         $this->load->view("admin/master/footer", $this->data);
+
+    //         if ($this->input->post('submit') === '') {
+    //             $info = [
+    //                 'id-info' => $this->input->post('id-info', true),
+    //                 'info' => $this->input->post('info', true),
+    //                 'ket' => $this->input->post('ket', true)
+    //             ];
+    //             if ($this->All_model->updInfo($info)) {
+    //                 redirect('krs');
+    //             } else {
+    //                 redirect('krs/update_info');
+    //             }
+    //         }
+    //     }
+    // }
 
     // BAGIAN CLIENT SIDE
     public function Home()

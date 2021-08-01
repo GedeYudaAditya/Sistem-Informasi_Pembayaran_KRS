@@ -2,6 +2,15 @@
     <h1 class="h3 md-2 text-primary"><?= $title; ?></h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
+            <?php if ($infos == true && $info[0]['info'] != "Data update kosong") : ?>
+                <h6 class="m-0 font-weight-bold text-primary">Data ini di update terakhir pada tanggal <?= $info[0]['info'] ?> tepatnya pukul <?= $info[0]['ket'] ?></h6>
+            <?php else : ?>
+                <h6 class="m-0 font-weight-bold text-primary"><?= $info[0]['info'] ?>. <?= $info[0]['ket'] ?>.</h6>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">List Data :</h6>
             <div>
                 <a class="btn btn-sm btn-primary shadow-sm" href="<?= base_url('krs/tambah_Mahasiswa'); ?>"><i class="fas fa-user-plus fa-sm"></i> Tambah Siswa</a>
