@@ -2248,6 +2248,26 @@ class All_model extends CI_Model
 		$this->db->delete('s6_smtr');
 	}
 
+	public function infos()
+	{
+		$this->db->select('*');
+		$this->db->from('s6_info');
+		return $this->db->get()->result_array();
+	}
+
+	public function defaultInfo($data)
+	{
+		$this->db->insert('s6_info', $data);
+	}
+
+	public function updInfo($id_info)
+	{
+		$where = [
+			'id-info' => 1,
+		];
+		$this->db->where($where);
+		$this->db->update('s6_info', $id_info);
+	}
 	// **************************************************************
 	// End KRS system
 	// **************************************************************
