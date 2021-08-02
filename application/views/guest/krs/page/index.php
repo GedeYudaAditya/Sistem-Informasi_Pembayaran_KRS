@@ -105,7 +105,7 @@
                     setTimeout(function() {
                         Swal.fire(
                             'Maaf :(',
-                            'Data KRS Mahasiswa Tahun <?= $this->input->post('tahun') ?> Semester <?= $this->input->post('semester') ?> tidak ada.',
+                            'Mahasiswa sudah terdaftar dalam sistem, namun belum memiliki riwayat pembayaran KRS',
                             'error'
                         )
                     }, 100);
@@ -117,7 +117,7 @@
             setTimeout(function() {
                 Swal.fire(
                     'Maaf :(',
-                    'Mahasiswa dengan NIM <?= $this->input->post('nim') ?> belum terdaftar di sistem KRS',
+                    'Mahasiswa belum terdaftar dalam sistem. Pastikan anda memasukkan NIM anda dengan benar!',
                     'error'
                 )
             }, 100);
