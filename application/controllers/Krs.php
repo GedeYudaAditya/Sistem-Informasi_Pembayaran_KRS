@@ -323,6 +323,7 @@ class Krs extends CI_Controller
         $data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
         $data['mhs'] = $this->All_model->getMahasiswaById($nim);
         $data['tahun'] = $this->All_model->getThn();
+        $data['updated_info'] = $this->All_model->infos();
 
         $data['title'] = "Home";
         $this->load->view("guest/krs/master/header", $data);

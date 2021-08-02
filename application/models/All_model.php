@@ -2268,6 +2268,7 @@ class All_model extends CI_Model
 		$this->db->where($where);
 		$this->db->update('s6_info', $id_info);
 	}
+
 	public function getSmtrWithTahunKRS($nim)
 	{
 		$this->db->select('*');
