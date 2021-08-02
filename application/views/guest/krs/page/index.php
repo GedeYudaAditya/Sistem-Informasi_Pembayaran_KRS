@@ -69,35 +69,55 @@
 
 
 <!-- ***** Modal Start ***** -->
-<?php if (!empty($mhs)) : ?>
-    <?php if (!empty($check)) : ?>
-        <?php if ($check['status'] == 'Lunas') : ?>
-            <script>
-                setTimeout(function() {
-                    Swal.fire(
-                        '<?= $mhs[0]['nama'] ?>\n<?= $mhs[0]['nim'] ?>',
-                        'Telah membayar iuran KRS Tahun <?= $this->input->post('tahun') ?> Semester <?= $this->input->post('semester') ?>',
-                        'success'
-                    )
-                }, 100);
-            </script>
-        <?php elseif ($check['status'] == 'Belum Bayar') : ?>
-            <script>
-                setTimeout(function() {
-                    Swal.fire(
-                        '<?= $mhs[0]['nama'] ?>\n<?= $mhs[0]['nim'] ?>',
-                        'Belum membayar iuran KRS Tahun <?= $this->input->post('tahun') ?> Semester <?= $this->input->post('semester') ?>',
-                        'warning'
-                    )
-                }, 100);
-            </script>
+<?php if ($this->input->post('submit') !== NULL) : ?>
+    <?php if (!empty($mhs)) : ?>
+        <?php if (!empty($dtMhs)) : ?>
+            <?php $ada = false; ?>
+            <?php foreach ($dtMhs as $m) : ?>
+                <?php if ($m['tahun'] == $this->input->post('tahun') && $m['smtr'] == $this->input->post('semester')) : ?>
+                    <?php if ($m['status'] == "Lunas") : ?>
+                        <script>
+                            setTimeout(function() {
+                                Swal.fire(
+                                    '<?= $mhs[0]['nama'] ?>\n<?= $mhs[0]['nim'] ?>',
+                                    'Telah membayar iuran KRS Tahun <?= $this->input->post('tahun') ?> Semester <?= $this->input->post('semester') ?>',
+                                    'success'
+                                )
+                            }, 100);
+                        </script>
+                        <?php $ada = true; ?>
+                    <?php elseif ($m['status'] == "Belum Bayar") : ?>
+                        <script>
+                            setTimeout(function() {
+                                Swal.fire(
+                                    '<?= $mhs[0]['nama'] ?>\n<?= $mhs[0]['nim'] ?>',
+                                    'Belum membayar iuran KRS Tahun <?= $this->input->post('tahun') ?> Semester <?= $this->input->post('semester') ?>',
+                                    'warning'
+                                )
+                            }, 100);
+                        </script>
+                        <?php $ada = true; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <?php if (!$ada) : ?>
+                <script>
+                    setTimeout(function() {
+                        Swal.fire(
+                            'Maaf :(',
+                            'Data KRS Mahasiswa Tahun <?= $this->input->post('tahun') ?> Semester <?= $this->input->post('semester') ?> tidak ada.',
+                            'error'
+                        )
+                    }, 100);
+                </script>
+            <?php endif; ?>
         <?php endif; ?>
     <?php else : ?>
         <script>
             setTimeout(function() {
                 Swal.fire(
                     'Maaf :(',
-                    'Data mahasiswa tidak ditemukan',
+                    'Mahasiswa dengan NIM <?= $this->input->post('nim') ?> belum terdaftar di sistem KRS',
                     'error'
                 )
             }, 100);
