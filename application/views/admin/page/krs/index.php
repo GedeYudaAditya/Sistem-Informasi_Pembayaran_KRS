@@ -1,4 +1,28 @@
 <div class="container-fluid">
+    <?php if ($this->session->flashdata('sukses')) : ?>
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Data Mahasiswa <strong>berhasil</strong> <?= $this->session->flashdata('sukses'); ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('suksesth')) : ?>
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Data Tahun <strong>berhasil</strong> <?= $this->session->flashdata('sukses'); ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
     <h1 class="h3 md-2 text-primary"><?= $title; ?></h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">

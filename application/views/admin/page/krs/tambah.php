@@ -1,6 +1,18 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
+    <?php if ($this->session->flashdata('flash')) : ?>
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Data Mahasiswa <strong><?= $this->session->flashdata('flash'); ?></strong> karena data yang anda masukkan sudah ada.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-primary"><?= $title; ?></h1>
 
