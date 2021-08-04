@@ -2121,8 +2121,20 @@ class All_model extends CI_Model
 	}
 	public function addThn($data)
 	{
-		$this->db->insert('s6_tahun-krs', $data);
-		return true;
+		$where = [
+			'tahun' => $this->input->post('tahun', true)
+		];
+
+		$this->db->select('*');
+		$this->db->from('s6_tahun-krs');
+		$this->db->where($where);
+
+		if ($this->db->get()->result_array() == null) {
+			$this->db->insert('s6_tahun-krs', $data);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function delThn($id)
@@ -2138,8 +2150,20 @@ class All_model extends CI_Model
 
 	public function updThn($data, $id)
 	{
-		$this->db->where('id-th', $id);
-		$this->db->update('s6_tahun-krs', $data);
+		$where = [
+			'tahun' => $this->input->post('tahun', true)
+		];
+
+		$this->db->select('*');
+		$this->db->from('s6_tahun-krs');
+		$this->db->where($where);
+		if ($this->db->get()->result_array() == null) {
+			$this->db->where('id-th', $id);
+			$this->db->update('s6_tahun-krs', $data);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function getoneThn($id)
@@ -2198,35 +2222,64 @@ class All_model extends CI_Model
 
 	public function addSmtr()
 	{
-		$data = array(
-			'id-smtr' => '',
-			'smtr' => $this->input->post('smtr', true),
-			'status' => $this->input->post('status', true),
+		$where = [
 			'nim' => $this->input->post('nim', true),
+			'smtr' => $this->input->post('smtr', true),
 			'id-th' => $this->input->post('tahun', true)
-		);
+		];
+		$this->db->select('*');
+		$this->db->from('s6_smtr');
+		$this->db->where($where);
 
-		$this->db->insert('s6_smtr', $data);
+		if ($this->db->get()->result_array() == null) {
+			$data = array(
+				'id-smtr' => '',
+				'smtr' => $this->input->post('smtr', true),
+				'status' => $this->input->post('status', true),
+				'nim' => $this->input->post('nim', true),
+				'id-th' => $this->input->post('tahun', true)
+			);
+
+			$this->db->insert('s6_smtr', $data);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function updSmtr($nim, $th, $smt)
 	{
-		$data = array(
-			'id-smtr' => $this->input->post('id-smtr', true),
-			'smtr' => $this->input->post('smtr', true),
-			'status' => $this->input->post('status', true),
-			'nim' => $this->input->post('nim', true),
-			'id-th' => $this->input->post('tahun', true)
-		);
-
 		$where = [
-			'nim' => $nim,
-			'smtr' => $smt,
-			'id-th' => $th
+			'nim' => $this->input->post('nim', true),
+			'smtr' => $this->input->post('smtr', true),
+			'id-th' => $this->input->post('tahun', true)
 		];
-
+		$this->db->select('*');
+		$this->db->from('s6_smtr');
 		$this->db->where($where);
-		$this->db->update('s6_smtr', $data);
+
+		if ($this->db->get()->result_array() == null) {
+			$data = array(
+				'id-smtr' => $this->input->post('id-smtr', true),
+				'smtr' => $this->input->post('smtr', true),
+				'status' => $this->input->post('status', true),
+				'nim' => $this->input->post('nim', true),
+				'id-th' => $this->input->post('tahun', true)
+			);
+
+			$where = [
+				'nim' => $nim,
+				'smtr' => $smt,
+				'id-th' => $th
+			];
+
+			$this->db->where($where);
+			$this->db->update('s6_smtr', $data);
+
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function getSmtr($nim, $th, $smt)

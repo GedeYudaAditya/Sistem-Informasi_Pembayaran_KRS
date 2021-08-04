@@ -17,6 +17,7 @@ class Krs extends CI_Controller
             $this->load->model('All_model');
             $data['th'] = $this->All_model->getThn();
             $data['info'] = $this->All_model->infos();
+            unset($_SESSION['flash']);
             //var_dump($data['info']);
             if (empty($data['info'])) {
                 $data = [
@@ -67,6 +68,7 @@ class Krs extends CI_Controller
             $this->data['flip'] = "false";
             $this->data['ckeditor'] = "krs";
 
+            unset($_SESSION['sukses']);
             $this->load->model('All_model');
             $data['th'] = $this->All_model->getThn();
             $data['prodis'] = [
@@ -95,16 +97,18 @@ class Krs extends CI_Controller
 
             if ($this->input->post('submit') === '') {
 
-                if ($this->All_model->addData()) {
-                    $this->All_model->addSmtr();
+                if ($this->All_model->addData() && $this->All_model->addSmtr()) {
                     $info = [
                         'id-info' => 1,
                         'info' => date('j F Y'),
                         'ket' => date('G \: i \: s')
                     ];
                     $this->All_model->updInfo($info);
+                    unset($_SESSION['flash']);
+                    $this->session->set_flashdata('sukses', 'Ditambahkan');
                     redirect('krs');
                 } else {
+                    $this->session->set_flashdata('flash', 'Gagal ditambahkan');
                     redirect('krs/tambah_Mahasiswa');
                 }
             }
@@ -120,6 +124,7 @@ class Krs extends CI_Controller
         $this->data['ckeditor'] = "krs";
         $this->load->model('All_model');
         $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        unset($_SESSION['sukses']);
         $data['th'] = $this->All_model->getThn();
         $data['prodis'] = [
             [
@@ -151,16 +156,18 @@ class Krs extends CI_Controller
     {
         if ($this->input->post('submit') === '') {
 
-            if ($this->All_model->updData($id)) {
-                $this->All_model->updSmtr($id, $th, $smtr);
+            if ($this->All_model->updData($id) && $this->All_model->updSmtr($id, $th, $smtr)) {
                 $info = [
                     'id-info' => 1,
                     'info' => date('j F Y'),
                     'ket' => date('G \: i \: s')
                 ];
                 $this->All_model->updInfo($info);
+                unset($_SESSION['flash']);
+                $this->session->set_flashdata('sukses', 'Diubah');
                 redirect('krs');
             } else {
+                $this->session->set_flashdata('flash', 'Gagal diubah');
                 redirect('krs/getUbah/' . $id . '/' . $th . '/' . $smtr);
             }
         }
@@ -179,6 +186,8 @@ class Krs extends CI_Controller
             $this->data['ckeditor'] = "krs";
             $data['siswa'] = $this->All_model->getThn();
 
+            unset($_SESSION['sukses']);
+            unset($_SESSION['suksesth']);
             $this->data['group'] = $this->ion_auth_model->getGroup($id);
             $this->load->model('All_model');
             $this->load->view("admin/master/header", $this->data);
@@ -192,6 +201,8 @@ class Krs extends CI_Controller
                     'ket' => $this->input->post('ket', true)
                 ];
                 if ($this->All_model->addThn($data)) {
+                    $this->session->set_flashdata('suksesth', 'Diubah');
+                    unset($_SESSION['flashth']);
                     redirect('krs');
                     $info = [
                         'id-info' => 1,
@@ -200,6 +211,7 @@ class Krs extends CI_Controller
                     ];
                     $this->All_model->updInfo($info);
                 } else {
+                    $this->session->set_flashdata('flashth', 'Gagal ditambah');
                     redirect('krs/tambah_tahun');
                 }
             }
@@ -220,6 +232,8 @@ class Krs extends CI_Controller
             $data['siswa'] = $this->All_model->getThn();
 
             $data['isi'] = $this->All_model->getoneThn($tahun);
+            unset($_SESSION['sukses']);
+            unset($_SESSION['suksesth']);
             //var_dump($data['isi']);
             $this->data['group'] = $this->ion_auth_model->getGroup($id);
             $this->load->view("admin/master/header", $this->data);
@@ -233,6 +247,8 @@ class Krs extends CI_Controller
                     'ket' => $this->input->post('ket', true)
                 ];
                 if ($this->All_model->updThn($data, $tahun)) {
+                    $this->session->set_flashdata('suksesth', 'Diubah');
+                    unset($_SESSION['flashth']);
                     $info = [
                         'id-info' => 1,
                         'info' => date('j F Y'),
@@ -241,6 +257,7 @@ class Krs extends CI_Controller
                     $this->All_model->updInfo($info);
                     redirect('krs');
                 } else {
+                    $this->session->set_flashdata('flashth', 'Gagal diubah');
                     redirect('krs/tambah_tahun');
                 }
             }
