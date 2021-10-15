@@ -1,0 +1,42 @@
+.img {
+	height: 500px !important;
+}
+
+.ket {
+	width: 60%;
+	margin-left: 30px;
+}
+
+.gambar {
+	height: 200px !important;
+	width: 400px !important;
+}
+
+@media (max-width: 767.98px) {
+
+	.d-flex.justify-content-between {
+		display: block !important;
+	}
+
+	.ket {
+		margin-left: 0px;
+		width: 100%;
+		margin-top: 30px;
+	}
+
+	.ml button {
+		padding: 0;
+		width: 60px;
+		height: 30px;
+	}
+
+	.img {
+		height: 300px !important;
+	}
+
+	.gambar {
+		height: 180px !important;
+		width: 400px !important;
+	}
+
+}
