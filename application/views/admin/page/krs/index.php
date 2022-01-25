@@ -112,6 +112,19 @@
                     <ul>
                         <li>File yang dapat di upload adalah file yang ber-extensi .csv</li>
                         <li>Data dalam file harus berurut sesuai berikut ini : </li>
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead class="text-center thead-light">
+                                <tr>
+                                    <td scope="col">NIM</td>
+                                    <td scope="col">Nama</td>
+                                    <td scope="col">Prodi</td>
+                                    <td scope="col">Semester</td>
+                                    <td scope="col">Status</td>
+                                    <td scope="col">Tahun</td>
+                                </tr>
+                            </thead>
+                        </table>
+                        <li>Pada bagian Prodi data di tulis sesuai aturan yaitu <strong>PTI</strong> untuk Pendidikan Teknik Informatika, <strong>SI</strong> untuk Sistem Informasi, <strong>MI</strong> untuk Managemen Informatika, dan <strong>ilkom</strong> untuk Ilmu Komputer</li>
                     </ul>
                     <h6>Upload :</h6>
                     <div class="custom-file">
