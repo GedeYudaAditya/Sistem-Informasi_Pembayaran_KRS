@@ -2119,6 +2119,7 @@ class All_model extends CI_Model
 
 		return $this->db->get()->result_array();
 	}
+
 	public function addThn($data)
 	{
 		$where = [
@@ -2330,6 +2331,111 @@ class All_model extends CI_Model
 		$this->db->where('nim', $nim);
 
 		return $this->db->get()->result_array();
+	}
+
+	public function printCSV()
+	{
+		$this->db->select('s6_data-mahasiswa.nim, s6_data-mahasiswa.nim, s6_data-mahasiswa.nama, s6_data-mahasiswa.prodi, s6_smtr.smtr, s6_smtr.status, s6_tahun-krs.tahun');
+		$this->db->from('s6_data-mahasiswa');
+		$this->db->join('s6_smtr', 's6_smtr.nim = s6_data-mahasiswa.nim');
+		$this->db->join('s6_tahun-krs', 's6_tahun-krs.id-th = s6_smtr.id-th');
+
+		return $this->db->get()->result_array();
+	}
+
+	public function importCSV()
+	{
+		$datanama  =  $_FILES['data']['name'];
+		$datatmp   =  $_FILES['data']['tmp_name'];
+		$exe       =  pathinfo($datanama, PATHINFO_EXTENSION);
+		$folder    =  'assets/csv/';
+
+		// $this->db->select('*');
+		// $this->db->from('s6_tahun-krs');
+		// $this->db->join('s6_smtr', 's6_smtr.id-th = s6_tahun-krs.id-th');
+		// $this->db->join('s6_data-mahasiswa', 's6_data-mahasiswa.nim = s6_smtr.nim');
+
+		// $isi = $this->db->get()->result_array();
+		// var_dump($isi);
+		// die;
+
+		if ($exe == 'csv') {
+			$upload = move_uploaded_file($datatmp, $folder . $datanama);
+			// var_dump($upload);
+			if ($upload) {
+				$open = fopen($folder . $datanama, 'r');
+				$th = $this->db->get('s6_tahun-krs')->result_array();
+				$i = 0;
+				$long = 0;
+				$kebenaran = false;
+				foreach ($th as $t) {
+					$comt[$i] = $t['id-th'];
+					$namet[$i] = $t['tahun'];
+					$i++;
+					$long++;
+				}
+
+				while (($row = fgetcsv($open, 1000, ',')) !== FALSE) {
+
+					$this->db->insert('s6_data-mahasiswa', [
+						'nim' => $row[0],
+						'nama' => $row[1],
+						'prodi' => $row[2]
+					]);
+					$i = 0;
+					for ($i; $i < $long; $i++) {
+						if ($namet[$i] == $row[5]) {
+							$tahun_id = $comt[$i];
+							$kebenaran = true;
+						}
+						// var_dump($namet[$i]);
+					}
+					// die;
+					if ($kebenaran) {
+
+						$this->db->insert('s6_smtr', [
+							'smtr' => $row[3],
+							'status' => $row[4],
+							'nim' => $row[0],
+							'id-th' => $tahun_id
+						]);
+					} else {
+						$this->db->insert('s6_tahun-krs', [
+							'id-th' => '',
+							'tahun' => $row[5],
+							'ket' => 'Add from CSV file'
+						]);
+						$this->db->select('*');
+						$this->db->from('s6_tahun-krs');
+						$this->db->where('tahun', $row[5]);
+						$wadah = $this->db->get()->result_array();
+						// var_dump($wadah);
+						// die;
+						$this->db->insert('s6_smtr', [
+							'smtr' => $row[3],
+							'status' => $row[4],
+							'nim' => $row[0],
+							'id-th' => $wadah[0]['id-th']
+						]);
+					}
+
+					// var_dump($row);
+					return true;
+					// $this->session->set_flashdata('sukses', 'Ditambahkan');
+					// redirect('krs/');
+				}
+			} else {
+				// echo "Gagal diupload";
+				return false;
+				// $this->session->set_flashdata('flash', 'Gagal diupload');
+				// redirect('krs/');
+			}
+		} else {
+			return false;
+			// $this->session->set_flashdata('flash', 'Bukan File CSV');
+			// redirect('krs/');
+			// echo "Bukan File CSV";
+		}
 	}
 
 	// **************************************************************
