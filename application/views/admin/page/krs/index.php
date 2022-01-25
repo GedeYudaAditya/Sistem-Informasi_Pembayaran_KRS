@@ -131,7 +131,8 @@
                         <input type="file" class="custom-file-input" id="customFile" name="data">
                         <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
-
+                    <hr>
+                    <h6 style="color: red;">Tidak mengikuti aturan di atas dapat menyebabkan error upload atau kesalahan inputan data ke sistem...</h6>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
