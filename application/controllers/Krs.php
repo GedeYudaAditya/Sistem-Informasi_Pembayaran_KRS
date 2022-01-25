@@ -290,6 +290,41 @@ class Krs extends CI_Controller
         redirect('krs/');
     }
 
+    public function printCSV()
+    {
+        if (isset($_POST['export'])) {
+            $this->load->model('All_model');
+            $isi = $this->All_model->printCSV();
+
+            $date = date('j F Y');
+            $time = date('G\^i\^s');
+            header('Content-Type: text/csv; charset=utf-8');
+            header('Content-Disposition: attachment; filename=DataPembayaran_' . $date . '_' . $time . '.csv');
+            $output = fopen("php://output", "w");
+            fputcsv($output, array('NIM', 'Nama', 'Prodi', 'Semester', 'Status', 'Tahun'));
+
+            foreach ($isi as $row) {
+                fputcsv($output, $row);
+            }
+            fclose($output);
+        }
+    }
+
+    public function importCSV()
+    {
+        if (isset($_POST['input'])) {
+
+            $this->load->model('All_model');
+            if ($this->All_model->importCSV()) {
+                redirect('krs/');
+                $this->session->set_flashdata('sukses', 'Ditambahkan');
+            } else {
+                redirect('krs/');
+                $this->session->set_flashdata('flash', 'Gagal diupload');
+            }
+        }
+    }
+
     // public function update_info()
     // {
     //     if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(group)) {
