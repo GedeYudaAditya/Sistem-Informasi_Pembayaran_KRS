@@ -6,7 +6,7 @@
             <div class="col-12 col-lg-7">
                 <div class="welcome-intro">
                     <h1 class="text-white">KRS Checker HMJ-TI</h1>
-                    <p class="text-white my-4 text-justify">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit omnis velit ea vel hic alias inventore eos animi, culpa tempora beatae similique laboriosam minus placeat sapiente voluptatum, modi sint natus corrupti. Voluptatibus enim sapiente debitis culpa fugiat cumque dignissimos nobis sint minima odit incidunt est dolores officia, aliquam nam beatae?</p>
+                    <p class="text-white my-4 text-justify">KRS Checker merupakan suatu layanan sistem infomasi dari HMJ TI dalam memudahkan mahasiswa atau dosen pada ruang lingkup Jurusan Teknik Informatika untuk mencari data terkait pembayaran KRS disetiap semester. <br><br><i>Catatan : Sistem ini masih dalam pengembangan, jika terdapat hal yang tidak lazim atau menurut Anda data yang dikeluarkan sistem salah, mohon untuk menghubungi <b><u><a href="https://www.instagram.com/hmj_ti.undiksha/" style="color : white;">pihak kami</a></u></b>.</i></p>
                 </div>
             </div>
             <div class="col-12 col-md-8 col-lg-5">
