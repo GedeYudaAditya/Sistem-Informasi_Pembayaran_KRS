@@ -2420,10 +2420,10 @@ class All_model extends CI_Model
 					}
 
 					// var_dump($row);
-					return true;
 					// $this->session->set_flashdata('sukses', 'Ditambahkan');
 					// redirect('krs/');
 				}
+				return true;
 			} else {
 				// echo "Gagal diupload";
 				return false;
