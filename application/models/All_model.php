@@ -2199,15 +2199,17 @@ class All_model extends CI_Model
 	public function updData($id)
 	{
 		$data = array(
-			'nim' => $this->input->post('nim', true),
+			// 'nim' => $this->input->post('nim', true),
 			'nama' => $this->input->post('nama', true),
 			'prodi' => $this->input->post('prodi', true)
 		);
 
 		$this->db->where('nim', $id);
-		$this->db->update('s6_data-mahasiswa', $data);
-
-		return true;
+		if ($this->db->update('s6_data-mahasiswa', $data)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function getDatas()
@@ -2250,37 +2252,37 @@ class All_model extends CI_Model
 
 	public function updSmtr($nim, $th, $smt)
 	{
-		$where = [
-			'nim' => $this->input->post('nim', true),
+		// $where = [
+		// 	'nim' => $this->input->post('nim', true),
+		// 	'smtr' => $this->input->post('smtr', true),
+		// 	'id-th' => $this->input->post('tahun', true)
+		// ];
+		// $this->db->select('*');
+		// $this->db->from('s6_smtr');
+		// $this->db->where($where);
+
+		// if ($this->db->get()->result_array()) {
+		$data = array(
+			'id-smtr' => $this->input->post('id-smtr', true),
 			'smtr' => $this->input->post('smtr', true),
+			'status' => $this->input->post('status', true),
+			// 'nim' => $this->input->post('nim', true),
 			'id-th' => $this->input->post('tahun', true)
+		);
+
+		$where = [
+			'nim' => $nim,
+			'smtr' => $smt,
+			'id-th' => $th
 		];
-		$this->db->select('*');
-		$this->db->from('s6_smtr');
+
 		$this->db->where($where);
+		$this->db->update('s6_smtr', $data);
 
-		if ($this->db->get()->result_array() == null) {
-			$data = array(
-				'id-smtr' => $this->input->post('id-smtr', true),
-				'smtr' => $this->input->post('smtr', true),
-				'status' => $this->input->post('status', true),
-				'nim' => $this->input->post('nim', true),
-				'id-th' => $this->input->post('tahun', true)
-			);
-
-			$where = [
-				'nim' => $nim,
-				'smtr' => $smt,
-				'id-th' => $th
-			];
-
-			$this->db->where($where);
-			$this->db->update('s6_smtr', $data);
-
-			return true;
-		} else {
-			return false;
-		}
+		return true;
+		// } else {
+		// 	return false;
+		// }
 	}
 
 	public function getSmtr($nim, $th, $smt)
@@ -2374,7 +2376,7 @@ class All_model extends CI_Model
 					$i++;
 					$long++;
 				}
-
+				$check = 0;
 				while (($row = fgetcsv($open, 1000, ',')) !== FALSE) {
 
 					$this->db->insert('s6_data-mahasiswa', [
@@ -2387,6 +2389,15 @@ class All_model extends CI_Model
 						if ($namet[$i] == $row[5]) {
 							$tahun_id = $comt[$i];
 							$kebenaran = true;
+						} else {
+							if ($check != $row[5]) {
+								$this->db->insert('s6_tahun-krs', [
+									'id-th' => '',
+									'tahun' => $row[5],
+									'ket' => 'Add from CSV file'
+								]);
+								$check = $row[5];
+							}
 						}
 						// var_dump($namet[$i]);
 					}
@@ -2400,11 +2411,7 @@ class All_model extends CI_Model
 							'id-th' => $tahun_id
 						]);
 					} else {
-						$this->db->insert('s6_tahun-krs', [
-							'id-th' => '',
-							'tahun' => $row[5],
-							'ket' => 'Add from CSV file'
-						]);
+
 						$this->db->select('*');
 						$this->db->from('s6_tahun-krs');
 						$this->db->where('tahun', $row[5]);

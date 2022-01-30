@@ -37,7 +37,7 @@ for ($i = 0; $i < count($options); $i++) {
                 <div class="col-lg">
                     <div class="form-group">
                         <label for="nim">NIM Mahasiswa</label>
-                        <input type="text" class="form-control" id="nim" name="nim" maxlength="10" value="<?= $datas[0]['nim'] ?>">
+                        <input disabled type="text" class="form-control" id="nim" name="nim" maxlength="10" value="<?= $datas[0]['nim'] ?>">
                         <?= form_error('nim', '<small class="text-danger pl-3">', '</small>'); ?>
                     </div>
                     <div class="form-group">
