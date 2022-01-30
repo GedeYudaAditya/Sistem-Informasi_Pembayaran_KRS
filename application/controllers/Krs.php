@@ -155,8 +155,10 @@ class Krs extends CI_Controller
     public function ubahData($id, $th, $smtr)
     {
         if ($this->input->post('submit') === '') {
-
-            if ($this->All_model->updData($id) && $this->All_model->updSmtr($id, $th, $smtr)) {
+            // var_dump($this->All_model->updSmtr($id, $th, $smtr));
+            // die;
+            if ($this->All_model->updData($id)) {
+                $this->All_model->updSmtr($id, $th, $smtr);
                 $info = [
                     'id-info' => 1,
                     'info' => date('j F Y'),
@@ -316,11 +318,17 @@ class Krs extends CI_Controller
 
             $this->load->model('All_model');
             if ($this->All_model->importCSV()) {
-                redirect('krs/');
+                $info = [
+                    'id-info' => 1,
+                    'info' => date('j F Y'),
+                    'ket' => date('G \: i \: s')
+                ];
+                $this->All_model->updInfo($info);
                 $this->session->set_flashdata('sukses', 'Ditambahkan');
-            } else {
                 redirect('krs/');
+            } else {
                 $this->session->set_flashdata('flash', 'Gagal diupload');
+                redirect('krs/');
             }
         }
     }
