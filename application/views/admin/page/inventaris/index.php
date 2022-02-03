@@ -24,70 +24,64 @@
  					<table class="table table-bordered" id="tableInformasi" width="100%" cellspacing="0">
  						<thead>
  							<tr>
- 								<th>Upload Pada</th>
- 								<th>Kategori Informasi</th>
+ 								<!-- <th>Ditambahakan Pada</th> -->
+ 								<th>Kategori Inventaris</th>
  								<th>Nama Kepengurusan</th>
- 								<th>Tampilan Informasi</th>
- 								<th>File Informasi</th>
- 								<th>Dibuat Oleh</th>
- 								<th>Fitur</th>
+ 								<th>Detail Barang</th>
+ 								<th>Status Barang</th>
+ 								<!-- <th>Ditambahkan Oleh</th> -->
+ 								<th class="text-center">Aksi</th>
  							</tr>
  						</thead>
  						<tbody>
- 							<?php foreach ($informasi as $data) : ?>
- 								<tr>
- 									<td><?= $data['create_at'] ?> Wita</td>
- 									<td><?= $data['kategori_informasi'] ?></td>
- 									<td><?= $data['nama_kepengurusan'] ?></td>
- 									<td>
- 										<?php if ($data['kategori_informasi'] == "Karya Tulis" || $data['kategori_informasi'] == "Berita") : ?>
- 											<a href="<?= base_url() ?>web/detail_berita/<?= $data['id_informasi']; ?>" class="btn btn-primary btn-sm btn-icon-split">
- 												<span class="icon text-white-50">
- 													<i class="fas fa-eye"></i>
- 												</span>
- 												<span class="text">Lihat</span>
- 											</a>
- 										<?php else : ?>
- 											<a href="<?= base_url() ?>web/detail_pengumuman/<?= $data['id_informasi']; ?>" class="btn btn-primary btn-sm btn-icon-split">
- 												<span class="icon text-white-50">
- 													<i class="fas fa-eye"></i>
- 												</span>
- 												<span class="text">Lihat</span>
- 											</a>
- 										<?php endif; ?>
- 									</td>
- 									<td>
- 										<?php if ($data['file_informasi'] == null) { ?>
- 											<div class="p mb-0  text-gray-500">
- 												<i>Tidak Terdapat File</i>
- 											</div>
- 										<?php } else { ?>
- 											<a href="<?= base_url() ?>web/flip_me/berkas/<?= $data['file_informasi'] ?>/informasi" target="_blank" class="btn btn-primary btn-sm  btn-icon-split">
- 												<span class="icon text-white-50">
- 													<i class="fas fa-eye"></i>
- 												</span>
- 												<span class="text">Lihat</span>
- 											</a>
- 											<a href="<?= base_url() ?>web/download_file/<?= $data['file_informasi'] ?>/informasi" class="btn btn-success btn-sm mt-2 btn-icon-split">
- 												<span class="icon text-white-50">
- 													<i class="fas fa-download"></i>
- 												</span>
- 												<span class="text">Unduh</span>
- 											</a>
- 										<?php } ?>
-
- 									</td>
- 									<td><?= $data['create_by'] ?></td>
- 									<td>
- 										<a href="<?= base_url() ?>web/hapus_data_informasi/<?= $data['id_informasi']; ?>" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
+ 							<!-- foreach -->
+ 							<tr>
+ 								<td>ATK</td> <!-- Kategori Inventaris -->
+ 								<td>HMJ TI Undiksha 2021-2022</td> <!-- Nama Kepengurusan -->
+ 								<td>
+ 									<span class="btn btn-warning btn-sm btn-icon-split">
+ 										<span class="icon text-white-50">
+ 											<i class="fas fa-minus-circle"></i>
+ 										</span>
+ 										<span class="text">Dipinjam</span>
+ 									</span>
+ 									<span class="btn btn-success btn-sm btn-icon-split">
+ 										<span class="icon text-white-50">
+ 											<i class="fas fa-check-circle"></i>
+ 										</span>
+ 										<span class="text">Ada</span>
+ 									</span>
+ 									<!-- <a href="<?= base_url() ?>web/detail_pengumuman/<?= $data['id_informasi']; ?>" class="btn btn-primary btn-sm btn-icon-split">
  											<span class="icon text-white-50">
- 												<i class="fas fa-trash"></i>
+ 												<i class="fas fa-eye"></i>
  											</span>
- 											<span class="text">Delete</span>
- 										</a>
- 									</td>
- 								</tr>
- 							<?php endforeach; ?>
+ 											<span class="text">Lihat</span>
+ 										</a> -->
+ 								</td>
+ 								<td>
+ 									<button href="" class="btn btn-primary btn-sm btn-icon-split">
+ 										<span class="icon text-white-50">
+ 											<i class="fas fa-info-circle"></i>
+ 										</span>
+ 										<span class="text">Detail</span>
+ 									</button>
+ 								</td>
+ 								<td class="text-center">
+ 									<a href="" class="btn btn-warning btn-sm btn-icon-split tombol-hapus">
+ 										<span class="icon text-white-50">
+ 											<i class="fas fa-trash"></i>
+ 										</span>
+ 										<span class="text">Update</span>
+ 									</a>
+ 									<a href="" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
+ 										<span class="icon text-white-50">
+ 											<i class="fas fa-trash"></i>
+ 										</span>
+ 										<span class="text">Delete</span>
+ 									</a>
+ 								</td>
+ 							</tr>
+ 							<!-- endforeach -->
  						</tbody>
  					</table>
  				</div>
