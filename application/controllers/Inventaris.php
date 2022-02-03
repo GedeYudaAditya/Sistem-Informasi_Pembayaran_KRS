@@ -37,20 +37,20 @@ class Inventaris extends CI_Controller
 			show_404();
 		}
 	}
-	public function organisasi()
+	public function barang()
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('login', 'refresh');
 		} else {
 			$id = $_SESSION['user_id'];
 			$this->data['group'] = $this->ion_auth_model->getGroup($id);
-			$this->data['title'] = "SI Inventaris - Detail Organisasi";
+			$this->data['title'] = "SI Inventaris - Detail Barang";
 			$this->data['active'] = "2";
 			$this->data['flip'] = "false";
-			// $this->load->view('admin/master/header', $this->data);
-			// $this->load->view('admin/page/inventaris/index', $this->data);
-			// $this->load->view('admin/master/footer', $this->data);
-			show_404();
+			$this->load->view('admin/master/header', $this->data);
+			$this->load->view('admin/page/inventaris/index', $this->data);
+			$this->load->view('admin/master/footer', $this->data);
+			// show_404();
 		}
 	}
 	public function peminjaman()
