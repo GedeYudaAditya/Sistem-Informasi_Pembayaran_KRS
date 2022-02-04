@@ -16,6 +16,18 @@
             </div>
         </div>
     <?php endif; ?>
+    <?php if ($this->session->flashdata('flash')) : ?>
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Data Mahasiswa <strong>Gagal</strong> <?= $this->session->flashdata('sukses'); ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
     <?php if ($this->session->flashdata('suksesth')) : ?>
         <div class="row mt-3">
             <div class="col-md-12 text-center">
@@ -124,7 +136,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <li>Pada bagian Prodi data di tulis sesuai aturan yaitu <strong>PTI</strong> untuk Pendidikan Teknik Informatika, <strong>SI</strong> untuk Sistem Informasi, <strong>MI</strong> untuk Managemen Informatika, dan <strong>ilkom</strong> untuk Ilmu Komputer</li>
+                        <li>Pada bagian Prodi data di tulis sesuai aturan yaitu <strong>PTI</strong> untuk Pendidikan Teknik Informatika, <strong>SI</strong> untuk Sistem Informasi, <strong>MI</strong> untuk Managemen Informatika, dan <strong>ILKOM</strong> untuk Ilmu Komputer</li>
                     </ul>
                     <h6>Upload :</h6>
                     <div class="custom-file">
