@@ -145,17 +145,17 @@
  								<td class="text-center">
  									<!-- Silakan Backend Memberikan Pengkondisian -->
  									<!-- Kodisi Start -->
- 									<a href="" class="btn btn-warning btn-sm btn-icon-split tombol-hapus">
+ 									<a href="" class="btn btn-success btn-sm btn-icon-split tombol-hapus">
  										<span class="icon text-white-50">
- 											<i class="fas fa-trash"></i>
+ 											<i class="fas fa-check-circle"></i>
  										</span>
- 										<span class="text">Update</span>
+ 										<span class="text">Terima</span>
  									</a>
  									<a href="" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
  										<span class="icon text-white-50">
- 											<i class="fas fa-trash"></i>
+ 											<i class="fas fa-times-circle"></i>
  										</span>
- 										<span class="text">Delete</span>
+ 										<span class="text">Tolak</span>
  									</a>
  									<!-- Kodisi Stop -->
  								</td>
