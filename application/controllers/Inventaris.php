@@ -69,4 +69,20 @@ class Inventaris extends CI_Controller
 			show_404();
 		}
 	}
+
+	// SINTAX FOR USER
+	public function home()
+	{
+		$this->data['title'] = "Home";
+		$this->load->view('guest/inventaris/master/header', $this->data);
+		$this->load->view('guest/inventaris/page/index', $this->data);
+		$this->load->view('guest/inventaris/master/footer', $this->data);
+		// if (!empty($active)) {
+		// 	$this->load->view('guest/inventaris/master/header', $this->data);
+		// 	$this->load->view('guest/inventaris/page/index', $this->data);
+		// 	$this->load->view('guest/inventaris/master/footer', $this->data);
+		// } else {
+		// 	show_404();
+		// }
+	}
 }
