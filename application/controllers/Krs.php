@@ -41,7 +41,7 @@ class Krs extends CI_Controller
                     'prodi' => 'Sistem Informatika'
                 ],
                 [
-                    'id' => 'ilkom',
+                    'id' => 'ILKOM',
                     'prodi' => 'Ilmu Komputer'
                 ],
                 [
@@ -81,7 +81,7 @@ class Krs extends CI_Controller
                     'prodi' => 'Sistem Informatika'
                 ],
                 [
-                    'id' => 'ilkom',
+                    'id' => 'ILKOM',
                     'prodi' => 'Ilmu Komputer'
                 ],
                 [
@@ -136,7 +136,7 @@ class Krs extends CI_Controller
                 'prodi' => 'Sistem Informatika'
             ],
             [
-                'id' => 'ilkom',
+                'id' => 'ILKOM',
                 'prodi' => 'Ilmu Komputer'
             ],
             [
