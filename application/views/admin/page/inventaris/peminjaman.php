@@ -2,8 +2,9 @@
  <div class="container-fluid">
  	<!-- Page Heading -->
  	<h1 class="h3 mb-2 text-gray-800"><?= $title; ?></h1>
- 	<p class="mb-4">Untuk mengupload inventaris baik itu barang berupa ATK, barang lainnya, silahkan pilih tombol
- 		tambah data. Untuk menghapus silahkan pilih tombol delete. Data paling terbaru ada dipaling awal</p>
+ 	<p class="mb-4">Untuk berinterkasi dengan permintaan pinjaman yang ada, silakan pilih aksi terima untuk menerima permintaan
+ 		dan sebalikknya tombol tolak untuk menolak permintaan yang ada. Pastikan perminataan sesuai dengan ketersediaan barang yang ada di Data Inventaris.
+ 		Selamat bertugas dan semangat admin ;)</p>
 
  	<div class="row">
 
@@ -62,42 +63,36 @@
  			</div>
  		</div>
  	</div>
- 	<!-- inventaris -->
+ 	<!-- peminjamanInventaris -->
 
  	<div class="card shadow mb-4">
  		<!-- Card Header - Accordion -->
- 		<a href="#inventaris" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="inventaris">
- 			<h6 class="m-0 font-weight-bold text-primary">Data Inventaris HMJ TI</h6>
+ 		<a href="#peminjamanInventaris" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="peminjamanInventaris">
+ 			<h6 class="m-0 font-weight-bold text-primary">Perminataan Peminjaman Inventaris HMJ TI</h6>
  		</a>
  		<!-- Card Content - Collapse -->
- 		<div class="collapse show" id="inventaris">
+ 		<div class="collapse show" id="peminjamanInventaris">
  			<div class="card-body">
- 				<a href="<?= base_url() ?>inventaris/tambah_inventaris" class="btn btn-primary btn-sm btn-icon-split mb-4">
- 					<span class="icon text-white-50">
- 						<i class="fas fa-flag"></i>
- 					</span>
- 					<span class="text">Tambah Data</span>
- 				</a>
  				<div class="table-responsive">
  					<table class="table table-bordered" id="tableInformasi" width="100%" cellspacing="0">
  						<thead>
  							<tr>
  								<!-- <th>Ditambahakan Pada</th> -->
- 								<th>Kategori Inventaris</th>
- 								<th class="text-center">Nama Kepengurusan</th>
- 								<th class="text-center">Nama Barang</th>
- 								<th class="text-center">Detail Barang</th>
- 								<th class="text-center">Status Barang</th>
- 								<!-- <th>Ditambahkan Oleh</th> -->
+ 								<th>Nama Peminjam</th>
+ 								<th class="text-center">Orgnisasi Mahasiswa</th>
+ 								<th class="text-center">No Wa</th>
+ 								<th class="text-center">Email</th>
+ 								<th class="text-center">Peminjaman Inventaris</th>
  								<th class="text-center">Aksi</th>
  							</tr>
  						</thead>
  						<tbody>
  							<!-- foreach -->
  							<tr>
- 								<td>ATK</td> <!-- Kategori Inventaris -->
- 								<td class="text-center">HMJ TI Undiksha 2021-2022</td> <!-- Nama Kepengurusan -->
- 								<td class="text-center">Pensil 2B</td> <!-- Nama Barang -->
+ 								<td>Putu Bagus Genjing</td> <!-- Kategori Inventaris -->
+ 								<td class="text-center">HMJ TI</td> <!-- Nama Ormawa -->
+ 								<td class="text-center">081888888888</td> <!-- No Wa -->
+ 								<td class="text-center">suardana.4@undiksha.ac.id</td> <!-- Email -->
  								<td class="text-center">
  									<!-- Button trigger modal -->
  									<button type="button" class="btn btn-primary btn-sm btn-icon-split" data-toggle="modal" data-target="#modalDetailBarang">
@@ -112,48 +107,45 @@
  										<div class="modal-dialog modal-lg" role="document">
  											<div class="modal-content">
  												<div class="modal-header">
- 													<h5 class="modal-title" id="exampleModalLongTitle">Detail Barang</h5>
+ 													<h5 class="modal-title" id="exampleModalLongTitle">Inventaris yang akan Dipinjam</h5>
  													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
  														<span aria-hidden="true">&times;</span>
  													</button>
  												</div>
  												<div class="modal-body">
- 													<div class="badge badge-secondary m-2 p-2">
- 														<i class="fas fa-box-open"></i>
- 														Ketersediaan Barang <span class="badge badge-light p-1">4/5</span>
- 													</div>
- 													<div>
- 														<img src="https://dummyimage.com/600x400/dbdbdb/0011ff" alt="">
- 													</div>
- 													<p class="mt-3 px-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem itaque dolores reiciendis mollitia? Reiciendis cumque itaque, dolorem magni in, sunt consequuntur quibusdam est iure voluptate voluptates impedit veniam. Distinctio, qui.</p>
+ 													<table class="table">
+ 														<thead>
+ 															<tr>
+ 																<th scope="col">No</th>
+ 																<th scope="col">Kategori Barang</th>
+ 																<th scope="col">Nama Barang</th>
+ 																<th scope="col">Jumlah barang yang dipinjam</th>
+ 															</tr>
+ 														</thead>
+ 														<tbody>
+ 															<tr>
+ 																<th scope="row">1</th>
+ 																<td>ATK</td>
+ 																<td>Pensil 2B</td>
+ 																<td>5</td>
+ 															</tr>
+ 															<tr>
+ 																<th scope="row">2</th>
+ 																<td>Sound Sistem</td>
+ 																<td>Sound Besar</td>
+ 																<td>1</td>
+ 															</tr>
+ 														</tbody>
+ 													</table>
  												</div>
  											</div>
  										</div>
  									</div>
  								</td>
  								<td class="text-center">
-
- 									<!-- Silakan Backend Memberikan Pengkondisian -->
- 									<!-- Kondisi Start -->
- 									<span class="btn btn-secondary btn-sm btn-icon-split">
- 										<span class="icon text-white-50">
- 											<i class="fas fa-minus-circle"></i>
- 										</span>
- 										<span class="text">Dipinjam</span>
- 									</span>
- 									<span class="btn btn-success btn-sm btn-icon-split">
- 										<span class="icon text-white-50">
- 											<i class="fas fa-check-circle"></i>
- 										</span>
- 										<span class="text">Ada</span>
- 									</span>
- 									<!-- Kodisi Stop -->
-
- 								</td>
- 								<td class="text-center">
  									<!-- Silakan Backend Memberikan Pengkondisian -->
  									<!-- Kodisi Start -->
- 									<a href="<?= base_url() ?>inventaris/edit_inventaris" class="btn btn-warning btn-sm btn-icon-split">
+ 									<a href="" class="btn btn-warning btn-sm btn-icon-split tombol-hapus">
  										<span class="icon text-white-50">
  											<i class="fas fa-trash"></i>
  										</span>

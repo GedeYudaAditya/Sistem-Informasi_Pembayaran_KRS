@@ -2,7 +2,7 @@
 /**
  * Name			: Controller Inventaris
  * 
- * Author		: Ganatech
+ * Author		: Yuda CR (Calon Rektor)
  *
  * Created		: -
  *
@@ -10,7 +10,7 @@
  * Requirements	: PHP 5.4 atau diatasnya
  *
  * @package    SSO HMJ TI Undiksha
- * @author     Ganatech
+ * @author     Yuda CR (Calon rektor)
  * @link       https://github.com/deyan-ardi/sso-hmj
  * @filesource
  **/
@@ -63,10 +63,36 @@ class Inventaris extends CI_Controller
 			$this->data['title'] = "SI Inventaris - Peminjaman";
 			$this->data['active'] = "2";
 			$this->data['flip'] = "false";
-			// $this->load->view('admin/master/header', $this->data);
-			// $this->load->view('admin/page/inventaris/peminjaman', $this->data);
-			// $this->load->view('admin/master/footer', $this->data);
-			show_404();
+			$this->load->view('admin/master/header', $this->data);
+			$this->load->view('admin/page/inventaris/peminjaman', $this->data);
+			$this->load->view('admin/master/footer', $this->data);
+			// show_404();
+		}
+	}
+	public function tambah_inventaris()
+	{
+		if (!$this->ion_auth->logged_in()) {
+			redirect('login', 'refresh');
+		} else {
+			$id = $_SESSION['user_id'];
+			$this->data['group'] = $this->ion_auth_model->getGroup($id);
+			$this->data['title'] = "SI Inventaris - Tambah Inventaris";
+			$this->load->view('admin/master/header', $this->data);
+			$this->load->view('admin/page/inventaris/tambah_inventaris', $this->data);
+			$this->load->view('admin/master/footer', $this->data);
+		}
+	}
+	public function edit_inventaris()
+	{
+		if (!$this->ion_auth->logged_in()) {
+			redirect('login', 'refresh');
+		} else {
+			$id = $_SESSION['user_id'];
+			$this->data['group'] = $this->ion_auth_model->getGroup($id);
+			$this->data['title'] = "SI Inventaris - Edit Inventaris";
+			$this->load->view('admin/master/header', $this->data);
+			$this->load->view('admin/page/inventaris/edit_inventaris', $this->data);
+			$this->load->view('admin/master/footer', $this->data);
 		}
 	}
 }
