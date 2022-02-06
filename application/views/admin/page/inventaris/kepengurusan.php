@@ -2,8 +2,7 @@
  <div class="container-fluid">
      <!-- Page Heading -->
      <h1 class="h3 mb-2 text-gray-800"><?= $title; ?></h1>
-     <p class="mb-4">Untuk mengupload inventaris baik itu barang berupa ATK, barang lainnya, silahkan pilih tombol
-         tambah data. Untuk menghapus silahkan pilih tombol delete. Data paling terbaru ada dipaling awal</p>
+     <p class="mb-4">Untuk menambahkan kepengurusan barang dari HMJ TI Undiksha silakan klik tambah data pada tabel <b>Data Kepengurusan Inventaris HMJ TI</b> </p>
 
      <div class="row">
 
@@ -14,7 +13,7 @@
                      <div class="row no-gutters align-items-center">
                          <div class="col mr-2">
                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Kategori Inventaris</div>
-                             <div class="h5 mb-0 font-weight-bold text-gray-800">10 Kategori</div> <!-- Jumlah Kategori Inventaris -->
+                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $banyakKategori ?> Kategori</div> <!-- Jumlah Kategori Inventaris -->
                          </div>
                          <div class="col-auto">
                              <i class="fas fa-boxes fa-2x text-gray-300"></i>
@@ -24,6 +23,12 @@
              </div>
          </div>
 
+         <?php
+            $bBarang = 0;
+            foreach ($banyakBarang as $b) {
+                $bBarang += $b['banyakBarang'];
+            }
+            ?>
          <!-- Optional Jika ingin menambahkan -->
          <div class="col-xl-4 col-md-6 mb-4">
              <div class="card border-left-success shadow h-100 py-2">
@@ -31,7 +36,7 @@
                      <div class="row no-gutters align-items-center">
                          <div class="col mr-2">
                              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ketersediaan Inventaris</div>
-                             <div class="h5 mb-0 font-weight-bold text-gray-800">100 Barang</div> <!-- Jumlah Total Barang -->
+                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $bBarang ?> Barang</div> <!-- Jumlah Total Barang -->
                          </div>
                          <div class="col-auto">
                              <i class="fas fa-box-open  fa-2x text-gray-300"></i>
@@ -41,6 +46,12 @@
              </div>
          </div>
 
+         <?php
+            $bDipinjam = 0;
+            foreach ($banyakDipinjam as $d) {
+                $bDipinjam += $d['barangDipinjam'];
+            }
+            ?>
          <!-- Optional Jika ingin menambahkan -->
          <div class="col-xl-4 col-md-6 mb-4">
              <div class="card border-left-info shadow h-100 py-2">
@@ -50,7 +61,7 @@
                              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Dicuri :(</div>
                              <div class="row no-gutters align-items-center">
                                  <div class="col-auto">
-                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">10 Barang</div>
+                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= $bDipinjam ?> Barang</div>
                                  </div>
                              </div>
                          </div>

@@ -14,7 +14,7 @@
  					<div class="row no-gutters align-items-center">
  						<div class="col mr-2">
  							<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Kategori Inventaris</div>
- 							<div class="h5 mb-0 font-weight-bold text-gray-800">10 Kategori</div> <!-- Jumlah Kategori Inventaris -->
+ 							<div class="h5 mb-0 font-weight-bold text-gray-800"><?= $banyakKategori ?> Kategori</div> <!-- Jumlah Kategori Inventaris -->
  						</div>
  						<div class="col-auto">
  							<i class="fas fa-boxes fa-2x text-gray-300"></i>
@@ -24,6 +24,12 @@
  			</div>
  		</div>
 
+ 		<?php
+			$bBarang = 0;
+			foreach ($banyakBarang as $b) {
+				$bBarang += $b['banyakBarang'];
+			}
+			?>
  		<!-- Optional Jika ingin menambahkan -->
  		<div class="col-xl-4 col-md-6 mb-4">
  			<div class="card border-left-success shadow h-100 py-2">
@@ -31,7 +37,7 @@
  					<div class="row no-gutters align-items-center">
  						<div class="col mr-2">
  							<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ketersediaan Inventaris</div>
- 							<div class="h5 mb-0 font-weight-bold text-gray-800">100 Barang</div> <!-- Jumlah Total Barang -->
+ 							<div class="h5 mb-0 font-weight-bold text-gray-800"><?= $bBarang ?> Barang</div> <!-- Jumlah Total Barang -->
  						</div>
  						<div class="col-auto">
  							<i class="fas fa-box-open  fa-2x text-gray-300"></i>
@@ -41,6 +47,12 @@
  			</div>
  		</div>
 
+ 		<?php
+			$bDipinjam = 0;
+			foreach ($banyakDipinjam as $d) {
+				$bDipinjam += $d['barangDipinjam'];
+			}
+			?>
  		<!-- Optional Jika ingin menambahkan -->
  		<div class="col-xl-4 col-md-6 mb-4">
  			<div class="card border-left-info shadow h-100 py-2">
@@ -50,7 +62,7 @@
  							<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Dicuri :(</div>
  							<div class="row no-gutters align-items-center">
  								<div class="col-auto">
- 									<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">10 Barang</div>
+ 									<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= $bDipinjam ?> Barang</div>
  								</div>
  							</div>
  						</div>
@@ -96,15 +108,16 @@
  						<tbody>
  							<!-- foreach -->
  							<?php
+								$no = 0;
 								foreach ($barang as $item) :
 								?>
  								<tr>
  									<td><?= $item['namaKategori'] ?></td> <!-- Kategori Inventaris -->
- 									<td class="text-center"><?= $item['namaKepengurusan'] ?></td> <!-- Nama Kepengurusan -->
+ 									<td class="text-center"><?= $item['nama_hmj'] ?></td> <!-- Nama Kepengurusan -->
  									<td class="text-center"><?= $item['namaBarang'] ?></td> <!-- Nama Barang -->
  									<td class="text-center">
  										<!-- Button trigger modal -->
- 										<button type="button" class="btn btn-primary btn-sm btn-icon-split" data-toggle="modal" data-target="#modalDetailBarang">
+ 										<button type="button" class="btn btn-primary btn-sm btn-icon-split" data-toggle="modal" data-target="#modalDetailBarang<?= $no ?>">
  											<span class="icon text-white-50">
  												<i class="fas fa-info-circle"></i>
  											</span>
@@ -112,7 +125,7 @@
  										</button>
 
  										<!-- Modal -->
- 										<div class="modal fade bd-example-modal-lg" id="modalDetailBarang" tabindex="-1" role="dialog" aria-labelledby="modalDetailBarangTitle" aria-hidden="true">
+ 										<div class="modal fade bd-example-modal-lg" id="modalDetailBarang<?= $no ?>" tabindex="-1" role="dialog" aria-labelledby="modalDetailBarangTitle" aria-hidden="true">
  											<div class="modal-dialog modal-lg" role="document">
  												<div class="modal-content">
  													<div class="modal-header">
@@ -124,12 +137,22 @@
  													<div class="modal-body">
  														<div class="badge badge-secondary m-2 p-2">
  															<i class="fas fa-box-open"></i>
- 															Ketersediaan Barang <span class="badge badge-light p-1">4/5</span>
+ 															Ketersediaan Barang <span class="badge badge-light p-1"><?= $item['banyakBarang'] - $item['barangDipinjam'] ?>/<?= $item['banyakBarang'] ?></span>
  														</div>
  														<div>
  															<img src="https://dummyimage.com/600x400/dbdbdb/0011ff" alt="">
  														</div>
- 														<p class="mt-3 px-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem itaque dolores reiciendis mollitia? Reiciendis cumque itaque, dolorem magni in, sunt consequuntur quibusdam est iure voluptate voluptates impedit veniam. Distinctio, qui.</p>
+ 														<h3><?= $item['namaBarang'] ?></h3>
+ 														<div>Kode Barang : <?= $item['kodeBarang'] ?> | Merk : <?= $item['merk'] ?> | Tahun Pembelian : <?= $item['tahunPembelian'] ?></div>
+ 														<div>Kategori <?= $item['namaKategori'] ?></div>
+ 														<div>
+ 															<?php if ($item['hakBarang'] == 'Diperpinjamkan') : ?>
+ 																<b style="color: green;">Barang <?= $item['hakBarang'] ?></b>
+ 															<?php else : ?>
+ 																<b style="color: red;">Barang <?= $item['hakBarang'] ?></b>
+ 															<?php endif; ?>
+ 														</div>
+ 														<p class="mt-3 px-5"><?= $item['deskripsiBarang'] ?></p>
  													</div>
  												</div>
  											</div>
@@ -163,19 +186,20 @@
 
  										<!-- Silakan Backend Memberikan Pengkondisian -->
  										<!-- Kondisi Start -->
- 										<?php if ($item['banyakBarang'] == $item['barangDipinjam']) : ?>
+ 										<?php if ($item['barangDipinjam'] > 0) : ?>
  											<span class="btn btn-secondary btn-sm btn-icon-split">
  												<span class="icon text-white-50">
  													<i class="fas fa-minus-circle"></i>
  												</span>
- 												<span class="text">Dipinjam</span>
+ 												<span class="text"><?= $item['barangDipinjam'] ?> Dipinjam</span>
  											</span>
- 										<?php elseif ($item['banyakBarang'] > $item['barangDipinjam']) : ?>
+ 										<?php endif; ?>
+ 										<?php if ($item['banyakBarang'] > 0 && $item['banyakBarang'] - $item['barangDipinjam'] > 0) : ?>
  											<span class="btn btn-success btn-sm btn-icon-split">
  												<span class="icon text-white-50">
  													<i class="fas fa-check-circle"></i>
  												</span>
- 												<span class="text">Ada</span>
+ 												<span class="text">Ada (<?= $item['banyakBarang'] - $item['barangDipinjam'] ?>)</span>
  											</span>
  										<?php endif; ?>
  										<!-- Kodisi Stop -->
@@ -190,7 +214,7 @@
  											</span>
  											<span class="text">Update</span>
  										</a>
- 										<a href="" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
+ 										<a href="<?= base_url() ?>inventaris/del_inventaris/<?= $item['kodeBarang'] ?>" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
  											<span class="icon text-white-50">
  												<i class="fas fa-trash"></i>
  											</span>
@@ -200,6 +224,7 @@
  									</td>
  								</tr>
  							<?php
+									$no++;
 								endforeach;
 								?>
  							<!-- endforeach -->
@@ -249,7 +274,7 @@
  											</span>
  											<span class="text">Update</span>
  										</a>
- 										<a href="" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
+ 										<a href="<?= base_url() ?>inventaris/del_kategori/<?= $itemK['idKategori'] ?>" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
  											<span class="icon text-white-50">
  												<i class="fas fa-trash"></i>
  											</span>

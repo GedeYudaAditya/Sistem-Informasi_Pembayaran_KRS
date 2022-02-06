@@ -41,7 +41,7 @@
                 <div class="col-lg">
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" name="submit">Simpan</button>
-                        <a class="btn btn-outline-secondary ml-2" role="button" href="<?= base_url('inventaris/barang'); ?>">Batal</a>
+                        <a class="btn btn-outline-secondary ml-2" role="button" href="<?= base_url('inventaris/'); ?>">Batal</a>
                     </div>
                 </div>
             </div>

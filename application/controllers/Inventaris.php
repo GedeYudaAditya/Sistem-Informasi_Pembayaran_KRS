@@ -21,25 +21,28 @@
  */
 class Inventaris extends CI_Controller
 {
+	// public function index()
+	// {
+	// 	if (!$this->ion_auth->logged_in()) {
+	// 		redirect('login', 'refresh');
+	// 	} else {
+	// 		$id = $_SESSION['user_id'];
+	// 		$this->data['flip'] = "false";
+	// 		$this->data['group'] = $this->ion_auth_model->getGroup($id);
+	// 		$this->data['title'] = "SI Inventaris - Detail Organisasi";
+	// 		$this->data['active'] = "2";
+	// 		$this->load->model('All_model');
+	// 		$this->data['kepengurusan'] = $this->All_model->allDataKepengurusan();
+	// 		$this->data['banyakKategori'] = $this->All_model->countKategoriBarang();
+	// 		$this->data['banyakBarang'] = $this->All_model->countDataBarang();
+	// 		$this->data['banyakDipinjam'] = $this->All_model->countDataBarangDipinjam();
+	// 		$this->load->view('admin/master/header', $this->data);
+	// 		$this->load->view('admin/page/inventaris/kepengurusan', $this->data);
+	// 		$this->load->view('admin/master/footer', $this->data);
+	// 		// show_404();
+	// 	}
+	// }
 	public function index()
-	{
-		if (!$this->ion_auth->logged_in()) {
-			redirect('login', 'refresh');
-		} else {
-			$id = $_SESSION['user_id'];
-			$this->data['flip'] = "false";
-			$this->data['group'] = $this->ion_auth_model->getGroup($id);
-			$this->data['title'] = "SI Inventaris - Detail Organisasi";
-			$this->data['active'] = "2";
-			$this->load->model('All_model');
-			$this->data['kepengurusan'] = $this->All_model->allDataKepengurusan();
-			$this->load->view('admin/master/header', $this->data);
-			$this->load->view('admin/page/inventaris/kepengurusan', $this->data);
-			$this->load->view('admin/master/footer', $this->data);
-			// show_404();
-		}
-	}
-	public function barang()
 	{
 		if (!$this->ion_auth->logged_in()) {
 			redirect('login', 'refresh');
@@ -50,6 +53,9 @@ class Inventaris extends CI_Controller
 			$this->data['active'] = "2";
 			$this->data['flip'] = "false";
 			$this->load->model('All_model');
+			$this->data['banyakKategori'] = $this->All_model->countKategoriBarang();
+			$this->data['banyakBarang'] = $this->All_model->countDataBarang();
+			$this->data['banyakDipinjam'] = $this->All_model->countDataBarangDipinjam();
 			$this->data['barang'] = $this->All_model->allDataBarang();
 			$this->data['kategori'] = $this->All_model->allKategoriBarang();
 			$this->load->view('admin/master/header', $this->data);
@@ -69,6 +75,9 @@ class Inventaris extends CI_Controller
 			$this->data['active'] = "2";
 			$this->data['flip'] = "false";
 			$this->load->model('All_model');
+			$this->data['banyakKategori'] = $this->All_model->countKategoriBarang();
+			$this->data['banyakBarang'] = $this->All_model->countDataBarang();
+			$this->data['banyakDipinjam'] = $this->All_model->countDataBarangDipinjam();
 			$this->load->view('admin/master/header', $this->data);
 			$this->load->view('admin/page/inventaris/peminjaman', $this->data);
 			$this->load->view('admin/master/footer', $this->data);
@@ -102,11 +111,12 @@ class Inventaris extends CI_Controller
 					'barangDipinjam' => 0,
 					'keadaanBarang' => $this->input->post('keadaan', true),
 					'deskripsiBarang' => $this->input->post('desk', true),
+					'hakBarang' => $this->input->post('hakBarang', true),
 					'gambar' => $this->input->post('foto_barang', true)
 				];
 				if ($this->All_model->addDataBarang($data)) {
 					$this->session->set_flashdata('sukses', 'Diubah');
-					redirect('inventaris/barang');
+					redirect('inventaris/');
 				} else {
 					$this->session->set_flashdata('gagal', 'Gagal ditambah');
 					redirect('inventaris/tambah_inventaris');
@@ -127,6 +137,12 @@ class Inventaris extends CI_Controller
 			$this->load->view('admin/page/inventaris/edit_inventaris', $this->data);
 			$this->load->view('admin/master/footer', $this->data);
 		}
+	}
+	public function del_inventaris($id)
+	{
+		$this->load->model('All_model');
+		$this->All_model->delDataBarang($id);
+		redirect('inventaris/');
 	}
 	public function tambah_kategori()
 	{
@@ -149,7 +165,7 @@ class Inventaris extends CI_Controller
 				];
 				if ($this->All_model->addKategoriBarang($data)) {
 					$this->session->set_flashdata('sukses', 'Diubah');
-					redirect('inventaris/barang');
+					redirect('inventaris/');
 				} else {
 					$this->session->set_flashdata('gagal', 'Gagal ditambah');
 					redirect('inventaris/tambah_kategori');
@@ -171,47 +187,53 @@ class Inventaris extends CI_Controller
 			$this->load->view('admin/master/footer', $this->data);
 		}
 	}
-	public function tambah_kepengurusan()
+	public function del_kategori($id)
 	{
-		if (!$this->ion_auth->logged_in()) {
-			redirect('login', 'refresh');
-		} else {
-			$id = $_SESSION['user_id'];
-			$this->data['group'] = $this->ion_auth_model->getGroup($id);
-			$this->data['title'] = "SI Inventaris - Tambah Kepengurusan";
-			$this->load->model('All_model');
-			$this->load->view('admin/master/header', $this->data);
-			$this->load->view('admin/page/inventaris/edit_kepengurusan', $this->data);
-			$this->load->view('admin/master/footer', $this->data);
+		$this->load->model('All_model');
+		$this->All_model->delKategoriBarang($id);
+		redirect('inventaris/');
+	}
+	// public function tambah_kepengurusan()
+	// {
+	// 	if (!$this->ion_auth->logged_in()) {
+	// 		redirect('login', 'refresh');
+	// 	} else {
+	// 		$id = $_SESSION['user_id'];
+	// 		$this->data['group'] = $this->ion_auth_model->getGroup($id);
+	// 		$this->data['title'] = "SI Inventaris - Tambah Kepengurusan";
+	// 		$this->load->model('All_model');
+	// 		$this->load->view('admin/master/header', $this->data);
+	// 		$this->load->view('admin/page/inventaris/edit_kepengurusan', $this->data);
+	// 		$this->load->view('admin/master/footer', $this->data);
 
-			if ($this->input->post('submit') === '') {
-				$data = [
-					// 'idKepengurusan' => '',
-					'namaKepengurusan' => $this->input->post('nama_kepengurusan', true),
-					'deskripsi' => $this->input->post('desk', true)
-				];
-				if ($this->All_model->addDataKepengurusan($data)) {
-					$this->session->set_flashdata('sukses', 'Diubah');
-					redirect('inventaris');
-				} else {
-					$this->session->set_flashdata('gagal', 'Gagal ditambah');
-					redirect('inventaris/tambah_kepengurusan');
-				}
-			}
-		}
-	}
-	public function edit_kepengurusan()
-	{
-		if (!$this->ion_auth->logged_in()) {
-			redirect('login', 'refresh');
-		} else {
-			$id = $_SESSION['user_id'];
-			$this->data['group'] = $this->ion_auth_model->getGroup($id);
-			$this->data['title'] = "SI Inventaris - Edit Kepengurusan";
-			$this->load->model('All_model');
-			$this->load->view('admin/master/header', $this->data);
-			$this->load->view('admin/page/inventaris/edit_kepengurusan', $this->data);
-			$this->load->view('admin/master/footer', $this->data);
-		}
-	}
+	// 		if ($this->input->post('submit') === '') {
+	// 			$data = [
+	// 				// 'idKepengurusan' => '',
+	// 				'namaKepengurusan' => $this->input->post('nama_kepengurusan', true),
+	// 				'deskripsi' => $this->input->post('desk', true)
+	// 			];
+	// 			if ($this->All_model->addDataKepengurusan($data)) {
+	// 				$this->session->set_flashdata('sukses', 'Diubah');
+	// 				redirect('inventaris');
+	// 			} else {
+	// 				$this->session->set_flashdata('gagal', 'Gagal ditambah');
+	// 				redirect('inventaris/tambah_kepengurusan');
+	// 			}
+	// 		}
+	// 	}
+	// }
+	// public function edit_kepengurusan()
+	// {
+	// 	if (!$this->ion_auth->logged_in()) {
+	// 		redirect('login', 'refresh');
+	// 	} else {
+	// 		$id = $_SESSION['user_id'];
+	// 		$this->data['group'] = $this->ion_auth_model->getGroup($id);
+	// 		$this->data['title'] = "SI Inventaris - Edit Kepengurusan";
+	// 		$this->load->model('All_model');
+	// 		$this->load->view('admin/master/header', $this->data);
+	// 		$this->load->view('admin/page/inventaris/edit_kepengurusan', $this->data);
+	// 		$this->load->view('admin/master/footer', $this->data);
+	// 	}
+	// }
 }

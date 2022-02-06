@@ -95,8 +95,7 @@
 							<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 								<div class="bg-white py-2 collapse-inner rounded">
 									<h6 class="collapse-header">Daftar Fitur:</h6>
-									<a class="collapse-item" href="<?= base_url() ?>inventaris/">Manajemen Organisasi</a>
-									<a class="collapse-item" href="<?= base_url() ?>inventaris/barang">Manajemen Barang</a>
+									<a class="collapse-item" href="<?= base_url() ?>inventaris/">Manajemen Barang</a>
 									<a class="collapse-item" href="<?= base_url() ?>inventaris/peminjaman">Manajemen Peminjaman</a>
 								</div>
 							</div>

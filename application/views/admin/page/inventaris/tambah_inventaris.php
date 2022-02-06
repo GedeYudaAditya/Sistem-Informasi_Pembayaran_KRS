@@ -38,7 +38,7 @@
 						<select type="text" class="custom-select form-control" id="nama_pengurus" name="nama_pengurus" value="">
 							<option value="" selected disabled>-- Pilih Kepengurusan --</option>
 							<?php foreach ($kepengurusan as $itemK) : ?>
-								<option value="<?= $itemK['idKepengurusan'] ?>"><?= $itemK['namaKepengurusan'] ?></option>
+								<option value="<?= $itemK['id_hmj'] ?>"><?= $itemK['nama_hmj'] ?></option>
 							<?php endforeach; ?>
 						</select>
 						<!-- <?= form_error('nama_pengurus', '<small class="text-danger pl-3">', '</small>'); ?> -->
@@ -47,6 +47,15 @@
 						<label for="nama_barang">Nama Barang</label>
 						<input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="Nama Barang Inventaris" value="">
 						<!-- <?= form_error('nama_barang', '<small class="text-danger pl-3">', '</small>'); ?> -->
+					</div>
+					<div class="form-group">
+						<label for="hakBarang">Hak Barang</label>
+						<select type="text" class="custom-select form-control" id="hakBarang" name="hakBarang" value="">
+							<option value="" selected disabled>-- Pilih Hak Barang --</option>
+							<option value="Diperpinjamkan">Diperpinjamkan</option>
+							<option value="Tidak Diperpinjamkan">Tidak Diperpinjamkan</option>
+						</select>
+						<!-- <?= form_error('hakBarang', '<small class="text-danger pl-3">', '</small>'); ?> -->
 					</div>
 				</div>
 			</div>
@@ -100,7 +109,7 @@
 				<div class="col-lg">
 					<div class="form-group">
 						<button type="submit" class="btn btn-primary" name="submit">Simpan</button>
-						<a class="btn btn-outline-secondary ml-2" role="button" href="<?= base_url('inventaris/barang'); ?>">Batal</a>
+						<a class="btn btn-outline-secondary ml-2" role="button" href="<?= base_url('inventaris/'); ?>">Batal</a>
 					</div>
 				</div>
 			</div>

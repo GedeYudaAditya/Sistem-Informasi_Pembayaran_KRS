@@ -2459,10 +2459,24 @@ class All_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('s7_inv_barang');
 		$this->db->join('s7_inv_kategori', 's7_inv_barang.idKategori = s7_inv_kategori.idKategori');
-		$this->db->join('s7_inv_kepengurusan', 's7_inv_barang.idKepengurusan = s7_inv_kepengurusan.idKepengurusan');
+		$this->db->join('s1_hmj', 's7_inv_barang.idKepengurusan = s1_hmj.id_hmj');
 
 		// var_dump($this->db->get()->result_array());
 		// die;
+		return $this->db->get()->result_array();
+	}
+
+	public function countDataBarang()
+	{
+		$this->db->select('banyakBarang');
+		$this->db->from('s7_inv_barang');
+		return $this->db->get()->result_array();
+	}
+
+	public function countDataBarangDipinjam()
+	{
+		$this->db->select('barangDipinjam');
+		$this->db->from('s7_inv_barang');
 		return $this->db->get()->result_array();
 	}
 
@@ -2480,8 +2494,10 @@ class All_model extends CI_Model
 	{
 	}
 
-	public function delDataBarang()
+	public function delDataBarang($id)
 	{
+		$this->db->where('kodeBarang', $id);
+		$this->db->delete('s7_inv_barang');
 	}
 
 	// Managemen Kategori barang
@@ -2505,34 +2521,43 @@ class All_model extends CI_Model
 		}
 	}
 
+	public function countKategoriBarang()
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_kategori');
+		return $this->db->get()->num_rows();
+	}
+
 	public function editKategoriBarang($data)
 	{
 	}
 
-	public function delKategoriBarang()
+	public function delKategoriBarang($id)
 	{
+		$this->db->where('idKategori', $id);
+		$this->db->delete('s7_inv_kategori');
 	}
 
 	// Managemen Organisasi
 	public function allDataKepengurusan()
 	{
 		$this->db->select('*');
-		$this->db->from('s7_inv_kepengurusan');
+		$this->db->from('s1_hmj');
 
 		// var_dump($this->db->get()->result_array());
 		// die;
 		return $this->db->get()->result_array();
 	}
 
-	public function addDataKepengurusan($data)
-	{
-		$indikator = $this->db->insert('s7_inv_kepengurusan', $data);
-		if ($indikator) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	// public function addDataKepengurusan($data)
+	// {
+	// 	$indikator = $this->db->insert('s7_inv_kepengurusan', $data);
+	// 	if ($indikator) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
 
 	public function editDataKepengurusan($data)
 	{
