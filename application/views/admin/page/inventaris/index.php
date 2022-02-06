@@ -87,6 +87,7 @@
  								<th class="text-center">Nama Kepengurusan</th>
  								<th class="text-center">Nama Barang</th>
  								<th class="text-center">Detail Barang</th>
+ 								<th class="text-center">Keadaan</th>
  								<th class="text-center">Status Barang</th>
  								<!-- <th>Ditambahkan Oleh</th> -->
  								<th class="text-center">Aksi</th>
@@ -94,80 +95,172 @@
  						</thead>
  						<tbody>
  							<!-- foreach -->
- 							<tr>
- 								<td>ATK</td> <!-- Kategori Inventaris -->
- 								<td class="text-center">HMJ TI Undiksha 2021-2022</td> <!-- Nama Kepengurusan -->
- 								<td class="text-center">Pensil 2B</td> <!-- Nama Barang -->
- 								<td class="text-center">
- 									<!-- Button trigger modal -->
- 									<button type="button" class="btn btn-primary btn-sm btn-icon-split" data-toggle="modal" data-target="#modalDetailBarang">
- 										<span class="icon text-white-50">
- 											<i class="fas fa-info-circle"></i>
- 										</span>
- 										<span class="text">Detail</span>
- 									</button>
+ 							<?php
+								foreach ($barang as $item) :
+								?>
+ 								<tr>
+ 									<td><?= $item['namaKategori'] ?></td> <!-- Kategori Inventaris -->
+ 									<td class="text-center"><?= $item['namaKepengurusan'] ?></td> <!-- Nama Kepengurusan -->
+ 									<td class="text-center"><?= $item['namaBarang'] ?></td> <!-- Nama Barang -->
+ 									<td class="text-center">
+ 										<!-- Button trigger modal -->
+ 										<button type="button" class="btn btn-primary btn-sm btn-icon-split" data-toggle="modal" data-target="#modalDetailBarang">
+ 											<span class="icon text-white-50">
+ 												<i class="fas fa-info-circle"></i>
+ 											</span>
+ 											<span class="text">Detail</span>
+ 										</button>
 
- 									<!-- Modal -->
- 									<div class="modal fade bd-example-modal-lg" id="modalDetailBarang" tabindex="-1" role="dialog" aria-labelledby="modalDetailBarangTitle" aria-hidden="true">
- 										<div class="modal-dialog modal-lg" role="document">
- 											<div class="modal-content">
- 												<div class="modal-header">
- 													<h5 class="modal-title" id="exampleModalLongTitle">Detail Barang</h5>
- 													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
- 														<span aria-hidden="true">&times;</span>
- 													</button>
- 												</div>
- 												<div class="modal-body">
- 													<div class="badge badge-secondary m-2 p-2">
- 														<i class="fas fa-box-open"></i>
- 														Ketersediaan Barang <span class="badge badge-light p-1">4/5</span>
+ 										<!-- Modal -->
+ 										<div class="modal fade bd-example-modal-lg" id="modalDetailBarang" tabindex="-1" role="dialog" aria-labelledby="modalDetailBarangTitle" aria-hidden="true">
+ 											<div class="modal-dialog modal-lg" role="document">
+ 												<div class="modal-content">
+ 													<div class="modal-header">
+ 														<h5 class="modal-title" id="exampleModalLongTitle">Detail Barang</h5>
+ 														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+ 															<span aria-hidden="true">&times;</span>
+ 														</button>
  													</div>
- 													<div>
- 														<img src="https://dummyimage.com/600x400/dbdbdb/0011ff" alt="">
+ 													<div class="modal-body">
+ 														<div class="badge badge-secondary m-2 p-2">
+ 															<i class="fas fa-box-open"></i>
+ 															Ketersediaan Barang <span class="badge badge-light p-1">4/5</span>
+ 														</div>
+ 														<div>
+ 															<img src="https://dummyimage.com/600x400/dbdbdb/0011ff" alt="">
+ 														</div>
+ 														<p class="mt-3 px-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem itaque dolores reiciendis mollitia? Reiciendis cumque itaque, dolorem magni in, sunt consequuntur quibusdam est iure voluptate voluptates impedit veniam. Distinctio, qui.</p>
  													</div>
- 													<p class="mt-3 px-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem itaque dolores reiciendis mollitia? Reiciendis cumque itaque, dolorem magni in, sunt consequuntur quibusdam est iure voluptate voluptates impedit veniam. Distinctio, qui.</p>
  												</div>
  											</div>
  										</div>
- 									</div>
- 								</td>
- 								<td class="text-center">
+ 									</td>
+ 									<td class="text-center">
+ 										<?php if ($item['keadaanBarang'] == 'Baik') : ?>
+ 											<span class="btn btn-success btn-sm btn-icon-split">
+ 												<span class="icon text-white-50">
+ 													<i class="fas fa-check-circle"></i>
+ 												</span>
+ 												<span class="text">Baik</span>
+ 											</span>
+ 										<?php elseif ($item['keadaanBarang'] == 'Kurang Baik') : ?>
+ 											<span class="btn btn-warning btn-sm btn-icon-split">
+ 												<span class="icon text-white-50">
+ 													<i class="fa fa-exclamation-circle"></i>
+ 												</span>
+ 												<span class="text">Kurang Baik</span>
+ 											</span>
+ 										<?php elseif ($item['keadaanBarang'] == 'Rusak Berat') : ?>
+ 											<span class="btn btn-danger btn-sm btn-icon-split">
+ 												<span class="icon text-white-50">
+ 													<i class="fas fa-skull"></i>
+ 												</span>
+ 												<span class="text">Rusak Berat</span>
+ 											</span>
+ 										<?php endif; ?>
+ 									</td>
+ 									<td class="text-center">
 
- 									<!-- Silakan Backend Memberikan Pengkondisian -->
- 									<!-- Kondisi Start -->
- 									<span class="btn btn-secondary btn-sm btn-icon-split">
- 										<span class="icon text-white-50">
- 											<i class="fas fa-minus-circle"></i>
- 										</span>
- 										<span class="text">Dipinjam</span>
- 									</span>
- 									<span class="btn btn-success btn-sm btn-icon-split">
- 										<span class="icon text-white-50">
- 											<i class="fas fa-check-circle"></i>
- 										</span>
- 										<span class="text">Ada</span>
- 									</span>
- 									<!-- Kodisi Stop -->
+ 										<!-- Silakan Backend Memberikan Pengkondisian -->
+ 										<!-- Kondisi Start -->
+ 										<?php if ($item['banyakBarang'] == $item['barangDipinjam']) : ?>
+ 											<span class="btn btn-secondary btn-sm btn-icon-split">
+ 												<span class="icon text-white-50">
+ 													<i class="fas fa-minus-circle"></i>
+ 												</span>
+ 												<span class="text">Dipinjam</span>
+ 											</span>
+ 										<?php elseif ($item['banyakBarang'] > $item['barangDipinjam']) : ?>
+ 											<span class="btn btn-success btn-sm btn-icon-split">
+ 												<span class="icon text-white-50">
+ 													<i class="fas fa-check-circle"></i>
+ 												</span>
+ 												<span class="text">Ada</span>
+ 											</span>
+ 										<?php endif; ?>
+ 										<!-- Kodisi Stop -->
 
- 								</td>
- 								<td class="text-center">
- 									<!-- Silakan Backend Memberikan Pengkondisian -->
- 									<!-- Kodisi Start -->
- 									<a href="<?= base_url() ?>inventaris/edit_inventaris" class="btn btn-warning btn-sm btn-icon-split">
- 										<span class="icon text-white-50">
- 											<i class="fas fa-trash"></i>
- 										</span>
- 										<span class="text">Update</span>
- 									</a>
- 									<a href="" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
- 										<span class="icon text-white-50">
- 											<i class="fas fa-trash"></i>
- 										</span>
- 										<span class="text">Delete</span>
- 									</a>
- 									<!-- Kodisi Stop -->
- 								</td>
+ 									</td>
+ 									<td class="text-center">
+ 										<!-- Silakan Backend Memberikan Pengkondisian -->
+ 										<!-- Kodisi Start -->
+ 										<a href="<?= base_url() ?>inventaris/edit_inventaris" class="btn btn-warning btn-sm btn-icon-split">
+ 											<span class="icon text-white-50">
+ 												<i class="fas fa-edit"></i>
+ 											</span>
+ 											<span class="text">Update</span>
+ 										</a>
+ 										<a href="" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
+ 											<span class="icon text-white-50">
+ 												<i class="fas fa-trash"></i>
+ 											</span>
+ 											<span class="text">Delete</span>
+ 										</a>
+ 										<!-- Kodisi Stop -->
+ 									</td>
+ 								</tr>
+ 							<?php
+								endforeach;
+								?>
+ 							<!-- endforeach -->
+ 						</tbody>
+ 					</table>
+ 				</div>
+ 			</div>
+ 		</div>
+ 	</div>
+
+ 	<div class="card shadow mb-4">
+ 		<a href="#kategori" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="kategori">
+ 			<h6 class="m-0 font-weight-bold text-primary">Data Kategori Barang HMJ TI</h6>
+ 		</a>
+ 		<div class="collapse show" id="kategori">
+ 			<div class="card-body">
+ 				<a href="<?= base_url() ?>inventaris/tambah_kategori" class="btn btn-primary btn-sm btn-icon-split mb-4">
+ 					<span class="icon text-white-50">
+ 						<i class="fas fa-list-alt"></i>
+ 					</span>
+ 					<span class="text">Tambah Kategori</span>
+ 				</a>
+ 				<div class="table-responsive">
+ 					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+ 						<thead>
+ 							<tr>
+ 								<!-- <th>Ditambahakan Pada</th> -->
+ 								<th>Nama Kategori Inventaris</th>
+ 								<th class="text-center">Deskripsi</th>
+ 								<th class="text-center">Aksi</th>
  							</tr>
+ 						</thead>
+ 						<tbody>
+ 							<!-- foreach -->
+ 							<?php
+								foreach ($kategori as $itemK) :
+								?>
+ 								<tr>
+ 									<td><?= $itemK['namaKategori'] ?></td> <!-- Kategori Inventaris -->
+ 									<td class="text-center"><?= $itemK['deskripsi'] ?></td> <!-- Nama Kepengurusan -->
+ 									<td class="text-center">
+ 										<!-- Silakan Backend Memberikan Pengkondisian -->
+ 										<!-- Kodisi Start -->
+ 										<a href="<?= base_url() ?>inventaris/edit_kategori" class="btn btn-warning btn-sm btn-icon-split">
+ 											<span class="icon text-white-50">
+ 												<i class="fas fa-edit"></i>
+ 											</span>
+ 											<span class="text">Update</span>
+ 										</a>
+ 										<a href="" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
+ 											<span class="icon text-white-50">
+ 												<i class="fas fa-trash"></i>
+ 											</span>
+ 											<span class="text">Delete</span>
+ 										</a>
+ 										<!-- Kodisi Stop -->
+ 									</td>
+ 								</tr>
+ 							<?php
+								endforeach;
+								?>
  							<!-- endforeach -->
  						</tbody>
  					</table>

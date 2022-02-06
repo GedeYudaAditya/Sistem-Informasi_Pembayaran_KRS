@@ -2448,4 +2448,103 @@ class All_model extends CI_Model
 	// **************************************************************
 	// End KRS system
 	// **************************************************************
+
+	// **************************************************************
+	// Inventaris system
+	// **************************************************************
+
+	// Managemen Barang
+	public function allDataBarang()
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_barang');
+		$this->db->join('s7_inv_kategori', 's7_inv_barang.idKategori = s7_inv_kategori.idKategori');
+		$this->db->join('s7_inv_kepengurusan', 's7_inv_barang.idKepengurusan = s7_inv_kepengurusan.idKepengurusan');
+
+		// var_dump($this->db->get()->result_array());
+		// die;
+		return $this->db->get()->result_array();
+	}
+
+	public function addDataBarang($data)
+	{
+		$indikator = $this->db->insert('s7_inv_barang', $data);
+		if ($indikator) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function editDataBarang($data)
+	{
+	}
+
+	public function delDataBarang()
+	{
+	}
+
+	// Managemen Kategori barang
+	public function allKategoriBarang()
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_kategori');
+
+		// var_dump($this->db->get()->result_array());
+		// die;
+		return $this->db->get()->result_array();
+	}
+
+	public function addKategoriBarang($data)
+	{
+		$indikator = $this->db->insert('s7_inv_kategori', $data);
+		if ($indikator) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function editKategoriBarang($data)
+	{
+	}
+
+	public function delKategoriBarang()
+	{
+	}
+
+	// Managemen Organisasi
+	public function allDataKepengurusan()
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_kepengurusan');
+
+		// var_dump($this->db->get()->result_array());
+		// die;
+		return $this->db->get()->result_array();
+	}
+
+	public function addDataKepengurusan($data)
+	{
+		$indikator = $this->db->insert('s7_inv_kepengurusan', $data);
+		if ($indikator) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function editDataKepengurusan($data)
+	{
+	}
+
+	public function delDataKepengurusan()
+	{
+	}
+
+
+	// Managemen Peminjaman
+	public function allDataPinjaman()
+	{
+	}
 }

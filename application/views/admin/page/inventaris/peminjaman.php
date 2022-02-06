@@ -79,7 +79,7 @@
  							<tr>
  								<!-- <th>Ditambahakan Pada</th> -->
  								<th>Nama Peminjam</th>
- 								<th class="text-center">Orgnisasi Mahasiswa</th>
+ 								<th class="text-center">Organisasi Mahasiswa</th>
  								<th class="text-center">No Wa</th>
  								<th class="text-center">Email</th>
  								<th class="text-center">Peminjaman Inventaris</th>
