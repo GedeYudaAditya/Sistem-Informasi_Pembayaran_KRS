@@ -54,11 +54,7 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-<<<<<<< HEAD
 define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-=======
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
->>>>>>> 2c845a7ffeb2423bff48f763c06926ac79cc82ce
 
 /*
  *---------------------------------------------------------------
