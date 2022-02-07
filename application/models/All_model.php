@@ -2461,8 +2461,6 @@ class All_model extends CI_Model
 		$this->db->join('s7_inv_kategori', 's7_inv_barang.idKategori = s7_inv_kategori.idKategori');
 		$this->db->join('s1_hmj', 's7_inv_barang.idKepengurusan = s1_hmj.id_hmj');
 
-		// var_dump($this->db->get()->result_array());
-		// die;
 		return $this->db->get()->result_array();
 	}
 
@@ -2490,14 +2488,35 @@ class All_model extends CI_Model
 		}
 	}
 
-	public function editDataBarang($data)
+	public function lookDataBarang($id)
 	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_barang');
+		$this->db->where('kodeBarang', $id);
+		return $this->db->get()->result_array();
+	}
+
+	public function editDataBarang($data, $id)
+	{
+		$where = [
+			'kodeBarang' => $id,
+		];
+		$this->db->where($where);
+		if ($this->db->update('s7_inv_barang', $data)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function delDataBarang($id)
 	{
 		$this->db->where('kodeBarang', $id);
-		$this->db->delete('s7_inv_barang');
+		if ($this->db->delete('s7_inv_barang')) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// Managemen Kategori barang
@@ -2506,8 +2525,6 @@ class All_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('s7_inv_kategori');
 
-		// var_dump($this->db->get()->result_array());
-		// die;
 		return $this->db->get()->result_array();
 	}
 
@@ -2528,14 +2545,35 @@ class All_model extends CI_Model
 		return $this->db->get()->num_rows();
 	}
 
-	public function editKategoriBarang($data)
+	public function lookKategoriBarang($id)
 	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_kategori');
+		$this->db->where('idKategori', $id);
+		return $this->db->get()->result_array();
+	}
+
+	public function editKategoriBarang($data, $id)
+	{
+		$where = [
+			'idKategori' => $id,
+		];
+		$this->db->where($where);
+		if ($this->db->update('s7_inv_kategori', $data)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function delKategoriBarang($id)
 	{
 		$this->db->where('idKategori', $id);
-		$this->db->delete('s7_inv_kategori');
+		if ($this->db->delete('s7_inv_kategori')) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// Managemen Organisasi
@@ -2544,8 +2582,6 @@ class All_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('s1_hmj');
 
-		// var_dump($this->db->get()->result_array());
-		// die;
 		return $this->db->get()->result_array();
 	}
 
@@ -2559,13 +2595,13 @@ class All_model extends CI_Model
 	// 	}
 	// }
 
-	public function editDataKepengurusan($data)
-	{
-	}
+	// public function editDataKepengurusan($data)
+	// {
+	// }
 
-	public function delDataKepengurusan()
-	{
-	}
+	// public function delDataKepengurusan()
+	// {
+	// }
 
 
 	// Managemen Peminjaman

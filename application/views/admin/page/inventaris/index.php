@@ -74,6 +74,32 @@
  			</div>
  		</div>
  	</div>
+
+ 	<?php if ($this->session->flashdata('sukses')) : ?>
+ 		<div class="row mt-3">
+ 			<div class="col-md-12 text-center">
+ 				<div class="alert alert-success alert-dismissible fade show" role="alert">
+ 					Data <strong><?= $this->session->flashdata('sukses'); ?></strong>
+ 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+ 						<span aria-hidden="true">&times;</span>
+ 					</button>
+ 				</div>
+ 			</div>
+ 		</div>
+ 	<?php endif; ?>
+
+ 	<?php if ($this->session->flashdata('gagal')) : ?>
+ 		<div class="row mt-3">
+ 			<div class="col-md-12 text-center">
+ 				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+ 					Data <strong><?= $this->session->flashdata('gagal'); ?></strong>
+ 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+ 						<span aria-hidden="true">&times;</span>
+ 					</button>
+ 				</div>
+ 			</div>
+ 		</div>
+ 	<?php endif; ?>
  	<!-- inventaris -->
 
  	<div class="card shadow mb-4">
@@ -208,7 +234,7 @@
  									<td class="text-center">
  										<!-- Silakan Backend Memberikan Pengkondisian -->
  										<!-- Kodisi Start -->
- 										<a href="<?= base_url() ?>inventaris/edit_inventaris" class="btn btn-warning btn-sm btn-icon-split">
+ 										<a href="<?= base_url() ?>inventaris/edit_inventaris/<?= $item['kodeBarang'] ?>" class="btn btn-warning btn-sm btn-icon-split">
  											<span class="icon text-white-50">
  												<i class="fas fa-edit"></i>
  											</span>
@@ -268,7 +294,7 @@
  									<td class="text-center">
  										<!-- Silakan Backend Memberikan Pengkondisian -->
  										<!-- Kodisi Start -->
- 										<a href="<?= base_url() ?>inventaris/edit_kategori" class="btn btn-warning btn-sm btn-icon-split">
+ 										<a href="<?= base_url() ?>inventaris/edit_kategori/<?= $itemK['idKategori'] ?>" class="btn btn-warning btn-sm btn-icon-split">
  											<span class="icon text-white-50">
  												<i class="fas fa-edit"></i>
  											</span>

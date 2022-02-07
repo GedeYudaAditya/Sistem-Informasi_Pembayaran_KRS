@@ -25,7 +25,7 @@
                 <div class="col-lg">
                     <div class="form-group">
                         <label for="nama_kategori">Nama Kategori</label>
-                        <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" placeholder="Nama Kategori" value="">
+                        <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" placeholder="Nama Kategori" value="<?= $diEdit[0]['namaKategori'] ?>">
                         <!-- <?= form_error('nama_kategori', '<small class="text-danger pl-3">', '</small>'); ?> -->
                     </div>
                 </div>
@@ -33,7 +33,7 @@
 
             <div class="form-group">
                 <label for="desk">Deskripsi</label>
-                <textarea class="form-control" id="desk" name="desk" type="text"></textarea>
+                <textarea class="form-control" id="desk" name="desk" type="text"><?= $diEdit[0]['deskripsi'] ?></textarea>
                 <!-- <?= form_error('tahun', '<small class="text-danger pl-3">', '</small>'); ?> -->
             </div>
 
