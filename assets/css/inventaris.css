@@ -1,0 +1,65 @@
+/* CSS BAGIAN GUEST */
+
+/* NAVBAR START */
+
+/* Link */
+#inventaris .navbar .navbar-nav a.nav-link {
+	margin: .75rem .25rem;
+	padding: 1.2rem;
+	border-radius: .4rem;
+}
+
+#inventaris .navbar .navbar-nav a.nav-link:hover {
+	background: #e5e5e5;
+}
+
+#inventaris .navbar .navbar-nav a.nav-link.active {
+	color: white;
+	background: linear-gradient(-47deg, #8731E8 0%, #4528DC 100%);
+}
+
+
+#inventaris .navbar .navbar-nav a.nav-link.active:hover {
+	background: linear-gradient(-15deg, #8731E8db 0%, #4628dcdb 100%);
+}
+
+/* Search */
+#inventaris .form-search-inventaris {
+	padding: .5rem 1.35rem;
+	box-shadow: -1px 1px 3px rgba(0, 0, 0, .3);
+	border-radius: 16px;
+	outline: none;
+	border: none;
+}
+
+#inventaris .btn-search-inventaris {
+	margin-left: 6px;
+	padding: .5rem .75rem;
+	border: none;
+	border-radius: 50%;
+	transition: all .35s ease-in;
+}
+
+#inventaris .btn-search-inventaris:hover {
+	color: white;
+	background: #000;
+	background: linear-gradient(-47deg, #8731E8 0%, #4528DC 100%);
+	border-radius: 25%;
+}
+
+/* Card */
+#inventaris .btn-pinjam-inventaris {
+	padding: .5rem .75rem;
+	color: white;
+	background: #000;
+	background: linear-gradient(-47deg, #8731E8 0%, #4528DC 100%);
+	border-radius: 8px;
+}
+
+
+
+#inventaris .btn-pinjam-inventaris svg {
+	transition: all .5s ease-in-out;
+}
+
+/* NAVBAR END */

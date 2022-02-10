@@ -247,6 +247,18 @@ class Inventaris extends CI_Controller
 			redirect('inventaris/');
 		}
 	}
+
+
+	// User Sintax
+	public function home()
+	{
+		$this->data['title'] = "SI Inventaris - Home";
+		$this->data['search'] = false;
+		$this->load->view('guest/inventaris/master/header', $this->data);
+		$this->load->view('guest/inventaris/page/index', $this->data);
+		$this->load->view('guest/inventaris/master/footer', $this->data);
+	}
+
 	// public function tambah_kepengurusan()
 	// {
 	// 	if (!$this->ion_auth->logged_in()) {
@@ -290,4 +302,5 @@ class Inventaris extends CI_Controller
 	// 		$this->load->view('admin/master/footer', $this->data);
 	// 	}
 	// }
+
 }
