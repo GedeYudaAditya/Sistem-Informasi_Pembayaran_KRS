@@ -2448,4 +2448,164 @@ class All_model extends CI_Model
 	// **************************************************************
 	// End KRS system
 	// **************************************************************
+
+	// **************************************************************
+	// Inventaris system
+	// **************************************************************
+
+	// Managemen Barang
+	public function allDataBarang()
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_barang');
+		$this->db->join('s7_inv_kategori', 's7_inv_barang.idKategori = s7_inv_kategori.idKategori');
+		$this->db->join('s1_hmj', 's7_inv_barang.idKepengurusan = s1_hmj.id_hmj');
+
+		return $this->db->get()->result_array();
+	}
+
+	public function countDataBarang()
+	{
+		$this->db->select('banyakBarang');
+		$this->db->from('s7_inv_barang');
+		return $this->db->get()->result_array();
+	}
+
+	public function countDataBarangDipinjam()
+	{
+		$this->db->select('barangDipinjam');
+		$this->db->from('s7_inv_barang');
+		return $this->db->get()->result_array();
+	}
+
+	public function addDataBarang($data)
+	{
+		$indikator = $this->db->insert('s7_inv_barang', $data);
+		if ($indikator) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function lookDataBarang($id)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_barang');
+		$this->db->where('kodeBarang', $id);
+		return $this->db->get()->result_array();
+	}
+
+	public function editDataBarang($data, $id)
+	{
+		$where = [
+			'kodeBarang' => $id,
+		];
+		$this->db->where($where);
+		if ($this->db->update('s7_inv_barang', $data)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function delDataBarang($id)
+	{
+		$this->db->where('kodeBarang', $id);
+		if ($this->db->delete('s7_inv_barang')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// Managemen Kategori barang
+	public function allKategoriBarang()
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_kategori');
+
+		return $this->db->get()->result_array();
+	}
+
+	public function addKategoriBarang($data)
+	{
+		$indikator = $this->db->insert('s7_inv_kategori', $data);
+		if ($indikator) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function countKategoriBarang()
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_kategori');
+		return $this->db->get()->num_rows();
+	}
+
+	public function lookKategoriBarang($id)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_kategori');
+		$this->db->where('idKategori', $id);
+		return $this->db->get()->result_array();
+	}
+
+	public function editKategoriBarang($data, $id)
+	{
+		$where = [
+			'idKategori' => $id,
+		];
+		$this->db->where($where);
+		if ($this->db->update('s7_inv_kategori', $data)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function delKategoriBarang($id)
+	{
+		$this->db->where('idKategori', $id);
+		if ($this->db->delete('s7_inv_kategori')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// Managemen Organisasi
+	public function allDataKepengurusan()
+	{
+		$this->db->select('*');
+		$this->db->from('s1_hmj');
+
+		return $this->db->get()->result_array();
+	}
+
+	// public function addDataKepengurusan($data)
+	// {
+	// 	$indikator = $this->db->insert('s7_inv_kepengurusan', $data);
+	// 	if ($indikator) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
+
+	// public function editDataKepengurusan($data)
+	// {
+	// }
+
+	// public function delDataKepengurusan()
+	// {
+	// }
+
+
+	// Managemen Peminjaman
+	public function allDataPinjaman()
+	{
+	}
 }
