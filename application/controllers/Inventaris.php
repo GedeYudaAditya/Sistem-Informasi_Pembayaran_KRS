@@ -95,4 +95,14 @@ class Inventaris extends CI_Controller
 			$this->load->view('admin/master/footer', $this->data);
 		}
 	}
+
+	// User Sintax
+	public function home()
+	{
+		$this->data['title'] = "SI Inventaris - Home";
+		$this->data['search'] = false;
+		$this->load->view('guest/inventaris/master/header', $this->data);
+		$this->load->view('guest/inventaris/page/index', $this->data);
+		$this->load->view('guest/inventaris/master/footer', $this->data);
+	}
 }
