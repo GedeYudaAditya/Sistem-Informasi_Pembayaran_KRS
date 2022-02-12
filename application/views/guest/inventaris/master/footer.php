@@ -30,6 +30,9 @@
 <script src="<?= base_url() ?>assets/js/jquery/jquery-3.3.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+<!-- Sweet Alert -->
+<script src="<?= base_url() ?>assets/js/sweetalert2.all.min.js"></script>
+
 <!-- Bootstrap js -->
 <script src="<?= base_url() ?>assets/js/bootstrap/popper.min.js"></script>
 <script src="<?= base_url() ?>assets/js/bootstrap/bootstrap.min.js"></script>
@@ -40,6 +43,9 @@
 <script src="<?= base_url() ?>assets/js/table.js"></script>
 <!-- Plugins js -->
 <script src="<?= base_url() ?>assets/js/plugins/plugins.min.js"></script>
+
+<!-- Text-editor -->
+<script src="<?= base_url() ?>assets/ckeditor/eors.js"></script>
 
 <!-- Active js -->
 <script src="<?= base_url() ?>assets/js/active.js"></script>

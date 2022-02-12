@@ -2585,6 +2585,48 @@ class All_model extends CI_Model
 		return $this->db->get()->result_array();
 	}
 
+	public function pinjam($data)
+	{
+		$counter = 0;
+		$tabelPinjam = [
+			'idUser' => $_SESSION['Inv_card'][0]['idUser'],
+			'tglPinjam' => $data['tglPinjam'],
+			'lamaPinjam' => $data['lamaPinjam'],
+			'deskripsiPinjam' => $data['deskripsiPinjam'],
+			'jumlahTotal' => $data['jumlahTotal'],
+			'status' => 'Menunggu',
+		];
+
+		$indikator = $this->db->insert('s7_inv_peminjaman', $tabelPinjam);
+
+		$this->db->select('idPeminjaman');
+		$this->db->from('s7_inv_peminjaman');
+		$this->db->where('idUser', $tabelPinjam['idUser']);
+		$this->db->where('tglPinjam', $tabelPinjam['tglPinjam']);
+		$idPeminjaman = $this->db->get()->result_array();
+		if ($indikator) {
+			for ($i = 0; $i < $data['berapaJenis']; $i++) {
+				$tabelToMany = [
+					'kodeBarang' => $data['allKode'][$i],
+					'idPeminjaman' => $idPeminjaman[0]['idPeminjaman'],
+					'banyak' => $data['allBarang'][$i]
+				];
+				var_dump($tabelToMany);
+				$indikator2 = $this->db->insert('s7_inv_tomany', $tabelToMany);
+				if ($indikator2) {
+					$counter++;
+				}
+			}
+			if ($counter == $data['berapaJenis']) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
 	// public function addDataKepengurusan($data)
 	// {
 	// 	$indikator = $this->db->insert('s7_inv_kepengurusan', $data);
@@ -2603,9 +2645,55 @@ class All_model extends CI_Model
 	// {
 	// }
 
+	// Account Managemen
+	public function searchUser($email)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_user');
+		$this->db->where('email', $email);
+		return $this->db->get()->result_array();
+	}
+
+	public function reg($data)
+	{
+		$indikator = $this->db->insert('s7_inv_user', $data);
+		if ($indikator) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function logoutInv()
+	{
+		$_SESSION['Inv_Login'] = null;
+		$_SESSION['Inv_card'] = null;
+		return true;
+	}
 
 	// Managemen Peminjaman
+	public function sendPilihan($array)
+	{
+		return $array;
+	}
+
 	public function allDataPinjaman()
 	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_peminjaman');
+		$this->db->join('s7_inv_user', 's7_inv_user.idUser = s7_inv_peminjaman.idUser');
+		// $this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang', 'left');
+		return $this->db->get()->result_array();
+	}
+
+	public function allDataDetailPinjam($id)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_tomany');
+		$this->db->join('s7_inv_peminjaman', 's7_inv_tomany.idPeminjaman = s7_inv_peminjaman.idPeminjaman');
+		$this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang');
+		$this->db->join('s7_inv_kategori', 's7_inv_kategori.idKategori = s7_inv_barang.idKategori');
+		$this->db->where('s7_inv_peminjaman.idPeminjaman', $id);
+		return $this->db->get()->result_array();
 	}
 }

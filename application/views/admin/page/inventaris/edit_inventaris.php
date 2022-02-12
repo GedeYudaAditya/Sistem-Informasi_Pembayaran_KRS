@@ -79,9 +79,9 @@
 					<label for="keadaan">Keadaan</label>
 					<select type="text" class="custom-select form-control" id="keadaan" name="keadaan" value="">
 						<!-- <option value="" selected disabled>-- Pilih Keadaan Barang --</option> -->
-						<option <?= ($diEdit[0]['hakBarang'] == 'Baik') ? 'selected' : '' ?> value="Baik">Baik</option>
-						<option <?= ($diEdit[0]['hakBarang'] == 'Kurang Baik') ? 'selected' : '' ?> value="Kurang Baik">Kurang Baik</option>
-						<option <?= ($diEdit[0]['hakBarang'] == 'Rusak Berat') ? 'selected' : '' ?> value="Rusak Berat">Rusak Berat</option>
+						<option <?= ($diEdit[0]['keadaanBarang'] == 'Baik') ? 'selected' : '' ?> value="Baik">Baik</option>
+						<option <?= ($diEdit[0]['keadaanBarang'] == 'Kurang Baik') ? 'selected' : '' ?> value="Kurang Baik">Kurang Baik</option>
+						<option <?= ($diEdit[0]['keadaanBarang'] == 'Rusak Berat') ? 'selected' : '' ?> value="Rusak Berat">Rusak Berat</option>
 					</select>
 					<!-- <?= form_error('keadaan', '<small class="text-danger pl-3">', '</small>'); ?> -->
 				</div>

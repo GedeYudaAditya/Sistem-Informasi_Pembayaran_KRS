@@ -100,78 +100,78 @@
  						</thead>
  						<tbody>
  							<!-- foreach -->
- 							<tr>
- 								<td>Putu Bagus Genjing</td> <!-- Kategori Inventaris -->
- 								<td class="text-center">HMJ TI</td> <!-- Nama Ormawa -->
- 								<td class="text-center">081888888888</td> <!-- No Wa -->
- 								<td class="text-center">suardana.4@undiksha.ac.id</td> <!-- Email -->
- 								<td class="text-center">
- 									<!-- Button trigger modal -->
- 									<button type="button" class="btn btn-primary btn-sm btn-icon-split" data-toggle="modal" data-target="#modalDetailBarang">
- 										<span class="icon text-white-50">
- 											<i class="fas fa-info-circle"></i>
- 										</span>
- 										<span class="text">Detail</span>
- 									</button>
+ 							<?php foreach ($peminjam as $p) : ?>
+ 								<tr>
+ 									<td><?= $p['nama'] ?></td> <!-- Kategori Inventaris -->
+ 									<td class="text-center"><?= $p['organisasi'] ?></td> <!-- Nama Ormawa -->
+ 									<td class="text-center"><?= $p['noTelp'] ?></td> <!-- No Wa -->
+ 									<td class="text-center"><?= $p['email'] ?></td> <!-- Email -->
+ 									<td class="text-center">
+ 										<!-- Button trigger modal -->
+ 										<button type="button" class="btn btn-primary btn-sm btn-icon-split" data-toggle="modal" data-target="#modalDetailBarang<?= $p['idPeminjaman'] ?>">
+ 											<span class="icon text-white-50">
+ 												<i class="fas fa-info-circle"></i>
+ 											</span>
+ 											<span class="text">Detail</span>
+ 										</button>
 
- 									<!-- Modal -->
- 									<div class="modal fade bd-example-modal-lg" id="modalDetailBarang" tabindex="-1" role="dialog" aria-labelledby="modalDetailBarangTitle" aria-hidden="true">
- 										<div class="modal-dialog modal-lg" role="document">
- 											<div class="modal-content">
- 												<div class="modal-header">
- 													<h5 class="modal-title" id="exampleModalLongTitle">Inventaris yang akan Dipinjam</h5>
- 													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
- 														<span aria-hidden="true">&times;</span>
- 													</button>
- 												</div>
- 												<div class="modal-body">
- 													<table class="table">
- 														<thead>
- 															<tr>
- 																<th scope="col">No</th>
- 																<th scope="col">Kategori Barang</th>
- 																<th scope="col">Nama Barang</th>
- 																<th scope="col">Jumlah barang yang dipinjam</th>
- 															</tr>
- 														</thead>
- 														<tbody>
- 															<tr>
- 																<th scope="row">1</th>
- 																<td>ATK</td>
- 																<td>Pensil 2B</td>
- 																<td>5</td>
- 															</tr>
- 															<tr>
- 																<th scope="row">2</th>
- 																<td>Sound Sistem</td>
- 																<td>Sound Besar</td>
- 																<td>1</td>
- 															</tr>
- 														</tbody>
- 													</table>
+ 										<!-- Modal -->
+ 										<div class="modal fade bd-example-modal-lg" id="modalDetailBarang<?= $p['idPeminjaman'] ?>" tabindex="-1" role="dialog" aria-labelledby="modalDetailBarangTitle" aria-hidden="true">
+ 											<div class="modal-dialog modal-lg" role="document">
+ 												<div class="modal-content">
+ 													<div class="modal-header">
+ 														<h5 class="modal-title" id="exampleModalLongTitle">Inventaris yang akan Dipinjam</h5>
+ 														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+ 															<span aria-hidden="true">&times;</span>
+ 														</button>
+ 													</div>
+ 													<div class="modal-body">
+ 														<table class="table">
+ 															<thead>
+ 																<tr>
+ 																	<th scope="col">Kode Barang</th>
+ 																	<th scope="col">Kategori Barang</th>
+ 																	<th scope="col">Nama Barang</th>
+ 																	<th scope="col">Jumlah barang yang dipinjam</th>
+ 																</tr>
+ 															</thead>
+ 															<tbody>
+ 																<?php $yangDipinjam = $this->All_model->allDataDetailPinjam($p['idPeminjaman']);
+																	var_dump($p['idPeminjaman']);
+																	foreach ($yangDipinjam as $y) : ?>
+ 																	<tr>
+ 																		<th scope="row"><?= $y['kodeBarang'] ?></th>
+ 																		<td><?= $y['namaKategori'] ?></td>
+ 																		<td><?= $y['namaBarang'] ?></td>
+ 																		<td><?= $y['banyak'] ?></td>
+ 																	</tr>
+ 																<?php endforeach; ?>
+ 															</tbody>
+ 														</table>
+ 													</div>
  												</div>
  											</div>
  										</div>
- 									</div>
- 								</td>
- 								<td class="text-center">
- 									<!-- Silakan Backend Memberikan Pengkondisian -->
- 									<!-- Kodisi Start -->
- 									<a href="" class="btn btn-success btn-sm btn-icon-split tombol-hapus">
- 										<span class="icon text-white-50">
- 											<i class="fas fa-check-circle"></i>
- 										</span>
- 										<span class="text">Terima</span>
- 									</a>
- 									<a href="" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
- 										<span class="icon text-white-50">
- 											<i class="fas fa-times-circle"></i>
- 										</span>
- 										<span class="text">Tolak</span>
- 									</a>
- 									<!-- Kodisi Stop -->
- 								</td>
- 							</tr>
+ 									</td>
+ 									<td class="text-center">
+ 										<!-- Silakan Backend Memberikan Pengkondisian -->
+ 										<!-- Kodisi Start -->
+ 										<a href="" class="btn btn-success btn-sm btn-icon-split tombol-hapus">
+ 											<span class="icon text-white-50">
+ 												<i class="fas fa-check-circle"></i>
+ 											</span>
+ 											<span class="text">Terima</span>
+ 										</a>
+ 										<a href="" class="btn btn-danger btn-sm btn-icon-split tombol-hapus">
+ 											<span class="icon text-white-50">
+ 												<i class="fas fa-times-circle"></i>
+ 											</span>
+ 											<span class="text">Tolak</span>
+ 										</a>
+ 										<!-- Kodisi Stop -->
+ 									</td>
+ 								</tr>
+ 							<?php endforeach; ?>
  							<!-- endforeach -->
  						</tbody>
  					</table>

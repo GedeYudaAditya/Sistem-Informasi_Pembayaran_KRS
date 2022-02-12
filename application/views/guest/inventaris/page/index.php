@@ -32,6 +32,12 @@
 	</div>
 </section>
 
+<?php
+$bBarang = 0;
+foreach ($banyakBarang as $b) {
+	$bBarang += $b['banyakBarang'];
+}
+?>
 
 <section class="container" id="inventaris">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg shadow-sm">
@@ -64,15 +70,169 @@
 		</div>
 	</nav>
 	<main class="row" style="padding: 7rem 0 3.5rem 0;">
+		<div class="col-8 row" style="max-height:300px">
+			<?php
+			$no = 0;
+			$baik = 0;
+			$sedang = 0;
+			$rusak = 0;
+			foreach ($barang as $item) : ?>
+				<?php
+				if ($item['keadaanBarang'] == 'Baik') {
+					$baik += $item['banyakBarang'];
+				} else if ($item['keadaanBarang'] == 'Kurang Baik') {
+					$sedang += $item['banyakBarang'];
+				} else {
+					$rusak += $item['banyakBarang'];
+				}
+				?>
+				<div class="col-4 mb-5">
+					<div class="card glass" style="width: 14rem;">
+						<img src="<?= base_url() ?>/assets/img/bg/welcome-bg.jpg" class="card-img-top" alt="Card Image">
+						<div class="icon card-body">
+							<div class="" style="min-height:150px;">
+								<h5 class="card-title"><?= $item['namaBarang'] ?> </h5>
+								<p><span class="badge badge-<?php if ($item['hakBarang'] == 'Diperpinjamkan') {
+																echo 'success';
+															} else {
+																echo 'danger';
+															} ?>"><?= $item['hakBarang'] ?></span></p>
+								<p class="card-text"><?= $item['deskripsiBarang'] ?></p>
+							</div>
+							<hr>
+							<!-- <a href="#" class="btn-pinjam-inventaris">
+								<i class="fas fa-search"></i> Detail
+							</a> -->
+							<button type="button" class="btn btn-pinjam-inventaris btn-sm btn-icon-split" data-toggle="modal" data-target="#modalDetailBarang<?= $no ?>">
+								<span class="text-white-50">
+									<i class="fas fa-info-circle"></i>
+								</span>
+								<span class="text">Detail</span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<!-- Modal -->
+				<div class="glassModal modal fade bd-example-modal-lg" id="modalDetailBarang<?= $no ?>" tabindex="-1" role="dialog" aria-labelledby="modalDetailBarangTitle" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class=" modal-content text-center">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLongTitle">Detail Barang</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="badge badge-secondary m-2 p-2">
+									<i class="fas fa-box-open"></i>
+									Ketersediaan Barang <span class="badge badge-light p-1"><?= $item['banyakBarang'] - $item['barangDipinjam'] ?>/<?= $item['banyakBarang'] ?></span>
+								</div>
+								<div>
+									<img src="https://dummyimage.com/600x400/dbdbdb/0011ff" alt="">
+								</div>
+								<h3><?= $item['namaBarang'] ?></h3>
+								<div>Kode Barang : <?= $item['kodeBarang'] ?> | Merk : <?= $item['merk'] ?> | Tahun Pembelian : <?= $item['tahunPembelian'] ?></div>
+								<div>Kategori <?= $item['namaKategori'] ?></div>
+								<div>
+									<?php if ($item['hakBarang'] == 'Diperpinjamkan') : ?>
+										<b style="color: green;">Barang <?= $item['hakBarang'] ?></b>
+									<?php else : ?>
+										<b style="color: red;">Barang <?= $item['hakBarang'] ?></b>
+									<?php endif; ?>
+								</div>
+								<p class="mt-3 px-5"><?= $item['deskripsiBarang'] ?></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php
+				$no++;
+			endforeach; ?>
+		</div>
 		<div class="col-4">
-			<div class="card" style="width: 18rem;">
-				<img src="https://dummyimage.com/600x400/e3e3e3/6a70cf&text=Image+Dummy" class="card-img-top" alt="Card Image">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					<a href="#" class="btn-pinjam-inventaris">
-						<i class="fas fa-plus"></i>
-					</a>
+			<?php if ($this->session->flashdata('sukses')) : ?>
+				<div class="col-md-12 text-center" style="width: 23rem;">
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						Data <strong><?= $this->session->flashdata('sukses'); ?></strong>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			<?php endif; ?>
+			<div class="col-12 mb-5">
+				<div class="card" style="width: 23rem; background: rgb(174,90,231);
+background: linear-gradient(132deg, rgba(174,90,231,1) 0%, rgba(138,218,202,1) 50%, rgba(101,244,131,1) 100%);">
+					<div class="p-5">
+						<img src="<?= base_url() ?>/assets/img/sso-logo.ico" class="card-img-top" alt="Card Image">
+					</div>
+					<?php if (!$_SESSION['Inv_Login']) : ?>
+						<div class="card-body">
+							<h3 class="card-title text-center">Login Untuk Meminjam</h3>
+							<form action="" method="POST">
+								<div class="card-text">
+
+									<div class="form-group">
+										<label for="exampleInputEmail1">Email address</label>
+										<input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+									</div>
+									<div class="form-group">
+										<label for="exampleInputPassword1">Password</label>
+										<input type="password" name="password" class="form-control" id="exampleInputPassword1">
+									</div>
+
+								</div>
+								<div class="text-center">
+									<button type="submit" name="submit" class="btn" style="background: linear-gradient(-47deg, #8731E8 0%, #4528DC 100%);">
+										<i class="fas fa-user"></i> Login
+									</button>
+									<p>Anda tidak memiliki akun? <a href="<?= base_url() ?>inventaris/registration">buat di sini!</a></p>
+								</div>
+							</form>
+						</div>
+					<?php else : ?>
+						<div class="card-body">
+							<h3 class="card-title text-center">Klik Pinjam Untuk Meminjam</h3>
+							<div class="row">
+								<div class="col-6">
+									<a class="btn" style="background: linear-gradient(-47deg, #8731E8 0%, #4528DC 100%);" href="<?= base_url() ?>inventaris/pinjam">Pinjam</a>
+								</div>
+								<div class="col-5 offset-md-1">
+									<a class="btn btn-danger" href="<?= base_url() ?>inventaris/invlogout">Logout</a>
+
+								</div>
+							</div>
+						</div>
+					<?php endif; ?>
+				</div>
+			</div>
+			<?php
+			$brB = $baik;
+			$baik = ($baik / $bBarang) * 100;
+			$brS = $sedang;
+			$sedang = ($sedang / $bBarang) * 100;
+			$brR = $rusak;
+			$rusak = ($rusak / $bBarang) * 100;
+			?>
+			<div class="col-12 mb-5">
+				<div class="card p-3" style="width: 23rem;">
+					<div class="card-body">
+						<h3 class="card-title">Garis Besar</h3>
+						<hr>
+						<div class="row mb-2">
+							<p class="col-12 text-center"><b>Keadaan Barang</b></p>
+							<p class="card-text col-4 text-center" style="border:1px solid green; border-radius:25px; color: green;">Baik : <?= $brB ?></p>
+							<p class="card-text col-4 text-center" style="border:1px solid orange; border-radius:25px; color: orange;">Sedang : <?= $brS ?></p>
+							<p class="card-text col-4 text-center" style="border:1px solid red; border-radius:25px; color: red;">Rusak : <?= $brR ?></p>
+						</div>
+						<div class="progress">
+							<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="<?= $baik ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $baik ?>%"> <?= round($baik, 2) ?>% </div>
+							<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="<?= $sedang ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $sedang ?>%"> <?= round($sedang, 2) ?>% </div>
+							<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="<?= $rusak ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $rusak ?>%"> <?= round($rusak, 2) ?>% </div>
+						</div>
+						<hr>
+						<p class="card-text" style="color: blue;">Banyak Barang Seluruhnya : <b><?= $bBarang ?> Unit</b></p>
+					</div>
 				</div>
 			</div>
 		</div>
