@@ -118,9 +118,9 @@
                                     </button>
 
 
-                                    <label class="col-md-6 offset-md-1 <?= ($item['hakBarang'] == 'Diperpinjamkan') ? 'btn' : 'btnd' ?> tambah-btn" id="check<?= $no ?>" for="defaultCheck<?= $no ?>">
+                                    <label class="col-md-6 offset-md-1 <?= ($item['hakBarang'] == 'Diperpinjamkan' && $item['banyakBarang'] - $item['barangDipinjam'] != 0) ? 'btn' : 'btnd' ?> tambah-btn" id="check<?= $no ?>" for="defaultCheck<?= $no ?>">
                                         <div class="row">
-                                            <input <?= ($item['hakBarang'] == 'Diperpinjamkan') ? '' : 'disabled' ?> onclick="myClick()" class="col-2 input" type="checkbox" name="pilih[]" value="<?= $item['kodeBarang'] ?>" id="defaultCheck<?= $no ?>">
+                                            <input <?= ($item['hakBarang'] == 'Diperpinjamkan' && $item['banyakBarang'] - $item['barangDipinjam'] != 0) ? '' : 'disabled' ?> onclick="myClick()" class="col-2 input" type="checkbox" name="pilih[]" value="<?= $item['kodeBarang'] ?>" id="defaultCheck<?= $no ?>">
                                             <span id="ubah<?= $no ?>" class="text ms-2 col-9" style="padding: 0px !important;">Tambah</span>
                                         </div>
                                     </label>

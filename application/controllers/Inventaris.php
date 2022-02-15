@@ -23,7 +23,7 @@ class Inventaris extends CI_Controller
 {
 	// public function index()
 	// {
-	// 	if (!$this->ion_auth->logged_in()) {
+	// 	if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
 	// 		redirect('login', 'refresh');
 	// 	} else {
 	// 		$id = $_SESSION['user_id'];
@@ -44,7 +44,7 @@ class Inventaris extends CI_Controller
 	// }
 	public function index()
 	{
-		if (!$this->ion_auth->logged_in()) {
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
 			redirect('login', 'refresh');
 		} else {
 			$id = $_SESSION['user_id'];
@@ -69,7 +69,7 @@ class Inventaris extends CI_Controller
 	}
 	public function peminjaman()
 	{
-		if (!$this->ion_auth->logged_in()) {
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
 			redirect('login', 'refresh');
 		} else {
 			$id = $_SESSION['user_id'];
@@ -83,16 +83,65 @@ class Inventaris extends CI_Controller
 			$this->data['banyakBarang'] = $this->All_model->countDataBarang();
 			$this->data['banyakDipinjam'] = $this->All_model->countDataBarangDipinjam();
 			$this->data['peminjam'] = $this->All_model->allDataPinjaman();
+			$this->data['peminjam2'] = $this->All_model->allDataPinjamanTerima();
+			$this->data['peminjam3'] = $this->All_model->allDataPinjamanKembali();
 			// $this->data['detail'] = $this->All_model->allDataDetailPinjam($idUser);
 			$this->load->view('admin/master/header', $this->data);
 			$this->load->view('admin/page/inventaris/peminjaman', $this->data);
 			$this->load->view('admin/master/footer', $this->data);
 			// show_404();
+			unset($_SESSION['sukses']);
+			unset($_SESSION['gagal']);
+		}
+	}
+	public function terima($idPeminjaman)
+	{
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
+			redirect('login', 'refresh');
+		} else {
+			$this->load->model('All_model');
+			if ($this->All_model->terima($idPeminjaman)) {
+				redirect('inventaris/peminjaman');
+				$this->session->set_flashdata('sukses', 'Berhasil Diterima');
+			} else {
+				redirect('inventaris/peminjaman');
+				$this->session->set_flashdata('gagal', 'Gagal Diterima');
+			}
+		}
+	}
+	public function terimaKembali($idPeminjaman)
+	{
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
+			redirect('login', 'refresh');
+		} else {
+			$this->load->model('All_model');
+			if ($this->All_model->terimaKembalikan($idPeminjaman)) {
+				redirect('inventaris/peminjaman');
+				$this->session->set_flashdata('sukses', 'Berhasil Diterima');
+			} else {
+				redirect('inventaris/peminjaman');
+				$this->session->set_flashdata('gagal', 'Gagal Diterima');
+			}
+		}
+	}
+	public function tolak($idPeminjaman)
+	{
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
+			redirect('login', 'refresh');
+		} else {
+			$this->load->model('All_model');
+			if ($this->All_model->tolak($idPeminjaman)) {
+				redirect('inventaris/peminjaman');
+				$this->session->set_flashdata('sukses', 'Berhasil Dihapus');
+			} else {
+				redirect('inventaris/peminjaman');
+				$this->session->set_flashdata('gagal', 'Gagal Dihapus');
+			}
 		}
 	}
 	public function tambah_inventaris()
 	{
-		if (!$this->ion_auth->logged_in()) {
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
 			redirect('login', 'refresh');
 		} else {
 			$id = $_SESSION['user_id'];
@@ -135,7 +184,7 @@ class Inventaris extends CI_Controller
 	}
 	public function edit_inventaris($kodeBarang)
 	{
-		if (!$this->ion_auth->logged_in()) {
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
 			redirect('login', 'refresh');
 		} else {
 			$id = $_SESSION['user_id'];
@@ -179,7 +228,7 @@ class Inventaris extends CI_Controller
 	}
 	public function del_inventaris($id)
 	{
-		if (!$this->ion_auth->logged_in()) {
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
 			redirect('login', 'refresh');
 		} else {
 			$this->load->model('All_model');
@@ -194,7 +243,7 @@ class Inventaris extends CI_Controller
 	}
 	public function tambah_kategori()
 	{
-		if (!$this->ion_auth->logged_in()) {
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
 			redirect('login', 'refresh');
 		} else {
 			$id = $_SESSION['user_id'];
@@ -226,7 +275,7 @@ class Inventaris extends CI_Controller
 	}
 	public function edit_kategori($idKategori)
 	{
-		if (!$this->ion_auth->logged_in()) {
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
 			redirect('login', 'refresh');
 		} else {
 			$id = $_SESSION['user_id'];
@@ -258,7 +307,7 @@ class Inventaris extends CI_Controller
 	}
 	public function del_kategori($id)
 	{
-		if (!$this->ion_auth->logged_in()) {
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
 			redirect('login', 'refresh');
 		} else {
 			$this->load->model('All_model');
@@ -274,7 +323,7 @@ class Inventaris extends CI_Controller
 
 	// public function tambah_kepengurusan()
 	// {
-	// 	if (!$this->ion_auth->logged_in()) {
+	// 	if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
 	// 		redirect('login', 'refresh');
 	// 	} else {
 	// 		$id = $_SESSION['user_id'];
@@ -303,7 +352,7 @@ class Inventaris extends CI_Controller
 	// }
 	// public function edit_kepengurusan()
 	// {
-	// 	if (!$this->ion_auth->logged_in()) {
+	// 	if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
 	// 		redirect('login', 'refresh');
 	// 	} else {
 	// 		$id = $_SESSION['user_id'];
@@ -346,11 +395,13 @@ class Inventaris extends CI_Controller
 					if (password_verify($data['password'], $email[0]['password'])) {
 						$_SESSION['Inv_Login'] = true;
 						$_SESSION['Inv_card'] = $email;
-						redirect('inventaris/pinjam');
+						redirect('inventaris/home');
 					} else {
+						$this->session->set_flashdata('gagal', 'Akun atau password salah!');
 						redirect('inventaris/home');
 					}
 				} else {
+					$this->session->set_flashdata('gagal', 'Akun atau password salah!');
 					redirect('inventaris/home');
 				}
 			}
@@ -361,10 +412,14 @@ class Inventaris extends CI_Controller
 
 	public function invlogout()
 	{
-		$this->data['search'] = false;
-		$this->load->model('All_model');
-		if ($this->All_model->logoutInv()) {
+		if (!$_SESSION['Inv_Login']) {
 			redirect('inventaris/home');
+		} else {
+			$this->data['search'] = false;
+			$this->load->model('All_model');
+			if ($this->All_model->logoutInv()) {
+				redirect('inventaris/home');
+			}
 		}
 	}
 
@@ -445,6 +500,60 @@ class Inventaris extends CI_Controller
 				if ($this->All_model->pinjam($data)) {
 					redirect('inventaris/home');
 				} else {
+					$this->session->set_flashdata('gagal', 'Terjadi kesalahan saat input data!');
+					redirect('inventaris/dataLengkapPinjam');
+				}
+			}
+		}
+	}
+
+	public function dataLengkapPinjamEdit($id)
+	{
+		if (!$_SESSION['Inv_Login']) {
+			redirect('inventaris/home');
+		} else {
+			$this->data['title'] = "SI Inventaris - Melengkapi Data Pinjaman";
+			$this->data['search'] = false;
+			$this->load->model('All_model');
+			$this->data['banyakKategori'] = $this->All_model->countKategoriBarang();
+			$this->data['banyakBarang'] = $this->All_model->countDataBarang();
+			$this->data['banyakDipinjam'] = $this->All_model->countDataBarangDipinjam();
+			$this->data['barang'] = $this->All_model->allDataBarang();
+			$this->data['kategori'] = $this->All_model->allKategoriBarang();
+
+			$barang = $this->All_model->allDataEditPesanan($id, $_SESSION['Inv_card'][0]['idUser']);
+
+			$this->data['lookBarang'] = $barang;
+			$this->load->view('guest/inventaris/master/header', $this->data);
+			$this->load->view('guest/inventaris/page/editData', $this->data);
+			$this->load->view('guest/inventaris/master/footer', $this->data);
+			if ($this->input->post('submit') === '') {
+				$satu = $this->input->post('banyak', true);
+				$total = 0;
+				$banyakPilihan = 0;
+				foreach ($satu as $a) {
+					$banyakPilihan++;
+					$total += $a;
+				}
+				$data = [
+					// tabel toMany
+					'allIdMany' =>  $this->input->post('idMany', true),
+					'allKode' => $this->input->post('kodeBarang', true),
+					'allBarang' => $this->input->post('banyak', true),
+
+					// tabel peminjaman
+					'idPeminjaman' =>  $this->input->post('idPeminjaman', true),
+					'idUser' => $_SESSION['Inv_card'][0]['idUser'],
+					'tglPinjam' => date('Y-m-d'),
+					'lamaPinjam' => $this->input->post('lamaPinjam', true),
+					'jumlahTotal' => $total,
+					'deskripsiPinjam' => $this->input->post('deskripsiPinjam', true),
+					'berapaJenis' => $banyakPilihan
+				];
+				if ($this->All_model->editPinjam($data)) {
+					redirect('inventaris/lihatPermintaan');
+				} else {
+					$this->session->set_flashdata('gagal', 'Terjadi kesalahan saat input data!');
 					redirect('inventaris/dataLengkapPinjam');
 				}
 			}
@@ -453,7 +562,7 @@ class Inventaris extends CI_Controller
 
 	public function registration()
 	{
-		$this->data['title'] = "SI Inventaris - Home";
+		$this->data['title'] = "SI Inventaris - Registrasi";
 		$this->data['search'] = false;
 		$this->load->model('All_model');
 		$this->load->library('form_validation');
@@ -508,6 +617,48 @@ class Inventaris extends CI_Controller
 					}
 				}
 			}
+		}
+	}
+
+	public function lihatPermintaan()
+	{
+		if (!$_SESSION['Inv_Login']) {
+			redirect('inventaris/home');
+		} else {
+			$user = $_SESSION['Inv_card'][0]['idUser'];
+			$this->data['title'] = "SI Inventaris - Lihat Permintaan";
+			$this->data['search'] = false;
+			$this->load->model('All_model');
+			$this->load->library('form_validation');
+			$this->data['peminjam'] = $this->All_model->dataPinjaman($user);
+			$this->data['peminjam2'] = $this->All_model->dataPinjamanConfirm($user);
+			$this->data['peminjam3'] = $this->All_model->dataPinjamanConfirmKembali($user);
+
+			$this->load->view('guest/inventaris/master/header', $this->data);
+			$this->load->view('guest/inventaris/page/lihatPinjaman', $this->data);
+			$this->load->view('guest/inventaris/master/footer', $this->data);
+		}
+	}
+
+	public function serahkan($id)
+	{
+		if (!$_SESSION['Inv_Login']) {
+			redirect('inventaris/home');
+		} else {
+			$this->load->model('All_model');
+			$this->All_model->kembalikan($id);
+			redirect('inventaris/lihatPermintaan');
+		}
+	}
+
+	public function hapus($id)
+	{
+		if (!$_SESSION['Inv_Login']) {
+			redirect('inventaris/home');
+		} else {
+			$this->load->model('All_model');
+			$this->All_model->hapus($id);
+			redirect('inventaris/lihatPermintaan');
 		}
 	}
 }

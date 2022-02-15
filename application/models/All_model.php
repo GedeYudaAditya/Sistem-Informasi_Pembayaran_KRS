@@ -2594,7 +2594,9 @@ class All_model extends CI_Model
 			'lamaPinjam' => $data['lamaPinjam'],
 			'deskripsiPinjam' => $data['deskripsiPinjam'],
 			'jumlahTotal' => $data['jumlahTotal'],
+			'time' => date('Y-m-d H:i:s.u'),
 			'status' => 'Menunggu',
+			'sendBack' => '1'
 		];
 
 		$indikator = $this->db->insert('s7_inv_peminjaman', $tabelPinjam);
@@ -2602,7 +2604,7 @@ class All_model extends CI_Model
 		$this->db->select('idPeminjaman');
 		$this->db->from('s7_inv_peminjaman');
 		$this->db->where('idUser', $tabelPinjam['idUser']);
-		$this->db->where('tglPinjam', $tabelPinjam['tglPinjam']);
+		$this->db->where('time', $tabelPinjam['time']);
 		$idPeminjaman = $this->db->get()->result_array();
 		if ($indikator) {
 			for ($i = 0; $i < $data['berapaJenis']; $i++) {
@@ -2613,6 +2615,55 @@ class All_model extends CI_Model
 				];
 				var_dump($tabelToMany);
 				$indikator2 = $this->db->insert('s7_inv_tomany', $tabelToMany);
+				if ($indikator2) {
+					$counter++;
+				}
+			}
+			if ($counter == $data['berapaJenis']) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public function editPinjam($data)
+	{
+		// var_dump($data);
+		// die;
+		$counter = 0;
+		$tabelPinjam = [
+			// 'idPeminjaman' => $data['idPeminjaman'],
+			'idUser' => $_SESSION['Inv_card'][0]['idUser'],
+			'tglPinjam' => $data['tglPinjam'],
+			'lamaPinjam' => $data['lamaPinjam'],
+			'deskripsiPinjam' => $data['deskripsiPinjam'],
+			'jumlahTotal' => $data['jumlahTotal'],
+			'time' => date('Y-m-d H:i:s.u'),
+			'status' => 'Menunggu',
+			'sendBack' => '1'
+		];
+		$this->db->where('idPeminjaman', $data['idPeminjaman']);
+		$indikator = $this->db->update('s7_inv_peminjaman', $tabelPinjam);
+
+		$this->db->select('idPeminjaman');
+		$this->db->from('s7_inv_peminjaman');
+		$this->db->where('idUser', $tabelPinjam['idUser']);
+		$this->db->where('time', $tabelPinjam['time']);
+		$idPeminjaman = $this->db->get()->result_array();
+		if ($indikator) {
+			for ($i = 0; $i < $data['berapaJenis']; $i++) {
+				$tabelToMany = [
+					'idMany' => $data['allIdMany'][$i],
+					'kodeBarang' => $data['allKode'][$i],
+					'idPeminjaman' => $idPeminjaman[0]['idPeminjaman'],
+					'banyak' => $data['allBarang'][$i]
+				];
+				var_dump($tabelToMany);
+				$this->db->where('idMany', $tabelToMany['idMany']);
+				$indikator2 = $this->db->update('s7_inv_tomany', $tabelToMany);
 				if ($indikator2) {
 					$counter++;
 				}
@@ -2682,7 +2733,87 @@ class All_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('s7_inv_peminjaman');
 		$this->db->join('s7_inv_user', 's7_inv_user.idUser = s7_inv_peminjaman.idUser');
+		$this->db->where('status', 'Menunggu');
+		$this->db->where('statusPinjam', NULL);
 		// $this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang', 'left');
+		return $this->db->get()->result_array();
+	}
+	public function allDataPinjamanTerima()
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_peminjaman');
+		$this->db->join('s7_inv_user', 's7_inv_user.idUser = s7_inv_peminjaman.idUser');
+		$this->db->where('status', 'Diterima');
+		$this->db->or_where('status', 'Ditolak');
+		// $this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang', 'left');
+		return $this->db->get()->result_array();
+	}
+
+	public function allDataPinjamanKembali()
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_peminjaman');
+		$this->db->join('s7_inv_user', 's7_inv_user.idUser = s7_inv_peminjaman.idUser');
+		// $this->db->where('status', 'Ditolak');
+		// $this->db->or_where('status', 'Diterima');
+		$this->db->where('status', 'Menunggu');
+		$this->db->where('statusPinjam', 'Sedang Dipinjam');
+		$this->db->or_where('statusPinjam', 'Lambat');
+		// $this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang', 'left');
+		return $this->db->get()->result_array();
+	}
+
+	public function dataPinjaman($user)
+	{
+		$query = "(`s7_inv_peminjaman`.`idUser` = '$user' AND `status` = 'Menunggu' AND `statusPinjam` IS NULL) OR (`statusPinjam` = 'Sedang Dipinjam' OR `statusPinjam` = 'Lambat') AND `sendBack` = 1";
+		$this->db->select('*');
+		$this->db->from('s7_inv_peminjaman');
+		$this->db->join('s7_inv_user', 's7_inv_user.idUser = s7_inv_peminjaman.idUser');
+		$this->db->where($query);
+		// $this->db->where('s7_inv_peminjaman.idUser', $user);
+		// $this->db->where('status', 'Menunggu');
+		// $this->db->where('statusPinjam', NULL,);
+		// $this->db->or_where('(statusPinjam', 'Sedang Dipinjam');
+		// $this->db->or_where('statusPinjam', 'Lambat');
+		// $this->db->where('sendBack', 1);
+		// $this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang', 'left');
+		return $this->db->get()->result_array();
+	}
+
+	public function dataPinjamanConfirmKembali($user)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_peminjaman');
+		$this->db->join('s7_inv_user', 's7_inv_user.idUser = s7_inv_peminjaman.idUser');
+		$this->db->where('s7_inv_peminjaman.idUser', $user);
+		$this->db->where('status', 'Diterima');
+		$this->db->where('statusPinjam', 'Dikembalikan');
+		// $this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang', 'left');
+		return $this->db->get()->result_array();
+	}
+	// public function dataPinjamanTerima($user)
+	// {
+	// 	$this->db->select('*');
+	// 	$this->db->from('s7_inv_peminjaman');
+	// 	$this->db->join('s7_inv_user', 's7_inv_user.idUser = s7_inv_peminjaman.idUser');
+	// 	$this->db->where('s7_inv_peminjaman.idUser', $user);
+	// 	$this->db->where('status', 'Diterima');
+	// 	// $this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang', 'left');
+	// 	return $this->db->get()->result_array();
+	// }
+	public function dataPinjamanConfirm($user)
+	{
+		$query = "(`statusPinjam` = 'Sedang Dipinjam' OR `statusPinjam` = 'Lambat') AND (`status` = 'Diterima' OR `status` = 'Ditolak') AND `s7_inv_peminjaman`.`idUser` = '$user'";
+		$this->db->select('*');
+		$this->db->from('s7_inv_peminjaman');
+		$this->db->join('s7_inv_user', 's7_inv_user.idUser = s7_inv_peminjaman.idUser');
+		$this->db->where($query);
+		// $this->db->where('statusPinjam', 'Sedang Dipinjam');
+		// $this->db->or_where('statusPinjam asa', 'Lambat');
+		// $this->db->where('status', 'Diterima');
+		// $this->db->or_where('status', 'Ditolak');
+		// // $this->db->or_where('statusPinjam', 'Dikembalikan');
+		// $this->db->where('s7_inv_peminjaman.idUser', $user);
 		return $this->db->get()->result_array();
 	}
 
@@ -2693,7 +2824,157 @@ class All_model extends CI_Model
 		$this->db->join('s7_inv_peminjaman', 's7_inv_tomany.idPeminjaman = s7_inv_peminjaman.idPeminjaman');
 		$this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang');
 		$this->db->join('s7_inv_kategori', 's7_inv_kategori.idKategori = s7_inv_barang.idKategori');
+		$this->db->where('status', 'Menunggu');
 		$this->db->where('s7_inv_peminjaman.idPeminjaman', $id);
 		return $this->db->get()->result_array();
+	}
+
+	public function allDataEditPesanan($id, $user)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_tomany');
+		$this->db->join('s7_inv_peminjaman', 's7_inv_tomany.idPeminjaman = s7_inv_peminjaman.idPeminjaman');
+		$this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang');
+		$this->db->join('s7_inv_kategori', 's7_inv_kategori.idKategori = s7_inv_barang.idKategori');
+		$this->db->where('s7_inv_peminjaman.idUser', $user);
+		$this->db->where('s7_inv_peminjaman.idPeminjaman', $id);
+		return $this->db->get()->result_array();
+	}
+
+	public function allDataDetailPinjamTerima($id)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_tomany');
+		$this->db->join('s7_inv_peminjaman', 's7_inv_tomany.idPeminjaman = s7_inv_peminjaman.idPeminjaman');
+		$this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang');
+		$this->db->join('s7_inv_kategori', 's7_inv_kategori.idKategori = s7_inv_barang.idKategori');
+		$this->db->or_where('status', 'Diterima');
+		$this->db->or_where('status', 'Ditolak');
+		$this->db->where('s7_inv_peminjaman.idPeminjaman', $id);
+		return $this->db->get()->result_array();
+	}
+
+	public function terima($id)
+	{
+		$field = [
+			'status' => 'Diterima',
+			'statusPinjam' => 'Sedang Dipinjam',
+			'sendBack' => '0'
+		];
+
+		$counter = 0;
+
+		$this->db->select('*');
+		$this->db->from('s7_inv_peminjaman');
+		$this->db->where('idPeminjaman', $id);
+		$pinjaman = $this->db->get()->result_array();
+
+		$this->db->select('*');
+		$this->db->from('s7_inv_tomany');
+		$this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang');
+		$this->db->where('idPeminjaman', $id);
+		$barangs = $this->db->get()->result_array();
+		// foreach ($barangs as $barang) {
+		// 	var_dump($barangs);
+		// }
+		// die;
+
+		$this->db->where('idPeminjaman', $id);
+		if ($this->db->update('s7_inv_peminjaman', $field)) {
+			foreach ($barangs as $barang) {
+				$field2 = [
+					'barangDipinjam' => $barang['barangDipinjam'] + $barang['banyak'],
+				];
+				$this->db->where('kodeBarang', $barang['kodeBarang']);
+				if ($this->db->update('s7_inv_barang', $field2)) {
+					$counter++;
+				}
+			}
+			if ($counter == $pinjaman[0]['jumlahTotal']) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public function tolak($id)
+	{
+		$field = [
+			'status' => 'Ditolak',
+			'sendBack' => '0'
+		];
+		$this->db->where('idPeminjaman', $id);
+		if ($this->db->update('s7_inv_peminjaman', $field)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function terimaKembalikan($id)
+	{
+		$counter = 0;
+		$this->db->select('*');
+		$this->db->from('s7_inv_peminjaman');
+		$this->db->where('idPeminjaman', $id);
+		$pinjaman = $this->db->get()->result_array();
+
+		$this->db->select('*');
+		$this->db->from('s7_inv_tomany');
+		$this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang');
+		$this->db->where('idPeminjaman', $id);
+		$barangs = $this->db->get()->result_array();
+
+		$field = [
+			'status' => 'Diterima',
+			'statusPinjam' => 'Dikembalikan',
+			'sendBack' => '0'
+		];
+		$this->db->where('idPeminjaman', $id);
+		if ($this->db->update('s7_inv_peminjaman', $field)) {
+			foreach ($barangs as $barang) {
+				$field2 = [
+					'barangDipinjam' => $barang['barangDipinjam'] - $barang['banyak'],
+				];
+				$this->db->where('kodeBarang', $barang['kodeBarang']);
+				if ($this->db->update('s7_inv_barang', $field2)) {
+					$counter++;
+				}
+			}
+			if ($counter == $pinjaman[0]['jumlahTotal']) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public function kembalikan($id)
+	{
+		$field = [
+			'status' => 'Menunggu',
+			'sendBack' => '1'
+		];
+		$this->db->where('idPeminjaman', $id);
+		if ($this->db->update('s7_inv_peminjaman', $field)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function hapus($id)
+	{
+		$this->db->where('idPeminjaman', $id);
+		if ($this->db->delete('s7_inv_peminjaman')) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

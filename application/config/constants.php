@@ -42,9 +42,10 @@ defined('DIR_WRITE_MODE')  or define('DIR_WRITE_MODE', 0755);
 | pada sistem, berhati-hatilah menggantinya.
 |
 */
-const group = array(1, 2, 4, 5, 6); //berfungsi untuk mengatur hak akses login berdasarkan grup (Cek database untuk mengetahui id grup)
+const group = array(1, 2, 4, 5, 6, 7, 8); //berfungsi untuk mengatur hak akses login berdasarkan grup (Cek database untuk mengetahui id grup)
 const eors = array(1, 4, 5); //digunakan pada sistem eors, mengatur hak akses login berdasarkan grup (Cek database untuk mengetahui id grup)
 const etika =  array(1, 6); //digunakan pada sistem etika, mengatur hak akses login berdasarkan grup (Cek database untuk mengetahui id grup)
+const inv = array(1, 8); //digunakan pada sistem inventaris, mengatur hak akses login berdasarkan grup (Cek database untuk mengetahui id grup)
 const lama_token = 120; //dalam menit
 const lama_blokir = "300 seconds"; //dalam detik;
 const nomor_admin = "6281915656865"; //awalan 0 diganti dengan 62, digunakan pada seluruh sistem terutama jika ada yang berhubungan dengan kendala admin, gunakan nomor WA

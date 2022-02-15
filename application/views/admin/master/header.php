@@ -74,124 +74,134 @@
 
 						<!-- Divider -->
 						<hr class="sidebar-divider">
-						<?php if ($group[0]['group_id'] == "1" || $group[0]['group_id'] == "2") { ?>
+						<?php if ($group[0]['group_id'] == "1" || $group[0]['group_id'] == "2" || $group[0]['group_id'] == "8") { ?>
 							<!-- Heading -->
 							<div class="sidebar-heading">
 								Layanan HMJ TI
 							</div>
 
 							<!-- Nav Item - Pages Collapse Menu -->
-							<?php
-							if ($active == "2") {
-								echo '<li class="nav-item active">';
-							} else {
-								echo '<li class="nav-item">';
-							}
-							?>
-							<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-								<i class="fas fa-hotel"></i>
-								<i><span class="text-warning">SI Inventaris (Off)</span></i>
-							</a>
-							<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-								<div class="bg-white py-2 collapse-inner rounded">
-									<h6 class="collapse-header">Daftar Fitur:</h6>
-									<a class="collapse-item" href="<?= base_url() ?>inventaris/">Manajemen Barang</a>
-									<a class="collapse-item" href="<?= base_url() ?>inventaris/peminjaman">Manajemen Peminjaman</a>
+							<?php if ($group[0]['group_id'] == "1" || $group[0]['group_id'] == "8") : ?>
+								<?php
+								if ($active == "2") {
+									echo '<li class="nav-item active">';
+								} else {
+									echo '<li class="nav-item">';
+								}
+								?>
+								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+									<i class="fas fa-hotel"></i>
+									<i><span class="text-warning">SI Inventaris (Off)</span></i>
+								</a>
+								<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+									<div class="bg-white py-2 collapse-inner rounded">
+										<h6 class="collapse-header">Daftar Fitur:</h6>
+										<a class="collapse-item" href="<?= base_url() ?>inventaris/">Manajemen Barang</a>
+										<a class="collapse-item" href="<?= base_url() ?>inventaris/peminjaman">Manajemen Peminjaman</a>
+									</div>
 								</div>
-							</div>
-							</li>
+								</li>
+							<?php endif; ?>
 							<!-- Nav Item - Utilities Collapse Menu -->
-							<?php
-							if ($active == "4") {
-								echo '<li class="nav-item active">';
-							} else {
-								echo '<li class="nav-item">';
-							}
-							?>
-							<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseUtilities">
-								<i class="fas fa-globe"></i>
-								<span>Web HMJ</span>
-							</a>
-							<div id="collapseThree" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-								<div class="bg-white py-2 collapse-inner rounded">
-									<h6 class="collapse-header">Daftar Fitur:</h6>
-									<a class="collapse-item" href="<?= base_url() ?>web/tentang_hmj">Manajemen Kepengurusan</a>
-									<a class="collapse-item" href="<?= base_url() ?>web/berkas">Manajemen Berkas</a>
-									<a class="collapse-item" href="<?= base_url() ?>web/informasi_hmj">Manajemen Informasi</a>
+							<?php if (!($group[0]['group_id'] == "8")) : ?>
+								<?php
+								if ($active == "4") {
+									echo '<li class="nav-item active">';
+								} else {
+									echo '<li class="nav-item">';
+								}
+								?>
+								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseUtilities">
+									<i class="fas fa-globe"></i>
+									<span>Web HMJ</span>
+								</a>
+								<div id="collapseThree" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+									<div class="bg-white py-2 collapse-inner rounded">
+										<h6 class="collapse-header">Daftar Fitur:</h6>
+										<a class="collapse-item" href="<?= base_url() ?>web/tentang_hmj">Manajemen Kepengurusan</a>
+										<a class="collapse-item" href="<?= base_url() ?>web/berkas">Manajemen Berkas</a>
+										<a class="collapse-item" href="<?= base_url() ?>web/informasi_hmj">Manajemen Informasi</a>
+									</div>
 								</div>
-							</div>
-							</li>
+								</li>
+							<?php endif; ?>
 							<!-- Nav Item - Utilities Collapse Menu -->
-							<?php
-							if ($active == "5") {
-								echo '<li class="nav-item active">';
-							} else {
-								echo '<li class="nav-item">';
-							}
-							?>
-							<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseUtilities">
-								<i class="fas fa-calendar-day"></i>
-								<span>Integer</span>
-							</a>
-							<div id="collapseFour" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-								<div class="bg-white py-2 collapse-inner rounded">
-									<h6 class="collapse-header">Daftar Fitur:</h6>
-									<a class="collapse-item" href="<?= base_url() ?>integer/kegiatan">Manajemen Kegiatan</a>
-									<a class="collapse-item" href="<?= base_url() ?>integer/lomba">Manajemen Lomba</a>
+							<?php if (!($group[0]['group_id'] == "8")) : ?>
+								<?php
+								if ($active == "5") {
+									echo '<li class="nav-item active">';
+								} else {
+									echo '<li class="nav-item">';
+								}
+								?>
+								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseUtilities">
+									<i class="fas fa-calendar-day"></i>
+									<span>Integer</span>
+								</a>
+								<div id="collapseFour" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+									<div class="bg-white py-2 collapse-inner rounded">
+										<h6 class="collapse-header">Daftar Fitur:</h6>
+										<a class="collapse-item" href="<?= base_url() ?>integer/kegiatan">Manajemen Kegiatan</a>
+										<a class="collapse-item" href="<?= base_url() ?>integer/lomba">Manajemen Lomba</a>
+									</div>
 								</div>
-							</div>
-							</li>
+								</li>
+							<?php endif; ?>
 
 							<!-- Sistem Cek pembayaran KRS -->
-							<?php
-							if ($active == "11") {
-								echo '<li class="nav-item active">';
-							} else {
-								echo '<li class="nav-item">';
-							}
-							?>
-							<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseUtilities">
-								<i class="fas fa-id-card"></i>
-								<span>KRS</span>
-							</a>
-							<div id="collapseFive" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-								<div class="bg-white py-2 collapse-inner rounded">
-									<h6 class="collapse-header">Daftar Fitur:</h6>
-									<a class="collapse-item" href="<?= base_url() ?>krs/">Data Mahasiswa</a>
-									<a class="collapse-item" href="<?= base_url() ?>krs/tambah_Mahasiswa">Tambah Mahasiswa</a>
-									<a class="collapse-item" href="<?= base_url() ?>krs/tambah_tahun">Tambah Tahun</a>
-									<!-- <a class="collapse-item" href="krs/update_info">Update Info</a> -->
+							<?php if (!($group[0]['group_id'] == "8")) : ?>
+								<?php
+								if ($active == "11") {
+									echo '<li class="nav-item active">';
+								} else {
+									echo '<li class="nav-item">';
+								}
+								?>
+								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseUtilities">
+									<i class="fas fa-id-card"></i>
+									<span>KRS</span>
+								</a>
+								<div id="collapseFive" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+									<div class="bg-white py-2 collapse-inner rounded">
+										<h6 class="collapse-header">Daftar Fitur:</h6>
+										<a class="collapse-item" href="<?= base_url() ?>krs/">Data Mahasiswa</a>
+										<a class="collapse-item" href="<?= base_url() ?>krs/tambah_Mahasiswa">Tambah Mahasiswa</a>
+										<a class="collapse-item" href="<?= base_url() ?>krs/tambah_tahun">Tambah Tahun</a>
+										<!-- <a class="collapse-item" href="krs/update_info">Update Info</a> -->
+									</div>
 								</div>
-							</div>
-							</li>
+								</li>
+							<?php endif; ?>
 							<!-- End of Cek pembayaran KRS -->
 
 
 						<?php } ?>
-						<?php
-						if ($active == "10") {
-							echo '<li class="nav-item active">';
-						} else {
-							echo '<li class="nav-item">';
-						}
-						?>
-						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseUtilities">
-							<i class="fas fa-vote-yea"></i>
-							<span>Layanan Lain</span>
-						</a>
+						<?php if ($group[0]['group_id'] == "1" || $group[0]['group_id'] == "4" || $group[0]['group_id'] == "5" || $group[0]['group_id'] == "6") : ?>
+							<?php
+							if ($active == "10") {
+								echo '<li class="nav-item active">';
+							} else {
+								echo '<li class="nav-item">';
+							}
+							?>
+							<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseUtilities">
+								<i class="fas fa-vote-yea"></i>
+								<span>Layanan Lain</span>
+							</a>
 
-						<div id="collapseSix" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-							<div class="bg-white py-2 collapse-inner rounded">
-								<h6 class="collapse-header">Lainnya:</h6>
-								<?php if ($group[0]['group_id'] == "1" || $group[0]['group_id'] == "4" || $group[0]['group_id'] == "5") { ?>
-									<a class="collapse-item" href="<?= base_url() ?>eors">E-ORS</a>
-								<?php } ?>
-								<?php if ($group[0]['group_id'] == "1" || $group[0]['group_id'] == "6") { ?>
-									<a class="collapse-item" href="<?= base_url() ?>etika">ETIKA</a>
-								<?php } ?>
+							<div id="collapseSix" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+								<div class="bg-white py-2 collapse-inner rounded">
+									<h6 class="collapse-header">Lainnya:</h6>
+									<?php if ($group[0]['group_id'] == "1" || $group[0]['group_id'] == "4" || $group[0]['group_id'] == "5") { ?>
+										<a class="collapse-item" href="<?= base_url() ?>eors">E-ORS</a>
+									<?php } ?>
+									<?php if ($group[0]['group_id'] == "1" || $group[0]['group_id'] == "6") { ?>
+										<a class="collapse-item" href="<?= base_url() ?>etika">ETIKA</a>
+									<?php } ?>
+								</div>
 							</div>
-						</div>
-						</li>
+							</li>
+						<?php endif; ?>
 						<!-- Divider -->
 						<hr class="sidebar-divider">
 

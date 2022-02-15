@@ -32,6 +32,30 @@
 	</div>
 </section>
 
+<?php if ($this->session->flashdata('sukses')) : ?>
+	<script>
+		setTimeout(function() {
+			Swal.fire(
+				'Berhasil'
+				'<?= $this->session->flashdata('sukses'); ?>',
+				'success'
+			)
+		}, 100);
+	</script>
+<?php endif; ?>
+
+<?php if ($this->session->flashdata('gagal')) : ?>
+	<script>
+		setTimeout(function() {
+			Swal.fire(
+				'Maaf',
+				'<?= $this->session->flashdata('gagal'); ?>',
+				'warning',
+			)
+		}, 100);
+	</script>
+<?php endif; ?>
+
 <?php
 $bBarang = 0;
 foreach ($banyakBarang as $b) {
@@ -166,7 +190,7 @@ background: linear-gradient(132deg, rgba(174,90,231,1) 0%, rgba(138,218,202,1) 5
 					<div class="p-5">
 						<img src="<?= base_url() ?>/assets/img/sso-logo.ico" class="card-img-top" alt="Card Image">
 					</div>
-					<?php if (!$_SESSION['Inv_Login']) : ?>
+					<?php if (!isset($_SESSION['Inv_Login'])) : ?>
 						<div class="card-body">
 							<h3 class="card-title text-center">Login Untuk Meminjam</h3>
 							<form action="" method="POST">
@@ -192,13 +216,36 @@ background: linear-gradient(132deg, rgba(174,90,231,1) 0%, rgba(138,218,202,1) 5
 						</div>
 					<?php else : ?>
 						<div class="card-body">
-							<h3 class="card-title text-center">Klik Pinjam Untuk Meminjam</h3>
+							<h3 class="card-title text-center">Anda Telah Login</h3>
+							<div class="container mb-3 glass">
+								<table>
+									<tr>
+										<th style="width: 80px;">Nama </th>
+										<th style="width: 10px;">:</th>
+										<td> <?= $_SESSION['Inv_card'][0]['nama'] ?></td>
+									</tr>
+									<tr>
+										<th style="width: 80px;">NIM </th>
+										<th style="width: 10px;">:</th>
+										<td> <?= $_SESSION['Inv_card'][0]['nim'] ?></td>
+									</tr>
+									<tr>
+										<th style="width: 80px;">Email </th>
+										<th style="width: 10px;">:</th>
+										<td> <?= $_SESSION['Inv_card'][0]['email'] ?></td>
+									</tr>
+								</table>
+							</div>
+							<h4 class="mb-2">Pilih Aksi :</h4>
 							<div class="row">
-								<div class="col-6">
-									<a class="btn" style="background: linear-gradient(-47deg, #8731E8 0%, #4528DC 100%);" href="<?= base_url() ?>inventaris/pinjam">Pinjam</a>
+								<div class="col-3">
+									<a class="btn btn-peminjaman button btn-success" style="background: linear-gradient(-47deg, #8731E8 0%, #4528DC 100%);" href="<?= base_url() ?>inventaris/pinjam">Pinjam</a>
 								</div>
-								<div class="col-5 offset-md-1">
-									<a class="btn btn-danger" href="<?= base_url() ?>inventaris/invlogout">Logout</a>
+								<div class="col-3">
+									<a class="btn btn-peminjaman button" style="background: linear-gradient(-47deg, #8731E8 0%, #4528DC 100%);" href="<?= base_url() ?>inventaris/lihatPermintaan">Permintaan</a>
+								</div>
+								<div class="col-3 offset-2">
+									<a class="button btn-peminjaman btn-dangerti" href="<?= base_url() ?>inventaris/invlogout">Logout</a>
 
 								</div>
 							</div>
