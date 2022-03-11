@@ -2098,6 +2098,28 @@ class All_model extends CI_Model
 					return $return;
 				}
 			}
+		} else if ($id_file == "inventaris") {
+			$config['upload_path'] = $folder;
+			$config['allowed_types'] = 'jpg|png';
+			$config['max_size']  = '1048';
+			$config['encrypt_name'] = TRUE;
+			$config['remove_space'] = TRUE;
+			// $config['overwrite'] = TRUE;
+
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if ($nama = 'foto_barang') {
+				if ($this->upload->do_upload('foto_barang')) {
+					// Lakukan upload dan Cek jika proses upload berhasil      
+					// Jika berhasil :      
+					$return = array('result' => 'success', 'foto_barang' => $this->upload->data(), 'error' => '');
+					return $return;
+				} else {
+					// Jika gagal :      
+					$return = array('result' => 'failed', 'foto_barang' => '', 'error' => $this->upload->display_errors());
+					return $return;
+				}
+			}
 		}
 	}
 	// **************************************************************
@@ -2507,6 +2529,18 @@ class All_model extends CI_Model
 		} else {
 			return false;
 		}
+	}
+
+	public function deleteFotoBarang($id)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_barang');
+		$this->db->where('kodeBarang', $id);
+		$nama_file = $this->db->get()->result_array();
+		var_dump($nama_file[0]['gambar']);
+		// die;
+		unlink('assets/upload/Folder_inventaris/' . $nama_file[0]['gambar']);
+		return true;
 	}
 
 	public function delDataBarang($id)

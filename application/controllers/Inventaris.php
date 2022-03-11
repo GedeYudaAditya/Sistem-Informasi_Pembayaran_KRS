@@ -158,6 +158,14 @@ class Inventaris extends CI_Controller
 			$this->load->view('admin/master/footer', $this->data);
 
 			if ($this->input->post('submit') === '') {
+
+				$upload = $this->All_model->uploadFile('foto_barang', 'inventaris', 'inventaris');
+				if ($upload['result'] == "success") {
+					$nama_foto = $upload['foto_barang']['file_name'];
+				} else {
+					$this->session->set_flashdata('gagal', 'Ditambahkan, Periksa Kembali Ukuran dan Tipe dari File Foto');
+					redirect('inventaris/tambah_inventaris');
+				}
 				$data = [
 					'kodeBarang' => $this->input->post('kode_barang', true),
 					'namaBarang' => $this->input->post('nama_barang', true),
@@ -170,8 +178,9 @@ class Inventaris extends CI_Controller
 					'keadaanBarang' => $this->input->post('keadaan', true),
 					'deskripsiBarang' => $this->input->post('desk', true),
 					'hakBarang' => $this->input->post('hakBarang', true),
-					'gambar' => $this->input->post('foto_barang', true)
+					'gambar' => $nama_foto
 				];
+
 				if ($this->All_model->addDataBarang($data)) {
 					$this->session->set_flashdata('sukses', 'Barang Berhasil Ditambah');
 					redirect('inventaris/');
@@ -202,6 +211,14 @@ class Inventaris extends CI_Controller
 			$this->load->view('admin/master/footer', $this->data);
 
 			if ($this->input->post('submit') === '') {
+				$upload = $this->All_model->uploadFile('foto_barang', 'inventaris', 'inventaris');
+				if ($upload['result'] == "success") {
+					$this->All_model->deleteFotoBarang($kodeBarang);
+					$nama_foto = $upload['foto_barang']['file_name'];
+				} else {
+					$this->session->set_flashdata('gagal', 'Ditambahkan, Periksa Kembali Ukuran dan Tipe dari File Foto');
+					redirect('inventaris/edit_inventaris/' . $kodeBarang);
+				}
 				$data = [
 					// 'kodeBarang' => $this->input->post('kode_barang', true),
 					'namaBarang' => $this->input->post('nama_barang', true),
@@ -214,7 +231,7 @@ class Inventaris extends CI_Controller
 					'keadaanBarang' => $this->input->post('keadaan', true),
 					'deskripsiBarang' => $this->input->post('desk', true),
 					'hakBarang' => $this->input->post('hakBarang', true),
-					'gambar' => $this->input->post('foto_barang', true)
+					'gambar' => $nama_foto
 				];
 				if ($this->All_model->editDataBarang($data, $kodeBarang)) {
 					$this->session->set_flashdata('sukses', 'Barang Berhasil Diubah');
@@ -232,6 +249,8 @@ class Inventaris extends CI_Controller
 			redirect('login', 'refresh');
 		} else {
 			$this->load->model('All_model');
+			$this->All_model->deleteFotoBarang($id);
+			// die;
 			if ($this->All_model->delDataBarang($id)) {
 				$this->session->set_flashdata('sukses', 'Barang Berhasil Dihapus');
 				redirect('inventaris/');

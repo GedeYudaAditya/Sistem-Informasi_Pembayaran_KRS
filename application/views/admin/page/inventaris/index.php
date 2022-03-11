@@ -166,7 +166,7 @@
  															Ketersediaan Barang <span class="badge badge-light p-1"><?= $item['banyakBarang'] - $item['barangDipinjam'] ?>/<?= $item['banyakBarang'] ?></span>
  														</div>
  														<div>
- 															<img src="https://dummyimage.com/600x400/dbdbdb/0011ff" alt="">
+ 															<img src="<?= base_url() . "assets/upload/Folder_inventaris/" . $item['gambar'] ?>" alt="Gambar Rusak atau Hilang">
  														</div>
  														<h3><?= $item['namaBarang'] ?></h3>
  														<div>Kode Barang : <?= $item['kodeBarang'] ?> | Merk : <?= $item['merk'] ?> | Tahun Pembelian : <?= $item['tahunPembelian'] ?></div>
