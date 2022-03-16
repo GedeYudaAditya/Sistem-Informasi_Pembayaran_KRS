@@ -72,16 +72,16 @@ foreach ($banyakBarang as $b) {
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="#">Peralatan dan Mesin</a>
+						<a class="nav-link active" aria-current="page" href="<?= base_url() ?>inventaris/home">Peralatan dan Mesin</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Furniture</a>
+						<a class="nav-link" href="<?= base_url() ?>inventaris/home">Furniture</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Bendera dan Kain</a>
+						<a class="nav-link" href="<?= base_url() ?>inventaris/home">Bendera dan Kain</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Hiasan dan Lain Lain</a>
+						<a class="nav-link" href="<?= base_url() ?>inventaris/home">Hiasan dan Lain Lain</a>
 					</li>
 				</ul>
 			</div>
@@ -112,7 +112,7 @@ foreach ($banyakBarang as $b) {
 				?>
 				<div class="col-4 mb-5">
 					<div class="card glass" style="width: 14rem;">
-						<img src="<?= base_url() ?>/assets/img/bg/welcome-bg.jpg" class="card-img-top" alt="Card Image">
+						<img src="<?= base_url() . "assets/upload/Folder_inventaris/" . $item['gambar'] ?>" class="card-img-top" alt="Card Image">
 						<div class="icon card-body">
 							<div class="" style="min-height:150px;">
 								<h5 class="card-title"><?= $item['namaBarang'] ?> </h5>
@@ -152,7 +152,7 @@ foreach ($banyakBarang as $b) {
 									Ketersediaan Barang <span class="badge badge-light p-1"><?= $item['banyakBarang'] - $item['barangDipinjam'] ?>/<?= $item['banyakBarang'] ?></span>
 								</div>
 								<div>
-									<img src="https://dummyimage.com/600x400/dbdbdb/0011ff" alt="">
+									<img src="<?= base_url() . "assets/upload/Folder_inventaris/" . $item['gambar'] ?>" alt="Gambar Rusak atau Hilang">
 								</div>
 								<h3><?= $item['namaBarang'] ?></h3>
 								<div>Kode Barang : <?= $item['kodeBarang'] ?> | Merk : <?= $item['merk'] ?> | Tahun Pembelian : <?= $item['tahunPembelian'] ?></div>

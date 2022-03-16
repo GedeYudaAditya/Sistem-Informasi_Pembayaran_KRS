@@ -255,8 +255,18 @@
  												</span>
  												<span class="text">Sedang Dipinjam</span>
  											</div>
- 											<p style="color: mediumseagreen;">Sisi Waktu</p>
- 											<p style="color: mediumseagreen;">[1d : 59h : 59m]</p>
+ 											<div style="color: mediumseagreen;">Sisi Waktu</div>
+ 											<div style="color: mediumseagreen;">
+ 												<div class="font-weight-bold">
+ 													<?php
+														$date = strtotime($p3['lamaPinjam']);
+														$now = time();
+														$day = $date - $now;
+														$days = round($day / (60 * 60 * 24));
+														?>
+ 													<?= $days ?> Hari
+ 												</div>
+ 											</div>
  										<?php elseif ($p3['statusPinjam'] == 'Dikembalikan') : ?>
  											<div class="badge badge-success">
  												<span class="text-white-50">
@@ -278,8 +288,18 @@
  												</span>
  												<span class="text">Terlambat mengembalikan</span>
  											</div>
- 											<p style="color:salmon;">Keterlambatan</p>
- 											<p style="color:salmon;">[1d : 59h : 59m]</p>
+ 											<div style="color:salmon;">Keterlambatan</div>
+ 											<div style="color: salmon;">
+ 												<div class="font-weight-bold">
+ 													<?php
+														$date = strtotime($p3['lamaPinjam']);
+														$now = time();
+														$day = $now - $date;
+														$days = round($day / (60 * 60 * 24));
+														?>
+ 													<?= $days ?> Hari
+ 												</div>
+ 											</div>
  										<?php endif; ?>
 
  										<!-- Modal -->

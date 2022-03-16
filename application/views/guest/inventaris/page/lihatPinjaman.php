@@ -257,7 +257,23 @@
                                                     <span class="text">Sedang Dipinjam</span>
                                                 </div>
                                                 <p style="color: mediumseagreen;">Sisi Waktu</p>
-                                                <p style="color: mediumseagreen;">[1d : 59h : 59m]</p>
+                                                <div style="color: mediumseagreen;" class="">
+                                                    <div class="font-weight-bold">
+                                                        <?php
+                                                        $date = strtotime($p2['lamaPinjam']);
+                                                        $now = time();
+                                                        $day = $date - $now;
+                                                        $days = round($day / (60 * 60 * 24));
+                                                        ?>
+                                                        <?= $days ?> Hari
+                                                    </div>
+                                                </div>
+                                                <div style="color: mediumseagreen;" class="col-auto col-12 row">
+
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="jam"></div>
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="menit"></div>
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="detik"></div>
+                                                </div>
                                             <?php elseif ($p2['statusPinjam'] == 'Dikembalikan') : ?>
                                                 <div class="badge badge-success">
                                                     <span class="text-white-50">
@@ -280,7 +296,23 @@
                                                     <span class="text">Terlambat mengembalikan</span>
                                                 </div>
                                                 <p style="color:salmon;">Keterlambatan</p>
-                                                <p style="color:salmon;">[1d : 59h : 59m]</p>
+                                                <div style="color: salmon;" class="">
+                                                    <div class="font-weight-bold">
+                                                        <?php
+                                                        $date = strtotime($p2['lamaPinjam']);
+                                                        $now = time();
+                                                        $day = $now - $date;
+                                                        $days = round($day / (60 * 60 * 24));
+                                                        ?>
+                                                        <?= $days ?> hari
+                                                    </div>
+                                                </div>
+                                                <div style="color: mediumseagreen;" class="col-auto col-12 row">
+
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="jam"></div>
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="menit"></div>
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="detik"></div>
+                                                </div>
                                             <?php endif; ?>
                                             <!-- Kodisi Stop -->
                                         </td>
@@ -409,7 +441,17 @@
                                                     <span class="text">Sedang Dipinjam</span>
                                                 </div>
                                                 <p style="color: mediumseagreen;">Sisi Waktu</p>
-                                                <p style="color: mediumseagreen;">[1d : 59h : 59m]</p>
+                                                <!-- <p style="color: mediumseagreen;">[1d : 59h : 59m]</p> -->
+                                                <div style="color: mediumseagreen;" class="">
+                                                    <div class="font-weight-bold">
+                                                        <?= date("d, M Y") ?></div>
+                                                </div>
+                                                <div style="color: mediumseagreen;" class="col-auto col-12 row">
+
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="jam"></div>
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="menit"></div>
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="detik"></div>
+                                                </div>
                                             <?php elseif ($p3['statusPinjam'] == 'Dikembalikan') : ?>
                                                 <div class="badge badge-success">
                                                     <span class="text-white-50">
@@ -432,7 +474,17 @@
                                                     <span class="text">Terlambat mengembalikan</span>
                                                 </div>
                                                 <p style="color:salmon;">Keterlambatan</p>
-                                                <p style="color:salmon;">[1d : 59h : 59m]</p>
+                                                <!-- <p style="color:salmon;">[1d : 59h : 59m]</p> -->
+                                                <div style="color: mediumseagreen;" class="">
+                                                    <div class="font-weight-bold">
+                                                        <?= date("d, M Y") ?></div>
+                                                </div>
+                                                <div style="color: mediumseagreen;" class="col-auto col-12 row">
+
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="jam"></div>
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="menit"></div>
+                                                    <div class="h5 mb-0 mr-1 text-xs font-weight-bold text-gray-800" id="detik"></div>
+                                                </div>
                                             <?php endif; ?>
                                             <!-- Kodisi Stop -->
                                         </td>

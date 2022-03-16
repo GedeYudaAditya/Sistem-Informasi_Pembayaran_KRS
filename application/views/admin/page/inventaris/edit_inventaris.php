@@ -21,7 +21,7 @@
 	<div class="card shadow mb-4 py-4 px-4">
 
 		<!-- form Input data -->
-		<form method="post" action="">
+		<form method="post" action="" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-lg">
 					<div class="form-group">
@@ -89,7 +89,7 @@
 			<div class="row">
 				<div class="form-group col">
 					<label for="foto_barang">Foto Barang</label>
-					<input type="file" accept=".jpeg, .jpg, .png" class="form-control form-control-user" id="foto_barang" name="foto_barang">
+					<input type="file" class="form-control form-control-user" id="foto_barang" name="foto_barang">
 					<!-- <?= form_error('foto_barang', '<small class="text-danger pl-3">', '</small>'); ?> -->
 				</div>
 

@@ -42,6 +42,23 @@ class Inventaris extends CI_Controller
 	// 		// show_404();
 	// 	}
 	// }
+	// public static $indicator;
+
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->model('All_model');
+		$data = $this->All_model->allDataPinjamanStatus('Sedang Dipinjam');
+		// var_dump($data);
+		foreach ($data as $peminjaman) {
+			if (strtotime($peminjaman['lamaPinjam']) < strtotime(date("Y-m-d"))) {
+				// echo (date("Y-m-d") . "<br>");
+				// echo (date($peminjaman['lamaPinjam']));
+				$this->All_model->ceklambat($peminjaman['idPeminjaman']);
+			}
+		}
+	}
+
 	public function index()
 	{
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
@@ -158,6 +175,14 @@ class Inventaris extends CI_Controller
 			$this->load->view('admin/master/footer', $this->data);
 
 			if ($this->input->post('submit') === '') {
+
+				$upload = $this->All_model->uploadFile('foto_barang', 'inventaris', 'inventaris');
+				if ($upload['result'] == "success") {
+					$nama_foto = $upload['foto_barang']['file_name'];
+				} else {
+					$this->session->set_flashdata('gagal', 'Ditambahkan, Periksa Kembali Ukuran dan Tipe dari File Foto');
+					redirect('inventaris/tambah_inventaris');
+				}
 				$data = [
 					'kodeBarang' => $this->input->post('kode_barang', true),
 					'namaBarang' => $this->input->post('nama_barang', true),
@@ -170,8 +195,9 @@ class Inventaris extends CI_Controller
 					'keadaanBarang' => $this->input->post('keadaan', true),
 					'deskripsiBarang' => $this->input->post('desk', true),
 					'hakBarang' => $this->input->post('hakBarang', true),
-					'gambar' => $this->input->post('foto_barang', true)
+					'gambar' => $nama_foto
 				];
+
 				if ($this->All_model->addDataBarang($data)) {
 					$this->session->set_flashdata('sukses', 'Barang Berhasil Ditambah');
 					redirect('inventaris/');
@@ -202,6 +228,14 @@ class Inventaris extends CI_Controller
 			$this->load->view('admin/master/footer', $this->data);
 
 			if ($this->input->post('submit') === '') {
+				$upload = $this->All_model->uploadFile('foto_barang', 'inventaris', 'inventaris');
+				if ($upload['result'] == "success") {
+					$this->All_model->deleteFotoBarang($kodeBarang);
+					$nama_foto = $upload['foto_barang']['file_name'];
+				} else {
+					$this->session->set_flashdata('gagal', 'Ditambahkan, Periksa Kembali Ukuran dan Tipe dari File Foto');
+					redirect('inventaris/edit_inventaris/' . $kodeBarang);
+				}
 				$data = [
 					// 'kodeBarang' => $this->input->post('kode_barang', true),
 					'namaBarang' => $this->input->post('nama_barang', true),
@@ -214,7 +248,7 @@ class Inventaris extends CI_Controller
 					'keadaanBarang' => $this->input->post('keadaan', true),
 					'deskripsiBarang' => $this->input->post('desk', true),
 					'hakBarang' => $this->input->post('hakBarang', true),
-					'gambar' => $this->input->post('foto_barang', true)
+					'gambar' => $nama_foto
 				];
 				if ($this->All_model->editDataBarang($data, $kodeBarang)) {
 					$this->session->set_flashdata('sukses', 'Barang Berhasil Diubah');
@@ -232,6 +266,8 @@ class Inventaris extends CI_Controller
 			redirect('login', 'refresh');
 		} else {
 			$this->load->model('All_model');
+			$this->All_model->deleteFotoBarang($id);
+			// die;
 			if ($this->All_model->delDataBarang($id)) {
 				$this->session->set_flashdata('sukses', 'Barang Berhasil Dihapus');
 				redirect('inventaris/');
@@ -371,6 +407,7 @@ class Inventaris extends CI_Controller
 		$this->data['title'] = "SI Inventaris - Home";
 		$this->data['search'] = false;
 		$this->load->model('All_model');
+		// var_dump(self::$indicator);
 		$this->data['banyakKategori'] = $this->All_model->countKategoriBarang();
 		$this->data['banyakBarang'] = $this->All_model->countDataBarang();
 		$this->data['banyakDipinjam'] = $this->All_model->countDataBarangDipinjam();
