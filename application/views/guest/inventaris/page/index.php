@@ -72,16 +72,16 @@ foreach ($banyakBarang as $b) {
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="#">Peralatan dan Mesin</a>
+						<a class="nav-link active" aria-current="page" href="<?= base_url() ?>inventaris/home">Peralatan dan Mesin</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Furniture</a>
+						<a class="nav-link" href="<?= base_url() ?>inventaris/home">Furniture</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Bendera dan Kain</a>
+						<a class="nav-link" href="<?= base_url() ?>inventaris/home">Bendera dan Kain</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Hiasan dan Lain Lain</a>
+						<a class="nav-link" href="<?= base_url() ?>inventaris/home">Hiasan dan Lain Lain</a>
 					</li>
 				</ul>
 			</div>

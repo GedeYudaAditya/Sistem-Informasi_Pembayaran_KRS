@@ -259,7 +259,14 @@
                                                 <p style="color: mediumseagreen;">Sisi Waktu</p>
                                                 <div style="color: mediumseagreen;" class="">
                                                     <div class="font-weight-bold">
-                                                        <?= date("d, M Y") ?></div>
+                                                        <?php
+                                                        $date = strtotime($p2['lamaPinjam']);
+                                                        $now = time();
+                                                        $day = $date - $now;
+                                                        $days = round($day / (60 * 60 * 24));
+                                                        ?>
+                                                        <?= $days ?> Hari
+                                                    </div>
                                                 </div>
                                                 <div style="color: mediumseagreen;" class="col-auto col-12 row">
 
@@ -291,7 +298,14 @@
                                                 <p style="color:salmon;">Keterlambatan</p>
                                                 <div style="color: salmon;" class="">
                                                     <div class="font-weight-bold">
-                                                        <?= date("d, M Y") ?></div>
+                                                        <?php
+                                                        $date = strtotime($p2['lamaPinjam']);
+                                                        $now = time();
+                                                        $day = $now - $date;
+                                                        $days = round($day / (60 * 60 * 24));
+                                                        ?>
+                                                        <?= $days ?> hari
+                                                    </div>
                                                 </div>
                                                 <div style="color: mediumseagreen;" class="col-auto col-12 row">
 

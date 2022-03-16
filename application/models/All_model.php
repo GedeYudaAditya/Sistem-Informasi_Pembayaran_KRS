@@ -2485,6 +2485,16 @@ class All_model extends CI_Model
 
 		return $this->db->get()->result_array();
 	}
+	public function allDataBarangWithCategory($category)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_barang');
+		$this->db->join('s7_inv_kategori', 's7_inv_barang.idKategori = s7_inv_kategori.idKategori');
+		$this->db->join('s1_hmj', 's7_inv_barang.idKepengurusan = s1_hmj.id_hmj');
+		$this->db->where('namaKategori', $category);
+
+		return $this->db->get()->result_array();
+	}
 
 	public function countDataBarang()
 	{
@@ -2772,6 +2782,16 @@ class All_model extends CI_Model
 		// $this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang', 'left');
 		return $this->db->get()->result_array();
 	}
+	public function allDataPinjamanStatus($statusPinjam)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_peminjaman');
+		$this->db->join('s7_inv_user', 's7_inv_user.idUser = s7_inv_peminjaman.idUser');
+		$this->db->where('status', 'Diterima');
+		$this->db->where('statusPinjam', $statusPinjam);
+		// $this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang', 'left');
+		return $this->db->get()->result_array();
+	}
 	public function allDataPinjamanTerima()
 	{
 		$this->db->select('*');
@@ -2790,9 +2810,11 @@ class All_model extends CI_Model
 		$this->db->join('s7_inv_user', 's7_inv_user.idUser = s7_inv_peminjaman.idUser');
 		// $this->db->where('status', 'Ditolak');
 		// $this->db->or_where('status', 'Diterima');
-		$this->db->where('status', 'Menunggu');
-		$this->db->where('statusPinjam', 'Sedang Dipinjam');
-		$this->db->or_where('statusPinjam', 'Lambat');
+		$query = "`status` = 'Menunggu' AND (`statusPinjam` = 'Sedang Dipinjam' OR `statusPinjam` = 'Lambat')";
+		// $this->db->where('status', 'Menunggu');
+		// $this->db->where('statusPinjam', 'Sedang Dipinjam');
+		// $this->db->or_where('statusPinjam', 'Lambat');
+		$this->db->where($query);
 		// $this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang', 'left');
 		return $this->db->get()->result_array();
 	}
@@ -2886,6 +2908,20 @@ class All_model extends CI_Model
 		$this->db->or_where('status', 'Ditolak');
 		$this->db->where('s7_inv_peminjaman.idPeminjaman', $id);
 		return $this->db->get()->result_array();
+	}
+
+	public function ceklambat($id)
+	{
+		$field = [
+			'statusPinjam' => 'Lambat',
+		];
+
+		$this->db->where('idPeminjaman', $id);
+		if ($this->db->update('s7_inv_peminjaman', $field)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function terima($id)

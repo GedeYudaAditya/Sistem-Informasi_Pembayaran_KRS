@@ -42,6 +42,23 @@ class Inventaris extends CI_Controller
 	// 		// show_404();
 	// 	}
 	// }
+	// public static $indicator;
+
+	function __construct()
+	{
+		parent::__construct();
+		$this->load->model('All_model');
+		$data = $this->All_model->allDataPinjamanStatus('Sedang Dipinjam');
+		// var_dump($data);
+		foreach ($data as $peminjaman) {
+			if (strtotime($peminjaman['lamaPinjam']) < strtotime(date("Y-m-d"))) {
+				// echo (date("Y-m-d") . "<br>");
+				// echo (date($peminjaman['lamaPinjam']));
+				$this->All_model->ceklambat($peminjaman['idPeminjaman']);
+			}
+		}
+	}
+
 	public function index()
 	{
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(inv)) {
@@ -390,6 +407,7 @@ class Inventaris extends CI_Controller
 		$this->data['title'] = "SI Inventaris - Home";
 		$this->data['search'] = false;
 		$this->load->model('All_model');
+		// var_dump(self::$indicator);
 		$this->data['banyakKategori'] = $this->All_model->countKategoriBarang();
 		$this->data['banyakBarang'] = $this->All_model->countDataBarang();
 		$this->data['banyakDipinjam'] = $this->All_model->countDataBarangDipinjam();
