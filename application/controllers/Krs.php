@@ -4,8 +4,8 @@ class Krs extends CI_Controller
 
     public function index()
     {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(group)) {
-            redirect('krs');
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs', 'home');
         } else {
             $this->data['title'] = "KRS - Data Mahasiswa";
             $this->data['active'] = "11";
@@ -49,6 +49,7 @@ class Krs extends CI_Controller
                     'prodi' => 'Manajemen Informasi'
                 ]
             ];
+
             //var_dump($this->All_model->getingAll());
             $data['siswa'] = $this->All_model->getingAll();
             $this->load->view("admin/master/header", $this->data);
@@ -59,7 +60,7 @@ class Krs extends CI_Controller
 
     public function tambah_Mahasiswa()
     {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(group)) {
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
             redirect('krs');
         } else {
             $this->data['title'] = "KRS - Tambah Data Mahasiswa";
@@ -178,7 +179,7 @@ class Krs extends CI_Controller
 
     public function tambah_tahun()
     {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(group)) {
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
             redirect('krs');
         } else {
             $this->data['title'] = "KRS - Tambah Tahun";
@@ -222,7 +223,7 @@ class Krs extends CI_Controller
 
     public function ubahTahun($tahun)
     {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(group)) {
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
             redirect('krs');
         } else {
             $this->data['title'] = "KRS - Ubah Tahun";
@@ -335,7 +336,7 @@ class Krs extends CI_Controller
 
     // public function update_info()
     // {
-    //     if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(group)) {
+    //     if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
     //         redirect('krs');
     //     } else {
     //         $this->data['title'] = "KRS - Update info";
@@ -377,18 +378,64 @@ class Krs extends CI_Controller
     // BAGIAN CLIENT SIDE
     public function Home()
     {
-        $nim = $this->input->post('nim');
+		if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(krs)) {
+			redirect('sso_hmj', 'refresh');
+		} else {
 
-        $this->load->model('All_model');
-        $data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
-        $data['mhs'] = $this->All_model->getMahasiswaById($nim);
-        $data['tahun'] = $this->All_model->getThn();
-        $data['updated_info'] = $this->All_model->infos();
+			$this->data['title'] = $this->lang->line('login_heading');
 
-        $data['title'] = "Home";
-        $this->load->view("guest/krs/master/header", $data);
-        $this->load->view("guest/krs/page/index", $data);
-        $this->load->view("guest/krs/master/footer", $data);
+			// validate form input
+			$this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
+			$this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
+
+			if ($this->form_validation->run() === TRUE) {
+				// check to see if the user is logging in
+				// check for "remember me"
+				$remember = (bool) $this->input->post('remember');
+
+				if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
+					//if the login is successful
+					//redirect them back to the home page
+					$this->session->set_flashdata('message', $this->ion_auth->messages());
+					redirect('sso_hmj', 'refresh');
+				} else {
+					// if the login was un-successful
+					// redirect them back to the login page
+					$this->session->set_flashdata('message', $this->ion_auth->errors());
+					redirect('login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+				}
+			} else {
+				// the user is not logging in so display the login page
+				// set the flash data error message if there is one
+				$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+				$this->data['identity'] = [
+					'name' => 'identity',
+					'id' => 'identity',
+					'type' => 'text',
+					'value' => $this->form_validation->set_value('identity'),
+				];
+
+				$this->data['password'] = [
+					'name' => 'password',
+					'id' => 'password',
+					'type' => 'password',
+				];
+
+				$nim = $this->input->post('nim');
+
+				$this->load->model('All_model');
+				$data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
+				$data['mhs'] = $this->All_model->getMahasiswaById($nim);
+				$data['tahun'] = $this->All_model->getThn();
+				$data['updated_info'] = $this->All_model->infos();
+		
+				$data['title'] = "Home";
+				$this->load->view("guest/krs/master/header", $data);
+				$this->load->view("guest/krs/page/index", $this->data);
+				$this->load->view("guest/krs/master/footer", $data);
+			}
+		}
     }
     // END CLIENT SIDE
 
