@@ -211,17 +211,17 @@
 							</div>
 							<!-- Nav Item - Pages Collapse Menu -->
 							<li class="nav-item">
-							<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDosen" aria-expanded="true" aria-controls="collapseDosen">
-								<i class="fas fa-hotel"></i>
-								<i><span class="text-warning">Menu Dosen 1</span></i>
-							</a>
-							<div id="collapseDosen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-								<div class="bg-white py-2 collapse-inner rounded">
-									<h6 class="collapse-header">Daftar Fitur:</h6>
-									<a class="collapse-item" href="<?= base_url() ?>">Sub Menu 1</a>
-									<a class="collapse-item" href="<?= base_url() ?>">Sub Menu 2</a>
+								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDosen" aria-expanded="true" aria-controls="collapseDosen">
+									<i class="fas fa-hotel"></i>
+									<i><span class="text-warning">Menu Dosen 1</span></i>
+								</a>
+								<div id="collapseDosen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+									<div class="bg-white py-2 collapse-inner rounded">
+										<h6 class="collapse-header">Daftar Fitur:</h6>
+										<a class="collapse-item" href="<?= base_url() ?>">Sub Menu 1</a>
+										<a class="collapse-item" href="<?= base_url() ?>">Sub Menu 2</a>
+									</div>
 								</div>
-							</div>
 							</li>
 						<?php } ?>
 
@@ -231,8 +231,8 @@
 							<div class="sidebar-heading">
 								Layanan Mahasiswa
 							</div>
-								<!-- Nav Item - Pages Collapse Menu -->
-								<li class="nav-item">
+							<!-- Nav Item - Pages Collapse Menu -->
+							<li class="nav-item">
 								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMahasiswa" aria-expanded="true" aria-controls="collapseMahasiswa">
 									<i class="fas fa-hotel"></i>
 									<i><span class="text-warning">Menu Mahasiswa 1</span></i>
@@ -240,11 +240,11 @@
 								<div id="collapseMahasiswa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 									<div class="bg-white py-2 collapse-inner rounded">
 										<h6 class="collapse-header">Daftar Fitur:</h6>
-										<a class="collapse-item" href="<?= base_url() ?>">Sub Menu 1</a>
+										<a class="collapse-item" href="<?= base_url() ?>Krs/upload_bukti">Upload Bukti Pembayaran</a>
 										<a class="collapse-item" href="<?= base_url() ?>">Sub Menu 2</a>
 									</div>
 								</div>
-								</li>
+							</li>
 						<?php } ?>
 
 						<!-- Divider -->
