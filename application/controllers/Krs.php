@@ -439,4 +439,18 @@ class Krs extends CI_Controller
     }
     // END CLIENT SIDE
 
+	// Method Untuk Dosen
+	public function viewMahasiswa()
+	{
+		$this->data['title'] = "KRS - Data Mahasiswa";
+		$this->data['active'] = "11";
+		$this->data['flip'] = "false";
+		$this->data['ckeditor'] = "krs";
+		$id = $_SESSION['user_id'];
+		$this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+		$this->load->view("admin/master/header", $this->data);
+		$this->load->view("admin/page/krs/dosen/index");
+		$this->load->view("admin/master/footer", $this->data);
+	}
 }
