@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            <div class="collapse show" id="thn_ajaran" data-parent="#tampilan_validasi">
+            <div class="collapse show" id="thn_krs" data-parent="#tampilan_validasi">
                 <div class="card-body row justify-content-center text-center p-1">
                     <div class="col-lg-6 col-md-8">
                         <div class="col-lg-12 mb-3">
@@ -75,7 +75,7 @@
                                 <div class="card-body p-0">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tahun Ajaran</div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tahun KRS</div>
                                             <div class="p mb-0 font-weight-bold text-gray-800">
                                                 <?php echo "TEST" ?></div>
                                         </div>
