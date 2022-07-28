@@ -7,7 +7,7 @@
             <div class="subscribe-content contact-box rounded p-4  mt-5 mt-lg-0">
                 <div class="row">
                     <div class="col-12">
-                        <form action="" method="post">
+                        <form action="" method="post" enctype="multipart/form-data">
                             <div class="form-group ">
                                 <label for="nama_lengkap">Nama</label>
                                 <input type="text" class="form-control <?= form_error('nama_lengkap') ? 'is-invalid' : NULL; ?>" id="nama_lengkap" name="nama_lengkap" value="<?= set_value('nama_lengkap', $this->session->userdata('current_client')); ?>">
@@ -24,7 +24,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="prodi">Prodi</label>
-                                <select class="form-control" id="exampleFormControlSelect2">
+                                <select class="form-control" id="prodi" name="prodi">
                                     <?php foreach ($prodis as $prodi) : ?>
                                         <option><?= $prodi['prodi']; ?></option>
                                     <?php endforeach ?>
@@ -32,11 +32,12 @@
                             </div>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                    <input type="file" class="custom-file-input" id="file_bukti" name="file_bukti">
+                                    <label class="custom-file-label" for="file_bukti">Choose file</label>
                                 </div>
                             </div>
                             <div class="float-right my-3">
+                                <button type="reset" class="btn btn-danger">Reset</button>
                                 <button type="submit" class="btn btn-success">Kirim</button>
                             </div>
                         </form>

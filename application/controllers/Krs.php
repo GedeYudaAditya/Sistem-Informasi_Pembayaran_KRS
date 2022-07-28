@@ -491,6 +491,26 @@ class Krs extends CI_Controller
                 'max_length' => 'Input {field} tidak valid'
             ]
         );
+        $this->form_validation->set_rules(
+            'nim',
+            'NIM',
+            'required|numeric|max_length[10]',
+            [
+                'required'   => 'Lengkapi {field} terlebih dahulu',
+                'numeric'    => 'Input {field} tidak valid',
+                'max_length' => 'Input {field} tidak valid'
+            ]
+        );
+        $this->form_validation->set_rules(
+            'file_bukti',
+            'File Bukti',
+            'required|numeric|max_length[10]',
+            [
+                'required'   => 'Lengkapi {field} terlebih dahulu',
+                'numeric'    => 'Input {field} tidak valid',
+                'max_length' => 'Input {field} tidak valid'
+            ]
+        );
         if ($this->form_validation->run() == FALSE) {
 
             $this->load->view("admin/master/header", $this->data);
