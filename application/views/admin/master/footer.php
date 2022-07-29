@@ -29,7 +29,8 @@
     <script src="<?= base_url() ?>assets/js/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- Javascript Plugin-->
-    <script src="<?= base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script  src="<?= base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script  src="<?= base_url() ?>assets/vendor/bootstrap/v5/bootstrap.bundle.js"></script>
     <script src="<?= base_url() ?>assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Sweetalert plugin-->
@@ -61,6 +62,8 @@
     <script src="<?= base_url() ?>assets/js/demo/datatables-demo.js"></script>
     <script src="<?= base_url() ?>assets/js/table.js"></script>
 
+    <!-- Tambah data -->
+    <script src="<?= base_url() ?>assets/js/upload_bukti.js"></script>
     <!-- Ckeditor plugin -->
     <?php if ($active == "4" || $active == "10" || $active == "5") { ?>
         <script src="<?= base_url() ?>assets/ckeditor/ckeditor.js"></script>

@@ -378,68 +378,150 @@ class Krs extends CI_Controller
     // BAGIAN CLIENT SIDE
     public function Home()
     {
-		if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(krs)) {
-			redirect('sso_hmj', 'refresh');
-		} else {
+        if ($this->ion_auth->logged_in() && $this->ion_auth->in_group(krs)) {
+            redirect('sso_hmj', 'refresh');
+        } else {
 
-			$this->data['title'] = $this->lang->line('login_heading');
+            $this->data['title'] = $this->lang->line('login_heading');
 
-			// validate form input
-			$this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
-			$this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
+            // validate form input
+            $this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
+            $this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
 
-			if ($this->form_validation->run() === TRUE) {
-				// check to see if the user is logging in
-				// check for "remember me"
-				$remember = (bool) $this->input->post('remember');
+            if ($this->form_validation->run() === TRUE) {
+                // check to see if the user is logging in
+                // check for "remember me"
+                $remember = (bool) $this->input->post('remember');
 
-				if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
-					//if the login is successful
-					//redirect them back to the home page
-					$this->session->set_flashdata('message', $this->ion_auth->messages());
-					redirect('sso_hmj', 'refresh');
-				} else {
-					// if the login was un-successful
-					// redirect them back to the login page
-					$this->session->set_flashdata('message', $this->ion_auth->errors());
-					redirect('login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
-				}
-			} else {
-				// the user is not logging in so display the login page
-				// set the flash data error message if there is one
-				$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+                if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
+                    //if the login is successful
+                    //redirect them back to the home page
+                    $this->session->set_flashdata('message', $this->ion_auth->messages());
+                    redirect('sso_hmj', 'refresh');
+                } else {
+                    // if the login was un-successful
+                    // redirect them back to the login page
+                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    redirect('login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+                }
+            } else {
+                // the user is not logging in so display the login page
+                // set the flash data error message if there is one
+                $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
-				$this->data['identity'] = [
-					'name' => 'identity',
-					'id' => 'identity',
-					'type' => 'text',
-					'value' => $this->form_validation->set_value('identity'),
-				];
+                $this->data['identity'] = [
+                    'name' => 'identity',
+                    'id' => 'identity',
+                    'type' => 'text',
+                    'value' => $this->form_validation->set_value('identity'),
+                ];
 
-				$this->data['password'] = [
-					'name' => 'password',
-					'id' => 'password',
-					'type' => 'password',
-				];
+                $this->data['password'] = [
+                    'name' => 'password',
+                    'id' => 'password',
+                    'type' => 'password',
+                ];
 
-				$nim = $this->input->post('nim');
+                $nim = $this->input->post('nim');
 
-				$this->load->model('All_model');
-				$data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
-				$data['mhs'] = $this->All_model->getMahasiswaById($nim);
-				$data['tahun'] = $this->All_model->getThn();
-				$data['updated_info'] = $this->All_model->infos();
-		
-				$data['title'] = "Home";
-				$this->load->view("guest/krs/master/header", $data);
-				$this->load->view("guest/krs/page/index", $this->data);
-				$this->load->view("guest/krs/master/footer", $data);
-			}
-		}
+                $this->load->model('All_model');
+                $data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
+                $data['mhs'] = $this->All_model->getMahasiswaById($nim);
+                $data['tahun'] = $this->All_model->getThn();
+                $data['updated_info'] = $this->All_model->infos();
+
+                $data['title'] = "Home";
+                $this->load->view("guest/krs/master/header", $data);
+                $this->load->view("guest/krs/page/index", $this->data);
+                $this->load->view("guest/krs/master/footer", $data);
+            }
+        }
     }
     // END CLIENT SIDE
+    // Mahasiswa
+    public function upload_bukti()
+    {
+        $this->load->library('form_validation');
+        $this->load->model('All_model');
+
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+
+
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = "9";
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $this->data['title'] = "Upload Bukti";
+
+        $this->data['prodis'] = [
+            [
+                'id' => 'PTI',
+                'prodi' => 'Pendidikan Teknik Informatika'
+            ],
+            [
+                'id' => 'SI',
+                'prodi' => 'Sistem Informatika'
+            ],
+            [
+                'id' => 'ILKOM',
+                'prodi' => 'Ilmu Komputer'
+            ],
+            [
+                'id' => 'MI',
+                'prodi' => 'Manajemen Informasi'
+            ]
+        ];
+
+        $this->form_validation->set_rules(
+            'nama_lengkap',
+            'Nama',
+            'required',
+            [
+                'required' => 'Lengkapi {field} terlebih dahulu'
+            ]
+        );
+        $this->form_validation->set_rules(
+            'nim',
+            'NIM',
+            'required|numeric|max_length[10]',
+            [
+                'required'   => 'Lengkapi {field} terlebih dahulu',
+                'numeric'    => 'Input {field} tidak valid',
+                'max_length' => 'Input {field} tidak valid'
+            ]
+        );
+        $this->form_validation->set_rules(
+            'nim',
+            'NIM',
+            'required|numeric|max_length[10]',
+            [
+                'required'   => 'Lengkapi {field} terlebih dahulu',
+                'numeric'    => 'Input {field} tidak valid',
+                'max_length' => 'Input {field} tidak valid'
+            ]
+        );
+        $this->form_validation->set_rules(
+            'file_bukti',
+            'File Bukti',
+            'required|numeric|max_length[10]',
+            [
+                'required'   => 'Lengkapi {field} terlebih dahulu',
+                'numeric'    => 'Input {field} tidak valid',
+                'max_length' => 'Input {field} tidak valid'
+            ]
+        );
+        if ($this->form_validation->run() == FALSE) {
+
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/mahasiswa/halaman_upload_bukti", $this->data);
+            $this->load->view("admin/master/footer", $this->data);
+        }
+    }
 
 	// Method Untuk Dosen
+    // Start View Mahasiswa
 	public function viewMahasiswa()
 	{
 		$this->data['title'] = "KRS - Data Mahasiswa";
@@ -450,7 +532,82 @@ class Krs extends CI_Controller
 		$this->data['group'] = $this->ion_auth_model->getGroup($id);
 
 		$this->load->view("admin/master/header", $this->data);
-		$this->load->view("admin/page/krs/dosen/index");
+		$this->load->view("admin/page/krs/dosen/viewValidasiMahasiswa");
 		$this->load->view("admin/master/footer", $this->data);
 	}
+
+    // End View Mahasiswa
+
+    // Start View MintaBukti 
+    public function viewMintaBukti()
+    {
+        $this->data['title'] = "KRS - Data Mahasiswa";
+		$this->data['active'] = "11";
+		$this->data['flip'] = "false";
+		$this->data['ckeditor'] = "krs";
+		$id = $_SESSION['user_id'];
+		$this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+		$this->load->view("admin/master/header", $this->data);
+		$this->load->view("admin/page/krs/dosen/mintaBukti");
+		$this->load->view("admin/master/footer", $this->data);
+    }
+    // End View MintaBukti
+
+    // Start View Form Buat Bukti
+    public function viewFormBuatBukti()
+    {
+        $this->data['title'] = "KRS - Data Mahasiswa";
+		$this->data['active'] = "11";
+		$this->data['flip'] = "false";
+		$this->data['ckeditor'] = "krs";
+		$id = $_SESSION['user_id'];
+		$this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+		$this->load->view("admin/master/header", $this->data);
+		$this->load->view("admin/page/krs/dosen/formBuatBukti");
+		$this->load->view("admin/master/footer", $this->data);
+    }
+    // End View Form Buat Bukti
+
+
+    // Method untuk menampilkan status validasi
+    public function status_validasi()
+    {
+        $this->load->library('form_validation');
+        $this->load->model('All_model');
+
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $this->data['title'] = "Tampilan Validasi";
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/mahasiswa/status_validasi", $this->data);
+            $this->load->view("admin/master/footer", $this->data);
+    }
+
+    // Method untuk memilih tahun dan semester yang akan dicek
+    public function pilih_validasi()
+    {
+        $this->load->library('form_validation');
+        $this->load->model('All_model');
+
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $this->data['title'] = "Tampilan Validasi";
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/mahasiswa/pilih_validasi", $this->data);
+            $this->load->view("admin/master/footer", $this->data);
+    }
+
+
 }
