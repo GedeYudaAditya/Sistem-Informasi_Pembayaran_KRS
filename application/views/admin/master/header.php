@@ -235,13 +235,13 @@
 								<li class="nav-item">
 								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMahasiswa" aria-expanded="true" aria-controls="collapseMahasiswa">
 									<i class="fas fa-hotel"></i>
-									<i><span class="text-warning">Menu Mahasiswa 1</span></i>
+									<i><span class="text-warning">KRS Checker</span></i>
 								</a>
 								<div id="collapseMahasiswa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 									<div class="bg-white py-2 collapse-inner rounded">
 										<h6 class="collapse-header">Daftar Fitur:</h6>
 										<a class="collapse-item" href="<?= base_url() ?>">Sub Menu 1</a>
-										<a class="collapse-item" href="<?= base_url() ?>">Sub Menu 2</a>
+										<a class="collapse-item" href="<?= base_url('krs/pilih_validasi') ?>">Cek Status Validasi</a>
 									</div>
 								</div>
 								</li>
