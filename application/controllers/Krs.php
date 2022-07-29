@@ -448,6 +448,7 @@ class Krs extends CI_Controller
         $this->data['flip'] = "false";
         $this->data['ckeditor'] = "krs";
 
+
         $id = $_SESSION['user_id'];
 
         $this->data['group'] = "9";
@@ -518,4 +519,95 @@ class Krs extends CI_Controller
             $this->load->view("admin/master/footer", $this->data);
         }
     }
+
+	// Method Untuk Dosen
+    // Start View Mahasiswa
+	public function viewMahasiswa()
+	{
+		$this->data['title'] = "KRS - Data Mahasiswa";
+		$this->data['active'] = "11";
+		$this->data['flip'] = "false";
+		$this->data['ckeditor'] = "krs";
+		$id = $_SESSION['user_id'];
+		$this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+		$this->load->view("admin/master/header", $this->data);
+		$this->load->view("admin/page/krs/dosen/viewValidasiMahasiswa");
+		$this->load->view("admin/master/footer", $this->data);
+	}
+
+    // End View Mahasiswa
+
+    // Start View MintaBukti 
+    public function viewMintaBukti()
+    {
+        $this->data['title'] = "KRS - Data Mahasiswa";
+		$this->data['active'] = "11";
+		$this->data['flip'] = "false";
+		$this->data['ckeditor'] = "krs";
+		$id = $_SESSION['user_id'];
+		$this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+		$this->load->view("admin/master/header", $this->data);
+		$this->load->view("admin/page/krs/dosen/mintaBukti");
+		$this->load->view("admin/master/footer", $this->data);
+    }
+    // End View MintaBukti
+
+    // Start View Form Buat Bukti
+    public function viewFormBuatBukti()
+    {
+        $this->data['title'] = "KRS - Data Mahasiswa";
+		$this->data['active'] = "11";
+		$this->data['flip'] = "false";
+		$this->data['ckeditor'] = "krs";
+		$id = $_SESSION['user_id'];
+		$this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+		$this->load->view("admin/master/header", $this->data);
+		$this->load->view("admin/page/krs/dosen/formBuatBukti");
+		$this->load->view("admin/master/footer", $this->data);
+    }
+    // End View Form Buat Bukti
+
+
+    // Method untuk menampilkan status validasi
+    public function status_validasi()
+    {
+        $this->load->library('form_validation');
+        $this->load->model('All_model');
+
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $this->data['title'] = "Tampilan Validasi";
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/mahasiswa/status_validasi", $this->data);
+            $this->load->view("admin/master/footer", $this->data);
+    }
+
+    // Method untuk memilih tahun dan semester yang akan dicek
+    public function pilih_validasi()
+    {
+        $this->load->library('form_validation');
+        $this->load->model('All_model');
+
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $this->data['title'] = "Tampilan Validasi";
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/mahasiswa/pilih_validasi", $this->data);
+            $this->load->view("admin/master/footer", $this->data);
+    }
+
+
 }
