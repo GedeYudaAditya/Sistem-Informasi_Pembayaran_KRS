@@ -62,6 +62,8 @@
     <script src="<?= base_url() ?>assets/js/demo/datatables-demo.js"></script>
     <script src="<?= base_url() ?>assets/js/table.js"></script>
 
+    <!-- Tambah data -->
+    <script src="<?= base_url() ?>assets/js/upload_bukti.js"></script>
     <!-- Ckeditor plugin -->
     <?php if ($active == "4" || $active == "10" || $active == "5") { ?>
         <script src="<?= base_url() ?>assets/ckeditor/ckeditor.js"></script>
