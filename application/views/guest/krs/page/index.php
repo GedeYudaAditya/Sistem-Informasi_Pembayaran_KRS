@@ -13,49 +13,58 @@
                 <!-- Contact Box -->
                 <div class="contact-box bg-white text-center rounded p-4 p-sm-5 mt-5 mt-lg-0 shadow-lg">
                     <!-- Contact Form -->
-                    <form id="contact-form" method="POST" action="">
-                        <div class="contact-top">
+					<?php echo form_open("auth/login"); ?>
+						<div class="contact-top">
                             <h3 class="contact-title">Cek Pembayaran KRS</h3>
                             <h5 class="text-secondary fw-3 py-3">Silakan masukkan informasi berikut untuk mengecek pembayaran krs mahasiswa</h5>
+							<?php if ($message) {
+								echo '<div id="infoMessage" class="alert-danger alert" role="alert">' .
+									$message
+									. '</div>';
+							};
+							?>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <select name="tahun" id="tahun" class="form-control" required>
-                                        <option value="" disabled selected hidden>Tahun Krs</option>
-                                        <?php foreach ($tahun as $thn) : ?>
-                                            <option value="<?= $thn['tahun']; ?>"><?= $thn['tahun']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select name="semester" id="semester" class="form-control" required>
-                                        <option value="" disabled selected hidden>Semester</option>
-                                        <option value="Ganjil">Ganjil</option>
-                                        <option value="Genap">Genap</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" onkeyup="checkProdi()">
-                                    <input type="text" id="nim" pattern="[0-9]*" minlength="10" maxlength="10" class="form-control" name="nim" placeholder="Nim Mahasiswa" required="required">
-                                </div>
-                                <div class="form-group">
-                                    <select name="prodi" id="prodi" class="form-control" required>
-                                        <option value="" disabled selected hidden>Prodi Mahasiswa</option>
-                                        <option value="05">Pendidikan Teknik Informatika</option>
-                                        <option value="02">Manajemen Informatika</option>
-                                        <option value="09">Sistem Informasi</option>
-                                        <option value="10">Ilmu Komputer</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-bordered w-100 mt-3 mt-sm-4" name="submit" type="submit" id="submit">
-                                    Cari Mahasiswa
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <p class="form-message"></p>
+						<?php if ($this->session->flashdata('gagal')) : ?>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+								Anda <strong>Gagal</strong> <?= $this->session->flashdata('gagal'); ?>
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						<?php endif; ?>
+						<div class="row">
+							<div class="col-12">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-envelope-open"></i></span>
+										</div>
+										<?php echo form_input($identity, '', 'class="form-control" placeholder="Email"'); ?>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+										</div>
+										<?php echo form_input($password, '', ' class="form-control" placeholder="Password"'); ?>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 mt-3" style="text-align: left;">
+								<p>
+									<?php echo form_checkbox('remember', '1', FALSE, 'id="remember"'); ?>
+									<?php echo 'Ingat Saya'; ?>
+								</p>
+							</div>
+							<div class="col-12">
+								<?php echo form_submit('submit', "Masuk", 'class="btn btn-bordered w-100 mt-3 mt-sm-4"'); ?>
+							</div>
+							<div class="col-12">
+								<span class="d-block pt-2 mt-4 border-top"><a href="forgot_password"><?php echo lang('login_forgot_password'); ?></a></span>
+							</div>
+						</div>
+					<?php echo form_close(); ?>
                 </div>
             </div>
         </div>

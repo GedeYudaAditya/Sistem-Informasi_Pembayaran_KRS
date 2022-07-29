@@ -65,3 +65,7 @@ $route['auth/edit_user'] = 'notfound';
 $route['admin/tambah_user'] = 'auth/create_user';
 $route['admin/tambah_group'] = 'auth/create_group';
 $route['admin/ubah_password'] = 'auth/change_password';
+
+// Route Untuk KRS User Dosen
+// nama route yang dipanggil = controller/method
+$route['krs/mahasiswa'] = 'krs/viewMahasiswa';
