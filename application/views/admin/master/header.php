@@ -34,6 +34,7 @@
 				<!-- Sweetalert -->
 				<link href="<?= base_url() ?>assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css">
 				<link rel="shortcut icon" href="<?= base_url() ?>assets/img/sso-logo.ico" type="image/x-icon">
+
 				<!-- JQUREY Plugin -->
 				<script src="<?= base_url() ?>assets/vendor/jquery/jquery.min.js"></script>
 				<!-- Lazyload Plugin -->
@@ -50,10 +51,10 @@
 
 						<!-- Sidebar - Brand -->
 						<a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url() ?>sso_hmj">
-							<div class="sidebar-brand-icon rotate-n-15">
+							<div class="sidebar-brand-icon rotate-n-15 ">
 								<img src="<?= base_url() ?>assets/img/sso-logo.png" class="lazyload" data-src="<?= base_url() ?>assets/img/sso-logo.png" alt="sso-logo" width="60rem">
 							</div>
-							<div class="sidebar-brand-text mx-3">SSO Informatics</div>
+							<div class="sidebar-brand-text text-left mx-3">SSO Informatics <span style="font-size:12px ;">KRS CHECKER </span></div>
 						</a>
 
 						<!-- Divider -->
@@ -218,8 +219,8 @@
 							<div id="collapseDosen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 								<div class="bg-white py-2 collapse-inner rounded">
 									<h6 class="collapse-header">Daftar Fitur:</h6>
-									<a class="collapse-item" href="<?= base_url('krs/mahasiswa') ?>">Mahasiswa</a>
-									<a class="collapse-item" href="<?= base_url() ?>">Sub Menu 2</a>
+									<a class="collapse-item" href="<?= base_url('krs/validasi_mahasiswa') ?>"><i class="fas fa-user-check mr-2"></i>Validasi Mahasiswa</a>
+									<a class="collapse-item" href="<?= base_url('krs/minta_bukti') ?>"><i class="fas fa-edit mr-1"></i> Minta Bukti</a>
 								</div>
 							</div>
 							</li>

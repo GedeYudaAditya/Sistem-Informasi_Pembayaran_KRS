@@ -29,7 +29,8 @@
     <script src="<?= base_url() ?>assets/js/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- Javascript Plugin-->
-    <script src="<?= base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script  src="<?= base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script  src="<?= base_url() ?>assets/vendor/bootstrap/v5/bootstrap.bundle.js"></script>
     <script src="<?= base_url() ?>assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Sweetalert plugin-->

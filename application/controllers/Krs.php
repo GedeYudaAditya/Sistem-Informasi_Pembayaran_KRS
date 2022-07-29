@@ -440,6 +440,7 @@ class Krs extends CI_Controller
     // END CLIENT SIDE
 
 	// Method Untuk Dosen
+    // Start View Mahasiswa
 	public function viewMahasiswa()
 	{
 		$this->data['title'] = "KRS - Data Mahasiswa";
@@ -450,9 +451,44 @@ class Krs extends CI_Controller
 		$this->data['group'] = $this->ion_auth_model->getGroup($id);
 
 		$this->load->view("admin/master/header", $this->data);
-		$this->load->view("admin/page/krs/dosen/index");
+		$this->load->view("admin/page/krs/dosen/viewValidasiMahasiswa");
 		$this->load->view("admin/master/footer", $this->data);
 	}
+
+    // End View Mahasiswa
+
+    // Start View MintaBukti 
+    public function viewMintaBukti()
+    {
+        $this->data['title'] = "KRS - Data Mahasiswa";
+		$this->data['active'] = "11";
+		$this->data['flip'] = "false";
+		$this->data['ckeditor'] = "krs";
+		$id = $_SESSION['user_id'];
+		$this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+		$this->load->view("admin/master/header", $this->data);
+		$this->load->view("admin/page/krs/dosen/mintaBukti");
+		$this->load->view("admin/master/footer", $this->data);
+    }
+    // End View MintaBukti
+
+    // Start View Form Buat Bukti
+    public function viewFormBuatBukti()
+    {
+        $this->data['title'] = "KRS - Data Mahasiswa";
+		$this->data['active'] = "11";
+		$this->data['flip'] = "false";
+		$this->data['ckeditor'] = "krs";
+		$id = $_SESSION['user_id'];
+		$this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+		$this->load->view("admin/master/header", $this->data);
+		$this->load->view("admin/page/krs/dosen/formBuatBukti");
+		$this->load->view("admin/master/footer", $this->data);
+    }
+    // End View Form Buat Bukti
+
 
     // Method untuk menampilkan status validasi
     public function status_validasi()
@@ -491,4 +527,5 @@ class Krs extends CI_Controller
             $this->load->view("admin/page/krs/mahasiswa/pilih_validasi", $this->data);
             $this->load->view("admin/master/footer", $this->data);
     }
+
 }

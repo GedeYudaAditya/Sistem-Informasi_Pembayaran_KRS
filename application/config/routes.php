@@ -68,4 +68,6 @@ $route['admin/ubah_password'] = 'auth/change_password';
 
 // Route Untuk KRS User Dosen
 // nama route yang dipanggil = controller/method
-$route['krs/mahasiswa'] = 'krs/viewMahasiswa';
+$route['krs/validasi_mahasiswa'] = 'krs/viewMahasiswa';
+$route['krs/minta_bukti'] = 'krs/viewMintaBukti';
+$route['krs/buat_bukti'] = 'krs/viewFormBuatBukti';
