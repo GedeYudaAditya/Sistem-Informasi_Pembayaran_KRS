@@ -33,13 +33,14 @@
                 </tr>
               </thead>
               <tbody >
+                <?php $i=0?>
                 <?php foreach($value as $mhs) : ?>
                 <tr>
                   <td>
                     <?php if($i > 9) :?>
-                      <p><?= $i?></p>
+                      <p><?= $i++?></p>
                     <?php else :?>
-                      <p>0<?= $i?></p>
+                      <p>0<?= $i++?></p>
                     <?php endif;?>
                   </td>
                   <td >
