@@ -3047,4 +3047,7 @@ class All_model extends CI_Model
 			return false;
 		}
 	}
+	public function gatherData(){
+		return $this->db->get('mhs_tb');
+	}
 }

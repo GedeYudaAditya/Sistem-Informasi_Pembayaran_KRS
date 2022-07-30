@@ -33,7 +33,7 @@
                 </tr>
               </thead>
               <tbody >
-                <?php for($i = 1; $i <= 20; $i++) : ?>
+                <?php foreach($value as $mhs) : ?>
                 <tr>
                   <td>
                     <?php if($i > 9) :?>
@@ -44,17 +44,17 @@
                   </td>
                   <td >
                     <div>
-                      <p>I Wayan Ari Pramana Putra</p>
+                      <p><?php echo $mhs->nama?></p>
                     </div>
                   </td>
                   <td>
                     <div >
-                      <p>2115091038</p>
+                      <p><?php echo $mhs->nim?></p>
                     </div>
                   </td>
                   <td>
                     <div >
-                      <p>SI</p>
+                      <p><?php echo $mhs->prodi?></p>
                     </div>
                   </td>
                   <td>
@@ -70,7 +70,7 @@
                     </div>
                   </td>
                 </tr>
-                <?php endfor;?>
+                <?php endforeach;?>
               </tbody>
             </table>
           </div>
