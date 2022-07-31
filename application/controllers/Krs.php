@@ -530,7 +530,9 @@ class Krs extends CI_Controller
 		$this->data['ckeditor'] = "krs";
 		$id = $_SESSION['user_id'];
 		$this->data['group'] = $this->ion_auth_model->getGroup($id);
-        $where = array('pa_id'=>$id);
+        $find = array('user_id'=>$id);
+        $where['id'] = $this->All_model->findDosen($find)->result();
+
         $mahasiswa['value'] = $this->All_model->gatherData($where)->result();
 		$this->load->view("admin/master/header", $this->data);
 		$this->load->view("admin/page/krs/dosen/viewValidasiMahasiswa",$mahasiswa);

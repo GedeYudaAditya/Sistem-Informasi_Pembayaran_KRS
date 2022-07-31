@@ -3047,10 +3047,14 @@ class All_model extends CI_Model
 			return false;
 		}
 	}
+	public function findDosen($id){
+		return $this->db->get_where('dosen_tb',$id);
+
+	}
 	public function gatherData($id){
 		$this->db->select('*');
 		$this->db->from('mhs_tb');
-		$this->db->where($id);
+		$this->db->where($id->pa_id);
 		$this->db->join('bukti', 'bukti.mahasiswa_id= mhs_tb.id');
 		$this->db->join('form_bukti','bukti.form_bukti_id = form_bukti.id');
 		return $this->db->get();
