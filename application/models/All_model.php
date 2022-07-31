@@ -3057,6 +3057,6 @@ class All_model extends CI_Model
 	public function gatherData($id){
 		$sql = "SELECT * FROM mhs_tb WHERE pa_id = ? JOIN bukti ON bukti.mahasiswa_id= mhs_tb.id JOIN form_bukti ON bukti.form_bukti_id = form_bukti.id";
 		$this->db->query($sql, array($id));
-		return $this->db->get();
+		// return $this->db->get();
 	}
 }
