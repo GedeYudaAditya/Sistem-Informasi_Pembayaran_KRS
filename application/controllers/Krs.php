@@ -534,7 +534,7 @@ class Krs extends CI_Controller
         var_dump($dosen_id);
         $find_mhs= array('pa_id'=>$dosen_id[0]);
         var_dump($find_mhs);
-        // $mahasiswa['value'] = $this->All_model->gatherData($dosen_id)->result();
+        $mahasiswa['value'] = $this->All_model->gatherData($find_mhs)->result();
 		$this->load->view("admin/master/header", $this->data);
 		$this->load->view("admin/page/krs/dosen/viewValidasiMahasiswa");
 		$this->load->view("admin/master/footer", $this->data);
