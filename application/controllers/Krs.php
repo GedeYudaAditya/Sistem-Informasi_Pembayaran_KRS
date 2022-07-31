@@ -533,7 +533,7 @@ class Krs extends CI_Controller
         $where = array('user_id' => $id);
         $dosen_id['pa_id']= $this->All_model->findDosen($where)->result_array();
         print_r($dosen_id);
-        $where = array('pa_id' => $dosen_id);
+        $where = array('pa_id' => $dosen_id[0]['id']);
         print_r($where);
         $mahasiswa['value'] = $this->All_model->gatherData($where)->result();
 		$this->load->view("admin/master/header", $this->data);
