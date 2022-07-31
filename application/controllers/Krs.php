@@ -533,9 +533,9 @@ class Krs extends CI_Controller
         $where = array('user_id' => $id);
         $dosen_id['pa_id']= $this->All_model->findDosen($where)->result_array();
         print_r($dosen_id);
-        $where['pa_id'] = $dosen_id['pa_id'][0]['id'];
-        print_r($where);
-        $mahasiswa['value'] = $this->All_model->gatherData($where)->result();
+        $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
+        print_r($find);
+        $mahasiswa['value'] = $this->All_model->gatherData($find)->result();
 		$this->load->view("admin/master/header", $this->data);
 		$this->load->view("admin/page/krs/dosen/viewValidasiMahasiswa",$mahasiswa);
 		$this->load->view("admin/master/footer", $this->data);
