@@ -3047,4 +3047,13 @@ class All_model extends CI_Model
 			return false;
 		}
 	}
+
+	/*Method baru bagian KRS mahasiswa
+	Perbaruan
+	*/
+
+	public function getOneMahasiswa($id)
+	{
+		return $this->db->get_where('mahasiswa', ['user_id' => $id])->row_array();
+	}
 }
