@@ -3048,7 +3048,7 @@ class All_model extends CI_Model
 		}
 	}
 	public function findDosen($id){
-		$this->db->select('user_id');
+		$this->db->select('id');
 		$this->db->from('dosen_tb');
 		$this->db->where('user_id',$id);
 		return $this->db->get();
