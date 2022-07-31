@@ -66,3 +66,12 @@ $route['admin/tambah_user'] = 'auth/create_user';
 $route['admin/tambah_user_mahasiswa'] = 'auth/create_user_mahasiswa';
 $route['admin/tambah_group'] = 'auth/create_group';
 $route['admin/ubah_password'] = 'auth/change_password';
+/*<<<<<<< HEAD
+=======
+
+// Route Untuk KRS User Dosen
+// nama route yang dipanggil = controller/method
+//$route['krs/validasi_mahasiswa'] = 'krs/viewMahasiswa';
+//$route['krs/minta_bukti'] = 'krs/viewMintaBukti';
+//$route['krs/buat_bukti'] = 'krs/viewFormBuatBukti';
+>>>>>>> 75851c9a86a9a445545df0eacdbf02fbe56659ef*/
