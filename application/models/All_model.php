@@ -3051,6 +3051,6 @@ class All_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('mhs_tb');
 		$this->db->join('bukti', 'bukti.mahasiswa_id= mhs_tb.id');
-		return $this->db->get()->result_array();
+		return $this->db->get();
 	}
 }
