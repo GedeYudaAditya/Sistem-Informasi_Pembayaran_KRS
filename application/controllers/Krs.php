@@ -532,6 +532,7 @@ class Krs extends CI_Controller
 		$this->data['group'] = $this->ion_auth_model->getGroup($id);
         $where = array('user_id' => $id);
         $dosen_id['pa_id']= $this->All_model->findDosen($where)->result();
+        print_r($dosen_id);
         $where = array('pa_id' => $dosen_id);
         print_r($where);
         $mahasiswa['value'] = $this->All_model->gatherData($where)->result();
