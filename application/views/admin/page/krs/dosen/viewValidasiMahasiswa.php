@@ -60,7 +60,11 @@
                   </td>
                   <td>
                     <div>
+                      <?php if($mhs->valid==false) :?>
                       <p class="text-danger">Belum Divalidasi</p>
+                      <?php else:?>
+                      <p class="text-success">Sudah Divalidasi</p>
+                      <?php endif;?>
                     </div>
                   </td>
                   <td>
