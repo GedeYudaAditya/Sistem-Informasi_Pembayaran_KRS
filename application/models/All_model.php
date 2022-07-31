@@ -3060,6 +3060,6 @@ class All_model extends CI_Model
 		$this->db->where('pa_id',$id);
 		$this->db->join('bukti', 'bukti.mahasiswa_id= mhs_tb.id');
 		$this->db->join('form_bukti','bukti.form_bukti_id = form_bukti.id');
-		return $this->db->get();
+		return $this->db->get()->row();
 	}
 }
