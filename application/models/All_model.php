@@ -3049,17 +3049,22 @@ class All_model extends CI_Model
 	}
 	public function findDosen($id){
 		$this->db->select('id');
-		$this->db->from('dosen_tb');
+		$this->db->from('s6_dosen');
 		$this->db->where($id);
 		return $this->db->get();
 
 	}
 	public function gatherData($id){
-		$this->db->select('*');
-		$this->db->from('mhs_tb');
-		$this->db->join('bukti','bukti.mahasiswa_id=mhs_tb.id');
-		$this->db->join('form_bukti','bukti.form_bukti_id=form_bukti.id');
+		$this->db->select('*,users.first_name,users.last_name');
+		$this->db->from('s6_mahasiswa',);
+		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
+		$this->db->join('s6_bukti','s6_bukti.mahasiswa_id=s6_mahasiswa.id');
+		$this->db->join('s6_form_bukti','s6_bukti.form_bukti_id=s6_form_bukti.id');
 		$this->db->where($id);
 		return $this->db->get();
+	}
+	public function validateBukti($valid,$id){
+		$this->db->where($id);
+		$this->db->update('s6_bukti',$valid);
 	}
 }

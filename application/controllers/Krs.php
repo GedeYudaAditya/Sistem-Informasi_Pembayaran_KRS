@@ -556,7 +556,15 @@ class Krs extends CI_Controller
 		$this->load->view("admin/master/footer", $this->data);
     }
     // End View MintaBukti
-
+    // Start memvalidkanBukti
+    public function memvalidkanBukti($id,$valid){
+        $this->load->model('All_model');
+        $valid=array('valid'=>$valid);
+        $where=array('mahasiswa_id'=>$id);
+        $this->All_model->validateBukti($valid,$where);
+        redirect("Krs/viewMahasiswa");
+    }
+    // End memvalidkanBukti
     // Start View Form Buat Bukti
     public function viewFormBuatBukti()
     {
