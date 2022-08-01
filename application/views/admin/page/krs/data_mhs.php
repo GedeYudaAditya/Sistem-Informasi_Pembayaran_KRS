@@ -73,7 +73,7 @@
                             <th scope="row"><?= $s['angkatan']; ?></th>
                             <th scope="row"><?= $s['semester']; ?></th>
                             <td class="text-center">
-                                <a href="<?= base_url(); ?>krs/update_data_mahasiswa/<?= $s['id']; ?>" class="badge badge-warning mr-1">
+                                <a href="<?= base_url(); ?>krs/update_data_mahasiswa/<?= $s['']; ?>" class="badge badge-warning mr-1">
                                     <i class="fas fa-edit fa-sm"></i> edit
                                 </a>
 

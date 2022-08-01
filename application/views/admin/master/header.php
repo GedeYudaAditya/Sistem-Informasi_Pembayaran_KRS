@@ -242,7 +242,7 @@
 								<div id="collapseMahasiswa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 									<div class="bg-white py-2 collapse-inner rounded">
 										<h6 class="collapse-header">Daftar Fitur:</h6>
-										<a class="collapse-item" href="<?= base_url() ?>Krs/upload_bukti">Upload Bukti Pembayaran</a>
+										<a class="collapse-item" href="<?= base_url() ?>Krs/halaman_bukti">Pembayaran Iuran KRS</a>
 										<a class="collapse-item" href="<?= base_url() ?>">Cek validasi Pembayaran</a>
 										<a class="collapse-item" href="<?= base_url('krs/pilih_validasi') ?>">Cek Status Validasi</a>
 									</div>

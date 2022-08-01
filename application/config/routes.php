@@ -63,9 +63,11 @@ $route['admin/edit_group/(:num)'] = 'auth/edit_group/$1';
 $route['auth/edit_group'] = 'notfound';
 $route['auth/edit_user'] = 'notfound';
 $route['admin/tambah_user'] = 'auth/create_user';
-$route['admin/tambah_user_mahasiswa'] = 'auth/create_user_mahasiswa';
 $route['admin/tambah_group'] = 'auth/create_group';
 $route['admin/ubah_password'] = 'auth/change_password';
+
+//Routes tambah user Mahasiswa
+$route['admin/tambah_user_mahasiswa'] = 'auth/create_user_mahasiswa';
 /*<<<<<<< HEAD
 =======
 

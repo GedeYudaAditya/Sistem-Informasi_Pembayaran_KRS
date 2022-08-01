@@ -3059,4 +3059,12 @@ class All_model extends CI_Model
 		$data = $this->db->get_where('s6_mahasiswa', ['user_id' => $id]);
 		return $data->row_array();
 	}
+
+	public function getDataBukti($where)
+	{
+		$this->db->select('*');
+		$this->db->join('s6_form_bukti', 's6_form_bukti.id_form = s6_bukti.form_bukti_id');
+		$data = $this->db->get_where('s6_bukti', ['mahasiswa_id' => $where]);
+		return $data->result_array();
+	}
 }

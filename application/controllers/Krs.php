@@ -551,7 +551,11 @@ class Krs extends CI_Controller
         $nama = $this->input->post('nama');
         $nim = $this->input->post('nim');
         $file_bukti = $_FILES['file_bukti'];
-        $file_name = $nama . '_' . $nim . " Bukti Pembayaran";
+
+        $this->load->helper('string');
+
+        $file_name = random_string('alnum', 35);
+        // $file_name = $nama . '_' . $nim . " Bu;
         $config = [
             'upload_path'   => './assets/upload/Folder_krs',
             'allowed_types' => 'pdf|png',
@@ -560,6 +564,8 @@ class Krs extends CI_Controller
 
         if ($file_bukti != '') {
 
+
+            // test hapus file
             $this->load->library('upload', $config);
             if (!$this->upload->do_upload('file_bukti')) {
                 $data['error'] = $this->upload->display_errors();
@@ -567,19 +573,22 @@ class Krs extends CI_Controller
                 redirect('Krs/upload_bukti');
             } else {
 
+                $path =  substr($this->upload->data('full_path'), 48);
                 $data = [
                     'mahasiswa_id' => $id_mahasiswa,
                     'form_bukti_id' => $form_id,
                     'deskripsi' => '',
-                    'file_path' => str_replace(" ", "_", $file_name) . $this->upload->data('file_ext'),
+                    'file_path' => $path,
                     'created_at'    => mdate('%Y-%m-%d %H:%i:%s', now())
                 ];
 
+                echo "Deleted file ";
                 $this->db->insert('s6_bukti', $data);
                 redirect('krs/halaman_bukti');
             }
         }
     }
+
     //handle data bukti from upload bukti end------
 
     // Halaman Bukti mahasiswa
@@ -588,7 +597,7 @@ class Krs extends CI_Controller
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
             redirect('krs', 'home');
         } else {
-            $this->data['title'] = "KRS - Data Mahasiswa";
+            $this->data['title'] = "KRS - Bukti Pembayaran";
             $this->data['active'] = "11";
             $id = $_SESSION['user_id'];
             $this->data['flip'] = "false";
@@ -617,7 +626,7 @@ class Krs extends CI_Controller
             $id_mhs = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
 
             //get_bukti
-            $data['bukti'] = $this->db->get_where('s6_bukti', ['mahasiswa_id' => $id_mhs])->row_array();
+            $data['bukti'] = $this->All_model->getDataBukti(2);
 
             $this->load->view("admin/master/header", $this->data);
             $this->load->view("admin/page/krs/mahasiswa/halaman_bukti", $data);
