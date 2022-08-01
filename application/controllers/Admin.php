@@ -164,11 +164,11 @@ class Admin extends CI_Controller
 				// Cek apakah variabel kosong?
 				if (!empty($hmj)) {
 					// Eksekusi hapus
-					if($this->All_model->deleteJabatan($id)){
+					if ($this->All_model->deleteJabatan($id)) {
 						// Redirect dan Send Flash Message
 						$this->session->set_flashdata('berhasil', 'Dihapus');
 						redirect('admin');
-					}else{
+					} else {
 						// Redirect dan Send Flash Message
 						$this->session->set_flashdata('gagal', 'Dihapus');
 						redirect('admin');
