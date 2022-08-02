@@ -840,7 +840,7 @@ class Krs extends CI_Controller
     // Start Of Dosen Section - [Adi Sastrawan]
     // Start View Mahasiswa
 
-    public function viewMahasiswa()
+    public function viewValidasiMahasiswa()
     {
         $this->data['title'] = "KRS - Data Mahasiswa";
         $this->data['active'] = "11";
@@ -852,12 +852,12 @@ class Krs extends CI_Controller
         $dosen_id['pa_id'] = $this->All_model->findDosen($where)->result_array();
         $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
         $mahasiswa['value'] = $this->All_model->gatherData($find)->result();
-        $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/dosen/viewValidasiMahasiswa", $mahasiswa);
-        $this->load->view("admin/master/footer", $this->data);
-    }
+		$this->load->view("admin/master/header", $this->data);
+		$this->load->view("admin/page/krs/dosen/validasiMahasiswa",$mahasiswa);
+		$this->load->view("admin/master/footer", $this->data);
+	}
 
-    // End View Mahasiswa
+    // End View Validasi Mahasiswa
 
     // Start View MintaBukti 
     public function viewMintaBukti()
@@ -874,6 +874,8 @@ class Krs extends CI_Controller
         $this->load->view("admin/master/footer", $this->data);
     }
     // End View MintaBukti
+
+
     // Start memvalidkanBukti
     public function memvalidkanBukti($id, $valid)
     {
@@ -884,6 +886,8 @@ class Krs extends CI_Controller
         redirect("Krs/viewMahasiswa");
     }
     // End memvalidkanBukti
+
+
     // Start View Form Buat Bukti
     public function viewFormBuatBukti()
     {
@@ -919,4 +923,20 @@ class Krs extends CI_Controller
         $this->load->view("admin/page/krs/mahasiswa/status_validasi", $this->data);
         $this->load->view("admin/master/footer", $this->data);
     }
+
+    // Start Detail Bukti Dosen
+    public function viewDetailBukti()
+    {
+        $this->data['title'] = "KRS - Data Mahasiswa";
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+        $this->load->view("admin/master/header", $this->data);
+        $this->load->view("admin/page/krs/dosen/detailBukti");
+        $this->load->view("admin/master/footer", $this->data);
+    }
+    // End Detail Bukti Dosen
 }
