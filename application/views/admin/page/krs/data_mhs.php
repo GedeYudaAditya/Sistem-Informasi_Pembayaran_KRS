@@ -59,21 +59,21 @@
                         <th scope="col">NIM</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Prodi</th>
-                        <th scope="col">Angkatan</th>
-                        <th scope="col">Semester</th>
+                        <!-- <th scope="col">Angkatan</th> -->
+                        <th scope="col">Dosen PA</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($siswa as $s) : ?>
                         <tr>
-                            <th scope="row"><?= $s['nim']; ?></th>
-                            <th scope="row"><?= $s['nama']; ?></th>
+                            <th scope="row"><?= $s['last_name']; ?></th>
+                            <th scope="row"><?= $s['first_name']; ?></th>
                             <th scope="row"><?= $s['prodi']; ?></th>
-                            <th scope="row"><?= $s['angkatan']; ?></th>
-                            <th scope="row"><?= $s['semester']; ?></th>
+                            <!-- <th scope="row"><?= $s['angkatan']; ?></th> -->
+                            <th scope="row"><?= $s['pa_id']; ?></th>
                             <td class="text-center">
-                                <a href="<?= base_url(); ?>krs/update_data_mahasiswa/<?= $s['']; ?>" class="badge badge-warning mr-1">
+                                <a href="<?= base_url(); ?>krs/update_data_mahasiswa/<?= $s['id_mhs']; ?>" class="badge badge-warning mr-1">
                                     <i class="fas fa-edit fa-sm"></i> edit
                                 </a>
 

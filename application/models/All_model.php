@@ -3052,6 +3052,12 @@ class All_model extends CI_Model
 	Perbaruan
 	*/
 
+	public function getMahasiswa()
+	{
+		$this->db->select('*');
+		$this->db->join('users', 'users.id = s6_mahasiswa.user_id');
+		return $this->db->get('s6_mahasiswa')->result_array();
+	}
 	public function getMahasiswaByUserId($id)
 	{
 		$this->db->select('*');

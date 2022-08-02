@@ -107,7 +107,7 @@
                         <select class="custom-select form-control <?= form_error('dosen_pa') ? 'is-invalid' : NULL; ?>" id="dosen_pa" name="dosen_pa">
                             <option value="">-- Pilih Dosen PA --</option> -->
                             <?php foreach ($dosen as $dsn) : ?>
-                                <option value="<?= $dsn['id']; ?>"><?= $dsn['nama']; ?></option>
+                                <option value="<?= $dsn['id']; ?>"><?= $dsn['id']; ?></option>
                             <?php endforeach ?>
                         </select>
                         <div class="invalid-feedback">

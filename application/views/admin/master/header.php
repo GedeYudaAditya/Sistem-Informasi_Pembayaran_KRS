@@ -41,6 +41,9 @@
 				<!-- Lazyload Plugin -->
 				<script src="<?= base_url() ?>assets/js/plugins/lazysizes.min.js" async=""></script>
 
+
+				<!-- css form bukti -->
+				<link rel="stylesheet" href="<?= base_url('assets/css/form_upload.css'); ?>">
 			</head>
 
 			<body id="page-top">
