@@ -58,7 +58,6 @@
 
 
         </div>
-
         <div class="card-body">
             <?php if ($bukti == NULL) : ?>
                 <p class="text-center ">Belum Ada Permintaan Pengunggahan Bukti Dari Dosen PA!</p>
@@ -94,7 +93,15 @@
                                         <?php if ($date > $expired) : ?>
                                             <span class="badge badge-danger">Date Expired</span>
                                         <?php else : ?>
-                                            <a href="<?= base_url('krs/upload_bukti/' . $b['id_form']); ?>" class="btn btn-sm btn-success shadow-sm"><i class="fas fa-upload fa-sm"></i></i>Upload Bukti Pembayaran</a>
+                                            <!-- Cek jika sudah pernah upload bukti -->
+                                            <?php
+                                            $bukti_m = $this->All_model->checkBuktiSudahDiKirim($b['id_form'], $id['id_mhs']);
+                                            ?>
+                                            <?php if ($bukti_m == 0) : ?>
+                                                <a href="<?= base_url('krs/upload_bukti/' . $b['id_form']); ?>" class="btn btn-sm btn-success shadow-sm"><i class="fas fa-upload fa-sm"></i></i>Upload Bukti Pembayaran</a>
+                                            <?php else : ?>
+                                                <span class="badge badge-success">Bukti Sudah Diupload</span>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
