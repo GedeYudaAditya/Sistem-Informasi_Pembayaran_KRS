@@ -33,44 +33,49 @@
                 </tr>
               </thead>
               <tbody >
-                <?php for($i = 1; $i <= 20; $i++) : ?>
+                <?php $i=1?>
+                <?php foreach($value as $mhs) : ?>
                 <tr>
                   <td>
                     <?php if($i > 9) :?>
-                      <p><?= $i?></p>
+                      <p><?= $i++?></p>
                     <?php else :?>
-                      <p>0<?= $i?></p>
+                      <p>0<?= $i++?></p>
                     <?php endif;?>
                   </td>
                   <td >
                     <div>
-                      <p>I Wayan Ari Pramana Putra</p>
+                      <p><?php echo $mhs->first_name?></p>
                     </div>
                   </td>
                   <td>
                     <div >
-                      <p>2115091038</p>
+                      <p><?php echo $mhs->last_name?></p>
                     </div>
                   </td>
                   <td>
                     <div >
-                      <p>SI</p>
+                      <p><?php echo $mhs->prodi?></p>
                     </div>
                   </td>
                   <td>
                     <div>
+                      <?php if($mhs->valid==false) :?>
                       <p class="text-danger">Belum Divalidasi</p>
+                      <?php else:?>
+                      <p class="text-success">Sudah Divalidasi</p>
+                      <?php endif;?>
                     </div>
                   </td>
                   <td>
                     <div>
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLihatBukti">
-                        Lihat Detail 
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLihatBukti">Lihat Detail 
                       </button>
+                        
                     </div>
                   </td>
                 </tr>
-                <?php endfor;?>
+                <?php endforeach;?>
               </tbody>
             </table>
           </div>
@@ -90,15 +95,19 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body ">        
-            <img src="<?= base_url() ?>assets/img/lomba/dance2.png" class="navbar-brand-img img-fluid ">
-            <img src="<?= base_url() ?>assets/img/lomba/dance2.png" class="navbar-brand-img img-fluid ">
+        <div class="modal-body ">
+            <label for="deskripsi"> <p>Deskripsi</p></label>
+            <li class="list-group-item gap-1"><?php echo $mhs->deskripsi?></li>
+            <label for="deskripsi"> <p>File Bukti</p></label>
+            <li class="list-group-item gap-1">
+            <iframe class="embed-responsive-item" type="text/html"src="<?php echo base_url();?>assets/upload/Folder_KRS/<?php echo $mhs->file_path?>#toolbar=0" width="455" 
+            height="500"></iframe></li>
           
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger">Tolak</button>
-          <button type="button" class="btn btn-primary">Terima</button>
+          <a href="<?php echo base_url();?>Krs/memvalidkanBukti/<?php echo $mhs->id?>/<?php echo 0?>"><button type="submit" class="btn btn-danger">Tolak</button></a>
+          <a href="<?php echo base_url();?>Krs/memvalidkanBukti/<?php echo $mhs->id?>/<?php echo 1?>"><button type="submit" class="btn btn-primary">Terima</button></a>
         </div>
       </div>
     </div>
