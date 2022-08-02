@@ -4,83 +4,82 @@
   <h3 class="text-center font-weight-bold">Membuat Form Bukti Iuran Mahasiswa</h3>
 
   <div class="row d-flex justify-content-center">
-      <div class="col-12 col-md-8">
-        <form action="" method="POST">
-          <div class="form-group col-12 mt-4 pl-4">
-            <label for="expireDate">Batas Akhir</label>
-            <input type="date" class="form-control" name="expireDate" id="expireDate" autocomplete="off">
-          </div>
-          
-          <div class="d-md-flex justify-content-between pt-4">
-            <!-- Start Input Tahun Ajaran -->
-            <div class="col-12 col-md-6">
-              <label class="d-block pl-3" for="expireDate">Tahun Ajaran</label>
-              <div class="form-group input-group mb-3 d-flex">
-                <div class="col-12 col-md-5 input-group mb-3">
-                  <select class="custom-select " id="inputTahunDepan" onchange="inputTahunDosen()">
-                    <option selected disabled>Tahun</option>
-                    <option value="2019">2019</option>
+    <div class="col-12 col-md-8">
+      <form action="<?= base_url(); ?>krs/tambahFormPengajuan" method="POST">
+        <div class="form-group col-12 mt-4 pl-4">
+          <label for="expireDate">Batas Akhir</label>
+          <input type="date" class="form-control" name="expire_date" id="expireDate" autocomplete="off">
+        </div>
+
+        <div class="d-md-flex justify-content-between pt-4">
+          <!-- Start Input Tahun Ajaran -->
+          <div class="col-12 col-md-6">
+            <label class="d-block pl-3" for="expireDate">Tahun Ajaran</label>
+            <div class="form-group input-group mb-3 d-flex">
+              <div class="col-12 col-md-5 input-group mb-3">
+                <!-- <select class="custom-select " id="inputTahunDepan" onchange="inputTahunDosen()">
+                  <option selected disabled>Pilih Tahun</option>
+                  <option value="2019">2019</option>
                     <option value="2020">2020</option>
                     <option value="2021">2021</option>
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
-                  </select>
-                </div>
-                <div class="d-none d-md-block col-md-1" style="font-size: 25px;">/</div>
-                <input id="inputTahunBelakang" class="col-12 col-md-5 form-control " type="number" placeholder="..." readonly>
+
+                </select> -->
+                <input type="number" placeholder="Tahun" class="form-control" id="inputTahunDepan" name="tahun" onchange="inputTahunDosen()">
               </div>
+              <div class="d-none d-md-block col-md-1" style="font-size: 25px;">/</div>
+              <input id="inputTahunBelakang" class="col-12 col-md-5 form-control " type="number" placeholder="..." readonly>
             </div>
-            <!-- End Input Tahun Ajaran -->
+          </div>
+          <!-- End Input Tahun Ajaran -->
 
           <!-- Start Interaktif Dosen memilih Tahun di input depan otomatis tahun belakang menyesuaikan  -->
           <script>
             const inputTahunDosen = () => {
               var elinputTahunDepan = document.getElementById('inputTahunDepan');
-              var option = elinputTahunDepan.options[elinputTahunDepan.selectedIndex];
-              
-              const elinputTahunBelakang = document.getElementById('inputTahunBelakang');
-              elinputTahunBelakang.value = option.value;
+              var option = elinputTahunDepan;
 
-              if(option.value === '2019'){
-                elinputTahunBelakang.value = '2020';
-              }
-              else if(option.value === '2020'){
-                elinputTahunBelakang.value = '2021';
-              }
-              else if(option.value === '2021'){
-                elinputTahunBelakang.value = '2022';
-              }
-              else if(option.value === '2022'){
-                elinputTahunBelakang.value = '2023';
-              }
-              else if(option.value === '2023'){
-                elinputTahunBelakang.value = '2024';
-              }    
-              
+              const elinputTahunBelakang = document.getElementById('inputTahunBelakang');
+
+              // if (option.value === '2019') {
+              //   elinputTahunBelakang.value = '2020';
+              // } else if (option.value === '2020') {
+              //   elinputTahunBelakang.value = '2021';
+              // } else if (option.value === '2021') {
+              //   elinputTahunBelakang.value = '2022';
+              // } else if (option.value === '2022') {
+              //   elinputTahunBelakang.value = '2023';
+              // } else if (option.value === '2023') {
+              //   elinputTahunBelakang.value = '2024';
+              // }
+
+              elinputTahunBelakang.value = parseInt(option.value) + 1;
+
             };
             inputTahunDosen();
-            </script>
-            <!--End Interaktif Dosen memilih Tahun di input depan otomatis tahun belakang menyesuaikan  -->
+          </script>
+          <!--End Interaktif Dosen memilih Tahun di input depan otomatis tahun belakang menyesuaikan  -->
 
-            <!-- Start Input Semester -->
-            <div class="col-12 col-md-6">
-              <div>
-                <label class="d-block " for="expireDate">Semester</label>
-                <div class="form-group input-group mb-3">
-                    <select class="custom-select d-block" id="inputGroupSelect01">
-                      <option selected disabled>Pilih Semester</option>
-                      <option value="ganjil">Ganjil</option>
-                      <option value="genap">Genap</option>
-                    </select>
-                </div>
+          <!-- Start Input Semester -->
+          <div class="col-12 col-md-6">
+            <div>
+              <label class="d-block " for="expireDate">Semester</label>
+              <div class="form-group input-group mb-3">
+                <select class="custom-select d-block" name="semester" id="inputGroupSelect01">
+                  <option selected disabled>Pilih Semester</option>
+                  <option value="ganjil">Ganjil</option>
+                  <option value="genap">Genap</option>
+                </select>
               </div>
             </div>
-            <!-- End Input Semester -->
           </div>
-                          
-          <button type="submit" name="buatForm" class="btn btn-primary font-weight-bold my-3 ml-4">Buat Form Bukti</button>
-        </form>
-      </div>
+          <!-- End Input Semester -->
+        </div>
+
+        <button type="submit" name="buatForm" class="btn btn-primary font-weight-bold my-3 ml-4">Buat Form Bukti</button>
+      </form>
+    </div>
   </div>
 
 </div>

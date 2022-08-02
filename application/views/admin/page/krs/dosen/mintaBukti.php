@@ -21,51 +21,46 @@
                 <tr class="fw-bold">
                   <td class="col-1">No</td>
                   <td class="col-3">Judul</td>
-                  <td class="col-1">Prodi</td>
                   <td class="col-2">Tahun Ajaran</td>
                   <td class="col-2">Semester</td>
-                  <td class="col-2">Lihat Semua Bukti</td>
+                  <!-- <td class="col-2">Lihat Semua Bukti</td> -->
                 </tr>
               </thead>
-              <tbody >
-                <?php for($i = 1; $i <= 3; $i++) : ?>
-                <tr>
-                  <td>
-                    <?php if($i > 9) :?>
-                      <p><?= $i?></p>
-                    <?php else :?>
-                      <p>0<?= $i?></p>
-                    <?php endif;?>
-                  </td>
-                  <td >
-                    <div>
-                      <p>Bukti Iuran Mahasiswa</p>
-                    </div>
-                  </td>
-                  <td>
-                    <div >
-                      <p>SI</p>
-                    </div>
-                  </td>
-                  <td>
-                    <div >
-                      <p>2022/2023</p>
-                    </div>
-                  </td>
-                  <td>
-                    <div >
-                      <p>Ganjil</p>
-                    </div>
-                  </td>
-                  <td>
+              <tbody>
+                <?php $i = 1 ?>
+                <?php foreach ($formBukti as $bukti) : ?>
+                  <tr>
+                    <td>
+                      <?php if ($i > 9) : ?>
+                        <p><?= $i++ ?></p>
+                      <?php else : ?>
+                        <p>0<?= $i++ ?></p>
+                      <?php endif; ?>
+                    </td>
+                    <td>
+                      <div>
+                        <p>Bukti Iuran Mahasiswa <?= $bukti['tahun'] ?>/ <?= $bukti['tahun'] + 1 ?></p>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <p><?= $bukti['tahun'] ?>/ <?= $bukti['tahun'] + 1 ?></p>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <p><?= $bukti['semester'] ?></p>
+                      </div>
+                    </td>
+                    <!-- <td>
                     <div>
                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLihatBukti">
                         Lihat Bukti
                       </button>
                     </div>
-                  </td>
-                </tr>
-                <?php endfor;?>
+                  </td> -->
+                  </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>
