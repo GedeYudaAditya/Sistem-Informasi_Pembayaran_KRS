@@ -664,7 +664,7 @@ class Krs extends CI_Controller
     // End Admin
 
     // Start User Mahasiswa
-    // Halaman Bukti mahasiswa
+    // Halaman Bukti mahasiswa - [Marchel]
     public function halaman_bukti()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
@@ -695,11 +695,11 @@ class Krs extends CI_Controller
                 $data['infos'] = true;
             }
 
-            //Get id Mhsiswa
-            $id_mhs = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
+            //Get id Pa dari mahasiswa
+            $pa_id = $this->All_model->getMahasiswaByUserId($id)['pa_id'];
 
             //get_bukti
-            $data['bukti'] = $this->All_model->getDataBukti($id_mhs);
+            $data['bukti'] = $this->All_model->getDataFormBuktiDosen($pa_id);
 
             $this->load->view("admin/master/header", $this->data);
             $this->load->view("admin/page/krs/mahasiswa/halaman_bukti", $data);
@@ -707,7 +707,32 @@ class Krs extends CI_Controller
         }
     }
 
-    public function upload_bukti()
+    // Method untuk memilih tahun dan semester yang akan dicek
+    public function pilih_validasi()
+    {
+        $this->load->library('form_validation');
+        $this->load->model('All_model');
+
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+        $mhs_id = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
+
+        //get_bukti
+        $this->data['bukti'] = $this->All_model->getDataBuktiMahasiswa($mhs_id);
+
+        $this->data['title'] = "Tampilan Validasi";
+        $this->load->view("admin/master/header", $this->data);
+        $this->load->view("admin/page/krs/mahasiswa/pilih_validasi", $this->data);
+        $this->load->view("admin/master/footer", $this->data);
+    }
+
+    public function upload_bukti($id_form)
     {
         $this->load->model('All_model');
 
@@ -719,32 +744,11 @@ class Krs extends CI_Controller
         $id = $_SESSION['user_id'];
 
         $this->data['mahasiswa'] = $this->All_model->getMahasiswaByUserId($id);
-        $this->data['form_bukti'] = $this->db->get_where('s6_form_bukti', ['dosen_id' => $this->data['mahasiswa']['pa_id']])->row_array();
-        var_dump($this->data['form_bukti']);
-        die;
-
         $this->data['group'] = "9";
         $this->data['group'] = $this->ion_auth_model->getGroup($id);
         $this->data['title'] = "Upload Bukti Pembayaran";
-
-        $this->data['prodis'] = [
-            [
-                'id' => 'PTI',
-                'prodi' => 'Pendidikan Teknik Informatika'
-            ],
-            [
-                'id' => 'SI',
-                'prodi' => 'Sistem Informasi'
-            ],
-            [
-                'id' => 'ILKOM',
-                'prodi' => 'Ilmu Komputer'
-            ],
-            [
-                'id' => 'MI',
-                'prodi' => 'Manajemen Informasi'
-            ]
-        ];
+        $form = $this->All_model->getForm($id_form);
+        $this->data['form'] =  $form;
 
         $this->load->view("admin/master/header", $this->data);
         $this->load->view("admin/page/krs/mahasiswa/halaman_upload_bukti", $this->data);
@@ -771,15 +775,15 @@ class Krs extends CI_Controller
         $this->data['mahasiswa'] = $this->All_model->getMahasiswaByUserId($id);
 
         $id_mahasiswa = $this->input->post('mahasiswa_id');
-        $form_id = $this->input->post('form_id');
+        $id_form = $this->input->post('id_form');
         $nama = $this->input->post('nama');
         $nim = $this->input->post('nim');
         $file_bukti = $_FILES['file_bukti'];
 
         $this->load->helper('string');
-
-        $file_name = random_string('alnum', 35);
-        // $file_name = $nama . '_' . $nim . " Bu;
+        $data_form = $this->All_model->getForm($id_form);
+        $file_name = $nama . $nim . random_string('alnum', 35);
+        $deskripsi = 'Pembayaran Iuran KRS tahun ' . $data_form['tahun'] . ', semester ' . $data_form['semester'];
         $config = [
             'upload_path'   => './assets/upload/Folder_krs',
             'allowed_types' => 'pdf',
@@ -798,14 +802,13 @@ class Krs extends CI_Controller
                 $path =  substr($this->upload->data('full_path'), 48);
                 $data = [
                     'mahasiswa_id' => $id_mahasiswa,
-                    'form_bukti_id' => $form_id,
-                    'deskripsi' => '',
+                    'form_bukti_id' => $id_form,
+                    'deskripsi' => $deskripsi,
                     'file_path' => $path,
                     'created_at'    => mdate('%Y-%m-%d %H:%i:%s', now())
                 ];
 
                 $this->db->insert('s6_bukti', $data);
-                $this->session->set_flashdata('sukses', 'Diupload');
                 redirect('krs/halaman_bukti');
             }
         }
@@ -814,7 +817,7 @@ class Krs extends CI_Controller
     //handle data bukti from upload bukti end------
 
 
-
+    // Start Of Dosen Section - [Adi Sastrawan]
     // Start View Mahasiswa
 
     public function viewMahasiswa()
@@ -856,7 +859,7 @@ class Krs extends CI_Controller
     {
         $this->load->model('All_model');
         $valid = array('valid' => $valid);
-        $where = array('mahasiswa_id' => $id);
+        $where = array('id' => $id);
         $this->All_model->validateBukti($valid, $where);
         redirect("Krs/viewMahasiswa");
     }
@@ -894,25 +897,6 @@ class Krs extends CI_Controller
         $this->data['title'] = "Tampilan Validasi";
         $this->load->view("admin/master/header", $this->data);
         $this->load->view("admin/page/krs/mahasiswa/status_validasi", $this->data);
-        $this->load->view("admin/master/footer", $this->data);
-    }
-
-    // Method untuk memilih tahun dan semester yang akan dicek
-    public function pilih_validasi()
-    {
-        $this->load->library('form_validation');
-        $this->load->model('All_model');
-
-        $this->data['active'] = "11";
-        $this->data['flip'] = "false";
-        $this->data['ckeditor'] = "krs";
-
-        $id = $_SESSION['user_id'];
-
-        $this->data['group'] = $this->ion_auth_model->getGroup($id);
-        $this->data['title'] = "Tampilan Validasi";
-        $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/mahasiswa/pilih_validasi", $this->data);
         $this->load->view("admin/master/footer", $this->data);
     }
 }

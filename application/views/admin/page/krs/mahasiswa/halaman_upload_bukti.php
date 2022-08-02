@@ -15,7 +15,7 @@
                                     <input type="hidden" name="mahasiswa_id" value="<?= $mahasiswa['id_mhs']; ?>">
                                     <input type="hidden" name="nama" value="<?= $mahasiswa['first_name']; ?>">
                                     <input type="hidden" name="nim" value="<?= $mahasiswa['last_name']; ?>">
-                                    <input type="hidden" name="form_id" value="<?= $form_bukti['id_form']; ?>">
+                                    <input type="hidden" name="id_form" value="<?= $form['id_form']; ?>">
                                     <p class="form_tagline">Drag & Drop Your File Here...</p>
                                     <h1 class="imgupload"><i class="fa fa-file-pdf" aria-hidden="true"></i></h1>
                                     <h1 class="imgupload ok"><i class="fa fa-check-circle"></i></h1>
@@ -37,6 +37,7 @@
                                 <!--the defauld disabled btn and the actual one shown only if the three fields are valid-->
                                 <input type="submit" value="Submit!" class="btn btn-primary" id="submitbtn">
                                 <button type="button" class="btn btn-default" disabled="disabled" id="fakebtn">Submit! <i class="fa fa-minus-circle"></i></button>
+
                             </div>
                         </div>
                         <!-- Form -->
