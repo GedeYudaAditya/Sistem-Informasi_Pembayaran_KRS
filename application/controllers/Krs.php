@@ -811,10 +811,8 @@ class Krs extends CI_Controller
     //handle data bukti from upload bukti end------
 
 
-
-    // Start View Mahasiswa
-
-	public function viewMahasiswa()
+    // Start View Validasi Mahasiswa
+	public function viewValidasiMahasiswa()
 	{
 		$this->data['title'] = "KRS - Data Mahasiswa";
 		$this->data['active'] = "11";
@@ -827,11 +825,11 @@ class Krs extends CI_Controller
         $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
         $mahasiswa['value'] = $this->All_model->gatherData($find)->result();
 		$this->load->view("admin/master/header", $this->data);
-		$this->load->view("admin/page/krs/dosen/viewValidasiMahasiswa",$mahasiswa);
+		$this->load->view("admin/page/krs/dosen/validasiMahasiswa",$mahasiswa);
 		$this->load->view("admin/master/footer", $this->data);
 	}
 
-    // End View Mahasiswa
+    // End View Validasi Mahasiswa
 
     // Start View MintaBukti 
     public function viewMintaBukti()
@@ -848,6 +846,8 @@ class Krs extends CI_Controller
         $this->load->view("admin/master/footer", $this->data);
     }
     // End View MintaBukti
+
+
     // Start memvalidkanBukti
     public function memvalidkanBukti($id,$valid){
         $this->load->model('All_model');
@@ -857,6 +857,8 @@ class Krs extends CI_Controller
         redirect("Krs/viewMahasiswa");
     }
     // End memvalidkanBukti
+
+
     // Start View Form Buat Bukti
     public function viewFormBuatBukti()
     {

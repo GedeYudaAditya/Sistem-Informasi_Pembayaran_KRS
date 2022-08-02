@@ -6,10 +6,10 @@
   <div class="row">
     <div class="col-12">
       <div class="card mb-4">
-        <div class="row py-2 px-4 d-flex align-items-center">
-          <h5 class="col-3 py-3 text-dark user-select-none font-weight-bold">Validasi Bukti Iuran</h5>
+        <div class="row py-2 px-4 d-flex flex-column flex-md-row align-items-center">
+          <h5 class="col-12 col-md-3 py-3 text-dark user-select-none font-weight-bold">Validasi Bukti Iuran</h5>
           <div class="col-6"></div>
-          <div class="col-3 form-group input-group">
+          <div class="col-12 col-md-3 form-group input-group">
             <select class="custom-select" id="inputGroupSelect01">
               <option selected disabled>Pilih Tahun Ajaran</option>
               <option value="ganjil21">Ganjil 2021/2022</option>
@@ -70,8 +70,7 @@
                   <td>
                     <div>
                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLihatBukti">Lihat Detail 
-                      </button>
-                        
+                      </button>                        
                     </div>
                   </td>
                 </tr>

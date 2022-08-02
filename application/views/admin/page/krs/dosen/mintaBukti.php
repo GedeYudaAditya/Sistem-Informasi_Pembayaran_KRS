@@ -20,10 +20,10 @@
               <thead>
                 <tr class="fw-bold">
                   <td class="col-1">No</td>
-                  <td class="col-2">Judul</td>
-                  <td class="col-4">Deskripsi</td>
+                  <td class="col-3">Judul</td>
                   <td class="col-1">Prodi</td>
                   <td class="col-2">Tahun Ajaran</td>
+                  <td class="col-2">Semester</td>
                   <td class="col-2">Lihat Semua Bukti</td>
                 </tr>
               </thead>
@@ -44,17 +44,17 @@
                   </td>
                   <td>
                     <div >
-                      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur perspiciatis corporis ratione reprehenderit, illum ad quod vitae iure repudiandae id!</p>
-                    </div>
-                  </td>
-                  <td>
-                    <div >
                       <p>SI</p>
                     </div>
                   </td>
                   <td>
                     <div >
-                      <p>Ganjil 2022/2023</p>
+                      <p>2022/2023</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div >
+                      <p>Ganjil</p>
                     </div>
                   </td>
                   <td>
