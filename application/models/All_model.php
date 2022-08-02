@@ -3067,6 +3067,12 @@ class All_model extends CI_Model
 		return $data->row_array();
 	}
 
+
+// get formulir
+	public function getFormBukti($where){
+		return $this->db->get_where('s6_form_bukti', ['dosen_id' => $where)->result_array();
+	}
+//get formulir penutup
 	public function getDataBukti($where)
 	{
 		$this->db->select('*');

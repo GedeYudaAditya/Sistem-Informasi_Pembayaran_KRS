@@ -1,14 +1,9 @@
-<script>
-    $('#myModal').on('shown.bs.modal', function() {
-        $('#myInput').trigger('focus')
-    })
-</script>
 <div class="container-fluid">
     <?php if ($this->session->flashdata('sukses')) : ?>
         <div class="row mt-3">
             <div class="col-md-12 text-center">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Data Mahasiswa <strong>berhasil</strong> <?= $this->session->flashdata('sukses'); ?>
+                    File <strong>berhasil</strong> <?= $this->session->flashdata('sukses'); ?>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -87,7 +82,7 @@
                             <th scope="row"><?= $b['tahun']; ?> - <?= $b['semester']; ?></th>
                             <td scope="row" class="text-center">
                                 <?php if ($b['valid'] == 0) : ?>
-                                    <p class="badge badge-danger">X</p>
+                                    <p class="badge badge-danger"><i class="fa fa-times"></i></p>
                                 <?php else : ?>
                                     <p class="badge badge-success"><i class="fa fa-check"></i></p>
                                 <?php endif ?>
@@ -114,50 +109,3 @@
     </div>
 </div>
 </div>
-<!-- Modal -->
-<!--
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload File CSV</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="<?= base_url('krs/importCSV'); ?>" method="POST" enctype="multipart/form-data">
-                <div class="modal-body">
-                    <h6>Perhatian!</h6>
-                    <ul>
-                        <li>File yang dapat di upload adalah file yang ber-extensi .csv</li>
-                        <li>Data dalam file harus berurut sesuai berikut ini : </li>
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead class="text-center thead-light">
-                                <tr>
-                                    <td scope="col">NIM</td>
-                                    <td scope="col">Nama</td>
-                                    <td scope="col">Prodi</td>
-                                    <td scope="col">Semester</td>
-                                    <td scope="col">Status</td>
-                                    <td scope="col">Tahun</td>
-                                </tr>
-                            </thead>
-                        </table>
-                        <li>Pada bagian Prodi data di tulis sesuai aturan yaitu <strong>PTI</strong> untuk Pendidikan Teknik Informatika, <strong>SI</strong> untuk Sistem Informasi, <strong>MI</strong> untuk Managemen Informatika, dan <strong>ILKOM</strong> untuk Ilmu Komputer</li>
-                    </ul>
-                    <h6>Upload :</h6>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="customFile" name="data">
-                        <label class="custom-file-label" for="customFile">Choose file</label>
-                    </div>
-                    <hr>
-                    <h6 style="color: red;">Tidak mengikuti aturan di atas dapat menyebabkan error upload atau kesalahan inputan data ke sistem...</h6>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="input" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> -->
