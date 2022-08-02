@@ -3096,15 +3096,14 @@ class All_model extends CI_Model
 			'tahun',
 			'semester',
 			'expire_date',
-			'id_form'
+			'id_form',
 		]);
-		// $this->db->from('s6_form_bukti');
+		$this->db->from('s6_form_bukti');
 		$this->db->join('s6_dosen', 's6_dosen.id = s6_form_bukti.dosen_id');
 		$this->db->join('users', 's6_dosen.user_id = users.id');
-		// $this->db->join('s6_bukti', 's6_form_bukti.id_form = s6_bukti.form_bukti_id');
 		$this->db->order_by('expire_date', 'desc');
-		$data = $this->db->get_where('s6_form_bukti', ['dosen_id' => $where]);
-		return $data->result_array();
+		$data = $this->db->where('dosen_id', $where);
+		return $data->get()->result_array();
 	}
 	//   End Of Marchel 
 
