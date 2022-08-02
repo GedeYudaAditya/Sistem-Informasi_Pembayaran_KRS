@@ -224,8 +224,8 @@
 								<div id="collapseDosen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 									<div class="bg-white py-2 collapse-inner rounded">
 										<h6 class="collapse-header">Daftar Fitur:</h6>
-										<a class="collapse-item" href="<?= base_url('krs/validasi_mahasiswa') ?>"><i class="fas fa-user-check mr-2"></i>Validasi Mahasiswa</a>
-										<a class="collapse-item" href="<?= base_url('krs/minta_bukti') ?>"><i class="fas fa-edit mr-1"></i> Minta Bukti</a>
+										<a class="collapse-item" href="<?= base_url('krs/viewMahasiswa') ?>"><i class="fas fa-user-check mr-2"></i>Validasi Mahasiswa</a>
+										<a class="collapse-item" href="<?= base_url('krs/viewMintaBukti') ?>"><i class="fas fa-edit mr-1"></i> Minta Bukti</a>
 									</div>
 							</li>
 						<?php } ?>
@@ -240,14 +240,14 @@
 							<li class="nav-item">
 								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMahasiswa" aria-expanded="true" aria-controls="collapseMahasiswa">
 									<i class="fas fa-hotel"></i>
-									<i><span class="text-warning">Pembayaran Iuran</span></i>
+									<i><span class="text-warning">Validasi Iuran</span></i>
 								</a>
 								<div id="collapseMahasiswa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 									<div class="bg-white py-2 collapse-inner rounded">
 										<h6 class="collapse-header">Daftar Fitur:</h6>
-										<a class="collapse-item" href="<?= base_url() ?>Krs/halaman_bukti">Pembayaran Iuran KRS</a>
-										<a class="collapse-item" href="<?= base_url() ?>">Cek validasi Pembayaran</a>
-										<a class="collapse-item" href="<?= base_url('krs/pilih_validasi') ?>">Cek Status Validasi</a>
+										<a class="collapse-item" href="<?= base_url() ?>Krs/halaman_bukti">Permintaan Bukti</a>
+										<!-- <a class="collapse-item" href="<?= base_url() ?>">Cek validasi Pembayaran</a> -->
+										<a class="collapse-item" href="<?= base_url('krs/pilih_validasi') ?>">Status Validasi Bukti</a>
 									</div>
 								</div>
 							</li>

@@ -3050,7 +3050,7 @@ class All_model extends CI_Model
 
 
 	/*Method baru bagian KRS mahasiswa
-	Perbaruan
+	Perbaruan -- Marchel
 	*/
 
 	public function getMahasiswa()
@@ -3067,34 +3067,70 @@ class All_model extends CI_Model
 		return $data->row_array();
 	}
 
-	public function getDataBukti($where)
+	public function getDataBuktiMahasiswa($where) // di ubah oleh yuda
 	{
-		$this->db->select('*');
+		$this->db->select(
+			[
+				'um.first_name as mahasiswa',
+				'um.last_name as nim',
+				'ud.first_name as dosen',
+				'tahun',
+				'semester',
+				'valid',
+				'file_path'
+			]
+		);
 		$this->db->join('s6_form_bukti', 's6_form_bukti.id_form = s6_bukti.form_bukti_id');
+		$this->db->join('s6_dosen', 's6_dosen.id = s6_form_bukti.dosen_id');
+		$this->db->join('s6_mahasiswa', 's6_mahasiswa.id_mhs = s6_bukti.mahasiswa_id');
+		$this->db->join('users as um', 'um.id = s6_mahasiswa.user_id');
+		$this->db->join('users as ud', 'ud.id = s6_dosen.user_id');
 		$data = $this->db->get_where('s6_bukti', ['mahasiswa_id' => $where]);
 		return $data->result_array();
-  }
-  
-	public function findDosen($id){
+	}
+
+	public function getDataFormBuktiDosen($where) // di tambah oleh yuda
+	{
+		$this->db->select([
+			'first_name',
+			'tahun',
+			'semester',
+			'expire_date',
+			'id_form'
+		]);
+		// $this->db->from('s6_form_bukti');
+		$this->db->join('s6_dosen', 's6_dosen.id = s6_form_bukti.dosen_id');
+		$this->db->join('users', 's6_dosen.user_id = users.id');
+		// $this->db->join('s6_bukti', 's6_form_bukti.id_form = s6_bukti.form_bukti_id');
+		$this->db->order_by('expire_date', 'desc');
+		$data = $this->db->get_where('s6_form_bukti', ['dosen_id' => $where]);
+		return $data->result_array();
+	}
+	//   End Of Marchel 
+
+	// Start Of Adi Sastrawan
+	public function findDosen($id)
+	{
 		$this->db->select('id');
 		$this->db->from('s6_dosen');
 		$this->db->where($id);
 		return $this->db->get();
-
 	}
-  
-	public function gatherData($id){
+
+	public function gatherData($id)
+	{
 		$this->db->select('*,users.first_name,users.last_name');
 		$this->db->from('s6_mahasiswa',);
 		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
-		$this->db->join('s6_bukti','s6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
-		$this->db->join('s6_form_bukti','s6_bukti.form_bukti_id=s6_form_bukti.id_form');
+		$this->db->join('s6_bukti', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
+		$this->db->join('s6_form_bukti', 's6_bukti.form_bukti_id=s6_form_bukti.id_form');
 		$this->db->where($id);
 		return $this->db->get();
 	}
-  
-	public function validateBukti($valid,$id){
+
+	public function validateBukti($valid, $id)
+	{
 		$this->db->where($id);
-		$this->db->update('s6_bukti',$valid);
+		$this->db->update('s6_bukti', $valid);
 	}
 }
