@@ -54,65 +54,57 @@
     </div> -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">File Iuran KRS :</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Antrian Permintaan Bukti Dosen :</h6>
 
-            <a class="btn btn-sm btn-success shadow-sm" href="<?= base_url('krs/upload_bukti'); ?>"><i class="fas fa-upload fa-sm"></i></i>Upload Bukti Pembayaran</a>
+
         </div>
-
 
         <div class="card-body">
-
             <?php if ($bukti == NULL) : ?>
-                <p class="text-center ">Kamu belum Mengunggah Bukti Pembayaran!</p>
-        </div>
-    <?php else : ?>
+                <p class="text-center ">Belum Ada Permintaan Pengunggahan Bukti Dari Dosen PA!</p>
+            <?php else : ?>
 
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead class="text-center thead-light">
-                    <tr>
-                        <th scope="col">File</th>
-                        <th scope="col">TA - Semester</th>
-                        <th scope="col">Validasi</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($bukti as $b) : ?>
-                        <tr>
-                            <th scope="row">
-                                <!-- <embed src=" //base_url('assets/upload/Folder_krs/' . $bukti//['file_path']) ?>" width="100%" height="100%" type="application/pdf" /> -->
-                                <a href="<?= base_url($b['file_path']) ?>"><img src="<?= base_url('assets/img/icon/file-icon/pdf-24.png'); ?>" alt="">Your File Name.pdf</a>
-                            </th>
-                            <th scope="row"><?= $b['tahun']; ?> - <?= $b['semester']; ?></th>
-                            <td scope="row" class="text-center">
-                                <?php if ($b['valid'] == 0) : ?>
-                                    <p class="badge badge-danger">X</p>
-                                <?php else : ?>
-                                    <p class="badge badge-success"><i class="fa fa-check"></i></p>
-                                <?php endif ?>
-                            </td>
-                            <td class="text-center">
-                                <?php if ($b['valid'] != 1) : ?>
-                                    <a href="" class="badge badge-warning mr-1">
-                                        <i class="fas fa-edit fa-sm"></i> edit
-                                    </a>
-
-                                    <a href="" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?');">
-                                        <i class="far fa-trash-alt fa-sm"></i> delete
-                                    </a>
-                                <?php else : ?>
-                                    <p>No action needed</p>
-                                <?php endif ?>
-                            </td>
-                        </tr>
-                    <?php endforeach ?>
-                <?php endif ?>
-                </tbody>
-            </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead class="text-center thead-light">
+                            <tr>
+                                <th scope="col">Dosen PA</th>
+                                <th scope="col">TA - Semester</th>
+                                <th scope="col">Expired</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($bukti as $b) : ?>
+                                <tr>
+                                    <th scope="row">
+                                        <!-- <embed src=" //base_url('assets/upload/Folder_krs/' . $bukti//['file_path']) ?>" width="100%" height="100%" type="application/pdf" /> -->
+                                        <?= $b['first_name'] ?>
+                                    </th>
+                                    <th scope="row"><?= $b['tahun']; ?> - <?= $b['semester']; ?></th>
+                                    <td scope="row" class="text-center">
+                                        <?= $b['expire_date'] ?>
+                                    </td>
+                                    <td scope="row" class="text-center">
+                                        <!-- check if expired now -->
+                                        <?php
+                                        $date = date('Y-m-d');
+                                        $expired = $b['expire_date'];
+                                        ?>
+                                        <?php if ($date > $expired) : ?>
+                                            <span class="badge badge-danger">Date Expired</span>
+                                        <?php else : ?>
+                                            <a href="<?= base_url('krs/upload_bukti/' . $b['id_form']); ?>" class="btn btn-sm btn-success shadow-sm"><i class="fas fa-upload fa-sm"></i></i>Upload Bukti Pembayaran</a>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif ?>
         </div>
     </div>
-</div>
 </div>
 <!-- Modal -->
 <!--

@@ -21,7 +21,7 @@
         </div>
         <div class="card-body px-0 pt-2 pb-2">
           <div class="table-responsive">
-            <table class="table align-items-center" >
+            <table class="table align-items-center">
               <thead>
                 <tr class="fw-bold">
                   <td>No</td>
@@ -32,50 +32,50 @@
                   <td>Validasi</td>
                 </tr>
               </thead>
-              <tbody >
-                <?php $i=1?>
-                <?php foreach($value as $mhs) : ?>
-                <tr>
-                  <td>
-                    <?php if($i > 9) :?>
-                      <p><?= $i++?></p>
-                    <?php else :?>
-                      <p>0<?= $i++?></p>
-                    <?php endif;?>
-                  </td>
-                  <td >
-                    <div>
-                      <p><?php echo $mhs->first_name?></p>
-                    </div>
-                  </td>
-                  <td>
-                    <div >
-                      <p><?php echo $mhs->last_name?></p>
-                    </div>
-                  </td>
-                  <td>
-                    <div >
-                      <p><?php echo $mhs->prodi?></p>
-                    </div>
-                  </td>
-                  <td>
-                    <div>
-                      <?php if($mhs->valid==false) :?>
-                      <p class="text-danger">Belum Divalidasi</p>
-                      <?php else:?>
-                      <p class="text-success">Sudah Divalidasi</p>
-                      <?php endif;?>
-                    </div>
-                  </td>
-                  <td>
-                    <div>
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLihatBukti">Lihat Detail 
-                      </button>
-                        
-                    </div>
-                  </td>
-                </tr>
-                <?php endforeach;?>
+              <tbody>
+                <?php $i = 1 ?>
+                <?php foreach ($value as $mhs) : ?>
+                  <tr>
+                    <td>
+                      <?php if ($i > 9) : ?>
+                        <p><?= $i++ ?></p>
+                      <?php else : ?>
+                        <p>0<?= $i++ ?></p>
+                      <?php endif; ?>
+                    </td>
+                    <td>
+                      <div>
+                        <p><?php echo $mhs->first_name ?></p>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <p><?php echo $mhs->last_name ?></p>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <p><?php echo $mhs->prodi ?></p>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <?php if ($mhs->valid == false) : ?>
+                          <p class="text-danger">Belum Divalidasi</p>
+                        <?php else : ?>
+                          <p class="text-success">Sudah Divalidasi</p>
+                        <?php endif; ?>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLihatBukti">Lihat Detail
+                        </button>
+
+                      </div>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>
@@ -96,18 +96,22 @@
           </button>
         </div>
         <div class="modal-body ">
-            <label for="deskripsi"> <p>Deskripsi</p></label>
-            <li class="list-group-item gap-1"><?php echo $mhs->deskripsi?></li>
-            <label for="deskripsi"> <p>File Bukti</p></label>
-            <li class="list-group-item gap-1">
-            <iframe class="embed-responsive-item" type="text/html"src="<?php echo base_url();?>assets/upload/Folder_KRS/<?php echo $mhs->file_path?>#toolbar=0" width="455" 
-            height="500"></iframe></li>
-          
+          <label for="deskripsi">
+            <p>Deskripsi</p>
+          </label>
+          <li class="list-group-item gap-1"><?php echo $mhs->deskripsi ?></li>
+          <label for="deskripsi">
+            <p>File Bukti</p>
+          </label>
+          <li class="list-group-item gap-1">
+            <iframe class="embed-responsive-item" type="text/html" src="<?php echo base_url(); ?><?php echo $mhs->file_path ?>#toolbar=0" width="455" height="500"></iframe>
+          </li>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <a href="<?php echo base_url();?>Krs/memvalidkanBukti/<?php echo $mhs->id?>/<?php echo 0?>"><button type="submit" class="btn btn-danger">Tolak</button></a>
-          <a href="<?php echo base_url();?>Krs/memvalidkanBukti/<?php echo $mhs->id?>/<?php echo 1?>"><button type="submit" class="btn btn-primary">Terima</button></a>
+          <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $mhs->id ?>/<?php echo 0 ?>"><button type="submit" class="btn btn-danger">Tolak</button></a>
+          <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $mhs->id ?>/<?php echo 1 ?>"><button type="submit" class="btn btn-primary">Terima</button></a>
         </div>
       </div>
     </div>
