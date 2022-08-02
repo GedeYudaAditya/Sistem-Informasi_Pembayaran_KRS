@@ -3092,19 +3092,29 @@ class All_model extends CI_Model
 	public function getDataFormBuktiDosen($where) // di tambah oleh yuda
 	{
 		$this->db->select([
+			'id_form',
 			'first_name',
 			'tahun',
 			'semester',
 			'expire_date',
-			'id_form'
+			'id_form',
 		]);
-		// $this->db->from('s6_form_bukti');
+		$this->db->from('s6_form_bukti');
 		$this->db->join('s6_dosen', 's6_dosen.id = s6_form_bukti.dosen_id');
 		$this->db->join('users', 's6_dosen.user_id = users.id');
-		// $this->db->join('s6_bukti', 's6_form_bukti.id_form = s6_bukti.form_bukti_id');
 		$this->db->order_by('expire_date', 'desc');
-		$data = $this->db->get_where('s6_form_bukti', ['dosen_id' => $where]);
-		return $data->result_array();
+		$data = $this->db->where('dosen_id', $where);
+		return $data->get()->result_array();
+	}
+
+	public function checkBuktiSudahDiKirim($form_bukti_id, $id)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_bukti');
+		$this->db->where('form_bukti_id', $form_bukti_id);
+		$this->db->where('mahasiswa_id', $id);
+		$data = $this->db->get();
+		return $data->num_rows();
 	}
 
 	public function getForm($where){

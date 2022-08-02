@@ -697,6 +697,7 @@ class Krs extends CI_Controller
 
             //Get id Pa dari mahasiswa
             $pa_id = $this->All_model->getMahasiswaByUserId($id)['pa_id'];
+            $data['id'] = $this->All_model->getMahasiswaByUserId($id);
 
             //get_bukti
             $data['bukti'] = $this->All_model->getDataFormBuktiDosen($pa_id);
