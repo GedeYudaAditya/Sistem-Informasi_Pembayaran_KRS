@@ -32,52 +32,52 @@
                   <td>Validasi</td>
                 </tr>
               </thead>
-              <tbody >
-                <?php $i=1?>
-                <?php foreach($value as $mhs) : ?>
-                <tr>
-                  <td>
-                    <?php if($i > 9) :?>
-                      <p><?= $i++?></p>
-                    <?php else :?>
-                      <p>0<?= $i++?></p>
-                    <?php endif;?>
-                  </td>
-                  <td >
-                    <div>
-                      <p><?php echo $mhs->first_name?></p>
-                    </div>
-                  </td>
-                  <td>
-                    <div >
-                      <p><?php echo $mhs->last_name?></p>
-                    </div>
-                  </td>
-                  <td>
-                    <div >
-                      <p><?php echo $mhs->prodi?></p>
-                    </div>
-                  </td>
-                  <td>
-                    <div>
-                      <?php if($mhs->valid==false) :?>
-                      <p class="text-danger">Belum Divalidasi</p>
-                      <?php else:?>
-                      <p class="text-success">Sudah Divalidasi</p>
-                      <?php endif;?>
-                    </div>
-                  </td>
-                  <td>
-                    <div>
-                      <button type="button" class="btn btn-primary">
-                        <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewDetailBukti')?>">  
-                          Lihat Detail 
-                        </a>
-                      </button>                        
-                    </div>
-                  </td>
-                </tr>
-                <?php endforeach;?>
+              <tbody>
+                <?php $i = 1 ?>
+                <?php foreach ($value as $mhs) : ?>
+                  <tr>
+                    <td>
+                      <?php if ($i > 9) : ?>
+                        <p><?= $i++ ?></p>
+                      <?php else : ?>
+                        <p>0<?= $i++ ?></p>
+                      <?php endif; ?>
+                    </td>
+                    <td>
+                      <div>
+                        <p><?php echo $mhs->first_name ?></p>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <p><?php echo $mhs->last_name ?></p>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <p><?php echo $mhs->prodi ?></p>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <?php if ($mhs->valid == false) : ?>
+                          <p class="text-danger">Belum Divalidasi</p>
+                        <?php else : ?>
+                          <p class="text-success">Sudah Divalidasi</p>
+                        <?php endif; ?>
+                      </div>
+                    </td>
+                    <td>
+                      <div>
+                        <button type="button" class="btn btn-primary">
+                          <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewDetailBukti/' . $mhs->id) ?>">
+                            Lihat Detail
+                          </a>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>
