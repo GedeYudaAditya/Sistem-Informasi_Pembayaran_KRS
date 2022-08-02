@@ -75,4 +75,6 @@ $route['admin/tambah_user_mahasiswa'] = 'auth/create_user_mahasiswa';
 $route['krs/validasi_mahasiswa'] = 'krs/viewValidasiMahasiswa';
 $route['krs/minta_bukti'] = 'krs/viewMintaBukti';
 $route['krs/buat_bukti'] = 'krs/viewFormBuatBukti';
+$route['krs/detail_bukti'] = 'krs/viewDetailBukti';
+
 

@@ -839,7 +839,7 @@ class Krs extends CI_Controller
     // Start Of Dosen Section - [Adi Sastrawan]
     // Start View Mahasiswa
 
-    public function viewMahasiswa()
+    public function viewValidasiMahasiswa()
     {
         $this->data['title'] = "KRS - Data Mahasiswa";
         $this->data['active'] = "11";
@@ -922,4 +922,20 @@ class Krs extends CI_Controller
         $this->load->view("admin/page/krs/mahasiswa/status_validasi", $this->data);
         $this->load->view("admin/master/footer", $this->data);
     }
+
+    // Start Detail Bukti Dosen
+    public function viewDetailBukti()
+    {
+        $this->data['title'] = "KRS - Data Mahasiswa";
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+        $this->load->view("admin/master/header", $this->data);
+        $this->load->view("admin/page/krs/dosen/detailBukti");
+        $this->load->view("admin/master/footer", $this->data);
+    }
+    // End Detail Bukti Dosen
 }

@@ -32,7 +32,6 @@
                   <td>Validasi</td>
                 </tr>
               </thead>
-<<<<<<< HEAD:application/views/admin/page/krs/dosen/validasiMahasiswa.php
               <tbody >
                 <?php $i=1?>
                 <?php foreach($value as $mhs) : ?>
@@ -70,58 +69,15 @@
                   </td>
                   <td>
                     <div>
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLihatBukti">Lihat Detail 
+                      <button type="button" class="btn btn-primary">
+                        <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewDetailBukti')?>">  
+                          Lihat Detail 
+                        </a>
                       </button>                        
                     </div>
                   </td>
                 </tr>
                 <?php endforeach;?>
-=======
-              <tbody>
-                <?php $i = 1 ?>
-                <?php foreach ($value as $mhs) : ?>
-                  <tr>
-                    <td>
-                      <?php if ($i > 9) : ?>
-                        <p><?= $i++ ?></p>
-                      <?php else : ?>
-                        <p>0<?= $i++ ?></p>
-                      <?php endif; ?>
-                    </td>
-                    <td>
-                      <div>
-                        <p><?php echo $mhs->first_name ?></p>
-                      </div>
-                    </td>
-                    <td>
-                      <div>
-                        <p><?php echo $mhs->last_name ?></p>
-                      </div>
-                    </td>
-                    <td>
-                      <div>
-                        <p><?php echo $mhs->prodi ?></p>
-                      </div>
-                    </td>
-                    <td>
-                      <div>
-                        <?php if ($mhs->valid == false) : ?>
-                          <p class="text-danger">Belum Divalidasi</p>
-                        <?php else : ?>
-                          <p class="text-success">Sudah Divalidasi</p>
-                        <?php endif; ?>
-                      </div>
-                    </td>
-                    <td>
-                      <div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLihatBukti">Lihat Detail
-                        </button>
-
-                      </div>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
->>>>>>> main:application/views/admin/page/krs/dosen/viewValidasiMahasiswa.php
               </tbody>
             </table>
           </div>
@@ -130,39 +86,6 @@
     </div>
   </div>
   <!-- End Table -->
-
-  <!-- Start Modal -->
-  <div class="modal fade" id="modalLihatBukti" tabindex="-1" aria-labelledby="modalLableTitle" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalLableTitle">Bukti Iuran</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body ">
-          <label for="deskripsi">
-            <p>Deskripsi</p>
-          </label>
-          <li class="list-group-item gap-1"><?php echo $mhs->deskripsi ?></li>
-          <label for="deskripsi">
-            <p>File Bukti</p>
-          </label>
-          <li class="list-group-item gap-1">
-            <iframe class="embed-responsive-item" type="text/html" src="<?php echo base_url(); ?><?php echo $mhs->file_path ?>#toolbar=0" width="455" height="500"></iframe>
-          </li>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $mhs->id ?>/<?php echo 0 ?>"><button type="submit" class="btn btn-danger">Tolak</button></a>
-          <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $mhs->id ?>/<?php echo 1 ?>"><button type="submit" class="btn btn-primary">Terima</button></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End Modal  -->
 
 </div>
 <!-- End Container -->
