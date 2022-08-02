@@ -438,10 +438,277 @@ class Krs extends CI_Controller
         }
     }
     // END CLIENT SIDE
-    // Mahasiswa
+
+
+    //tampilkan data mahasiswa aktif TI start-----
+    public function mahasiswa()
+    {
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs', 'home');
+        } else {
+            $this->data['title'] = "KRS - Data Mahasiswa";
+            $this->data['active'] = "11";
+            $id = $_SESSION['user_id'];
+            $this->data['flip'] = "false";
+            $this->data['ckeditor'] = "krs";
+
+            $this->data['group'] = $this->ion_auth_model->getGroup($id);
+            $this->load->model('All_model');
+            $data['th'] = $this->All_model->getThn();
+            $data['info'] = $this->All_model->infos();
+            unset($_SESSION['flash']);
+            //var_dump($data['info']);
+            if (empty($data['info'])) {
+                $data = [
+                    'id-info' => 1,
+                    'info' => 'Data update kosong',
+                    'ket' => 'Tidak ada yang di ubah sebelumnya'
+                ];
+                $this->All_model->defaultInfo($data);
+                $data['info'] = $this->All_model->infos();
+                $data['infos'] = false;
+            } else {
+                $data['infos'] = true;
+            }
+            $data['prodis'] = [
+                [
+                    'id' => 'PTI',
+                    'prodi' => 'Pendidikan Teknik Informatika'
+                ],
+                [
+                    'id' => 'SI',
+                    'prodi' => 'Sistem Informatika'
+                ],
+                [
+                    'id' => 'ILKOM',
+                    'prodi' => 'Ilmu Komputer'
+                ],
+                [
+                    'id' => 'MI',
+                    'prodi' => 'Manajemen Informasi'
+                ]
+            ];
+
+            //var_dump($this->All_model->getingAll());
+            $data['siswa'] = $this->All_model->getMahasiswa();
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/data_mhs", $data);
+            $this->load->view("admin/master/footer", $this->data);
+        }
+    }
+
+    //tampilkan data mahasiswa aktif TI end-----
+
+    // Admin Tambah data mahasiswa Krs
+    public function tambah_Mahasiswa_Krs()
+    {
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs');
+        } else {
+
+            $this->data['title'] = "KRS - Tambah Data Mahasiswa";
+            $this->data['active'] = "11";
+            $id = $_SESSION['user_id'];
+            $this->data['flip'] = "false";
+            $this->data['ckeditor'] = "krs";
+
+
+            unset($_SESSION['sukses']);
+            $this->load->model('All_model');
+            $this->lang->load('form_validation');
+            $data['th'] = ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'];
+            $data['semester'] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+            $data['dosen'] = $this->db->get('s6_dosen')->result_array();
+
+
+            $data['users'] = $this->db->select("*")->limit(1)->order_by('id', "DESC")->get("users")->row();
+
+            $data['prodis'] = [
+                [
+                    'id' => 'PTI',
+                    'prodi' => 'Pendidikan Teknik Informatika'
+                ],
+                [
+                    'id' => 'SI',
+                    'prodi' => 'Sistem Informasi'
+                ],
+                [
+                    'id' => 'ILKOM',
+                    'prodi' => 'Ilmu Komputer'
+                ],
+                [
+                    'id' => 'MI',
+                    'prodi' => 'Manajemen Informasi'
+                ]
+            ];
+            $this->data['group'] = $this->ion_auth_model->getGroup($id);
+            $this->load->library('form_validation');
+            $this->lang->load('form_validation_lang');
+
+            $this->form_validation->set_rules('user_id', 'User Id', 'required|numeric|is_unique[s6_mahasiswa.user_id]');
+            $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
+            // $this->form_validation->set_rules('nim', 'NIM Mahasiswa', 'required|numeric|is_unique[s6_mahasiswa.nim]');
+            $this->form_validation->set_rules('prodi', 'Prodi', 'required');
+            $this->form_validation->set_rules('angkatan', 'Angkatan', 'required');
+            $this->form_validation->set_rules('smtr', 'Semester', 'required');
+            $this->form_validation->set_rules('dosen_pa', 'Pembimbing Akademik', 'required');
+
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->view("admin/master/header", $this->data);
+                $this->load->view("admin/page/krs/input_data_mahasiswa", $data);
+                $this->load->view("admin/master/footer", $this->data);
+            } else {
+                $nama = $this->input->post('nama');
+                $nim = $this->input->post('nim');
+                $prodi = $this->input->post('prodi');
+                $user_id = $this->input->post('user_id');
+                $pa_id = $this->input->post('dosen_pa');
+                $angkatan = $this->input->post('angkatan');
+                $semester = $this->input->post('smtr');
+
+                $data = [
+                    'prodi'     =>  $prodi,
+                    'user_id'   =>  $user_id,
+                    'pa_id'     =>  $pa_id,
+                ];
+                $this->db->insert('s6_mahasiswa', $data);
+                $data['users'] = $this->db->select("*")->limit(1)->order_by('id', "DESC")->get("users")->row();
+                $user_id = $data['users']->id;
+
+                echo $this->input->post('userGroup');
+                $this->db->where('user_id', $user_id);
+                $this->db->update('users_groups', ['group_id' => $this->input->post('userGroup')]);
+                redirect('krs/mahasiswa');
+            }
+        }
+    }
+
+    public function update_data_mahasiswa($mhs_id)
+    {
+        $this->data['title'] = "KRS - Update Data Mahasiswa";
+        $this->data['active'] = "11";
+        $id = $_SESSION['user_id'];
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $this->load->model('All_model');
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        unset($_SESSION['sukses']);
+        $data['th'] = $this->All_model->getThn();
+        $data['prodis'] = [
+            [
+                'id' => 'PTI',
+                'prodi' => 'Pendidikan Teknik Informatika'
+            ],
+            [
+                'id' => 'SI',
+                'prodi' => 'Sistem Informasi'
+            ],
+            [
+                'id' => 'ILKOM',
+                'prodi' => 'Ilmu Komputer'
+            ],
+            [
+                'id' => 'MI',
+                'prodi' => 'Manajemen Informasi'
+            ]
+        ];
+        $data['th'] = ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'];
+        $data['semester'] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        $data['dosen'] = $this->db->get('s6_dosen')->result_array();
+        $data['mahasiswa'] = $this->db->get_where('s6_mahasiswa', ['id_mhs' => $mhs_id])->row_array();
+
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('nama', 'Nama Mahasiswa', 'required');
+        $this->form_validation->set_rules('prodi', 'Prodi', 'required');
+        $this->form_validation->set_rules('angkatan', 'Angkatan', 'required');
+        $this->form_validation->set_rules('smtr', 'Semester', 'required');
+        $this->form_validation->set_rules('dosen_pa', 'Pembimbing Akademik', 'required');
+        if ($this->form_validation->run() == FALSE) {
+
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/m_ubah_data_mhs", $data);
+            $this->load->view("admin/master/footer", $this->data);
+        } else {
+
+            redirect('/krs/simpan_data');
+        }
+    }
+    public function simpan_data()
+    {
+        $id = $this->input->post('id');
+        $nama = $this->input->post('nama');
+        $nim = $this->input->post('nim');
+        $prodi = $this->input->post('prodi');
+        $user_id = $this->input->post('user_id');
+        $pa_id = $this->input->post('dosen_pa');
+        $angkatan = $this->input->post('angkatan');
+        $semester = $this->input->post('smtr');
+
+        $data = [
+            'nama'      => $nama,
+            'nim'       =>  $nim,
+            'prodi'     =>  $prodi,
+            'user_id'   =>  $user_id,
+            'pa_id'     =>  $pa_id,
+            'angkatan'  =>  $angkatan,
+            'semester'  =>  $semester
+        ];
+
+        $this->db->where('id_mhs', $id);
+        $this->db->update('s6_mahasiswa', $data);
+        $this->session->set_flashdata('sukses', "diubah");
+
+        redirect('krs/mahasiswa');
+    }
+    // End Admin
+
+    // Start User Mahasiswa
+    // Halaman Bukti mahasiswa
+    public function halaman_bukti()
+    {
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs', 'home');
+        } else {
+            $this->data['title'] = "KRS - Bukti Pembayaran";
+            $this->data['active'] = "11";
+            $id = $_SESSION['user_id'];
+            $this->data['flip'] = "false";
+            $this->data['ckeditor'] = "krs";
+
+            $this->data['group'] = $this->ion_auth_model->getGroup($id);
+            $this->load->model('All_model');
+            $data['th'] = $this->All_model->getThn();
+            $data['info'] = $this->All_model->infos();
+            unset($_SESSION['flash']);
+            //var_dump($data['info']);
+            if (empty($data['info'])) {
+                $data = [
+                    'id-info' => 1,
+                    'info' => 'Data update kosong',
+                    'ket' => 'Tidak ada yang di ubah sebelumnya'
+                ];
+                $this->All_model->defaultInfo($data);
+                $data['info'] = $this->All_model->infos();
+                $data['infos'] = false;
+            } else {
+                $data['infos'] = true;
+            }
+
+            //Get id Mhsiswa
+            $id_mhs = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
+
+            //get_bukti
+            $data['bukti'] = $this->All_model->getDataBukti($id_mhs);
+
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/mahasiswa/halaman_bukti", $data);
+            $this->load->view("admin/master/footer", $this->data);
+        }
+    }
+
     public function upload_bukti()
     {
-        $this->load->library('form_validation');
         $this->load->model('All_model');
 
         $this->data['active'] = "11";
@@ -451,9 +718,12 @@ class Krs extends CI_Controller
 
         $id = $_SESSION['user_id'];
 
+        $this->data['mahasiswa'] = $this->All_model->getMahasiswaByUserId($id);
+        $this->data['form_bukti'] = $this->db->get_where('s6_form_bukti', ['id_form' => 3])->result_array();
+
         $this->data['group'] = "9";
         $this->data['group'] = $this->ion_auth_model->getGroup($id);
-        $this->data['title'] = "Upload Bukti";
+        $this->data['title'] = "Upload Bukti Pembayaran";
 
         $this->data['prodis'] = [
             [
@@ -462,7 +732,7 @@ class Krs extends CI_Controller
             ],
             [
                 'id' => 'SI',
-                'prodi' => 'Sistem Informatika'
+                'prodi' => 'Sistem Informasi'
             ],
             [
                 'id' => 'ILKOM',
@@ -474,54 +744,76 @@ class Krs extends CI_Controller
             ]
         ];
 
-        $this->form_validation->set_rules(
-            'nama_lengkap',
-            'Nama',
-            'required',
-            [
-                'required' => 'Lengkapi {field} terlebih dahulu'
-            ]
-        );
-        $this->form_validation->set_rules(
-            'nim',
-            'NIM',
-            'required|numeric|max_length[10]',
-            [
-                'required'   => 'Lengkapi {field} terlebih dahulu',
-                'numeric'    => 'Input {field} tidak valid',
-                'max_length' => 'Input {field} tidak valid'
-            ]
-        );
-        $this->form_validation->set_rules(
-            'nim',
-            'NIM',
-            'required|numeric|max_length[10]',
-            [
-                'required'   => 'Lengkapi {field} terlebih dahulu',
-                'numeric'    => 'Input {field} tidak valid',
-                'max_length' => 'Input {field} tidak valid'
-            ]
-        );
-        $this->form_validation->set_rules(
-            'file_bukti',
-            'File Bukti',
-            'required|numeric|max_length[10]',
-            [
-                'required'   => 'Lengkapi {field} terlebih dahulu',
-                'numeric'    => 'Input {field} tidak valid',
-                'max_length' => 'Input {field} tidak valid'
-            ]
-        );
-        if ($this->form_validation->run() == FALSE) {
+        $this->load->view("admin/master/header", $this->data);
+        $this->load->view("admin/page/krs/mahasiswa/halaman_upload_bukti", $this->data);
+        $this->load->view("admin/master/footer", $this->data);
+    }
 
-            $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/mahasiswa/halaman_upload_bukti", $this->data);
-            $this->load->view("admin/master/footer", $this->data);
+
+    //handle data bukti from upload bukti start---
+    public function simpan_bukti()
+    {
+        $this->load->model('All_model');
+
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+
+        $id = $_SESSION['user_id'];
+
+
+        $this->data['group'] = "9";
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $this->data['title'] = "Upload Bukti";
+        // ambil data 
+        $this->data['mahasiswa'] = $this->All_model->getMahasiswaByUserId($id);
+
+        $id_mahasiswa = $this->input->post('mahasiswa_id');
+        $form_id = $this->input->post('form_id');
+        $nama = $this->input->post('nama');
+        $nim = $this->input->post('nim');
+        $file_bukti = $_FILES['file_bukti'];
+
+        $this->load->helper('string');
+
+        $file_name = random_string('alnum', 35);
+        // $file_name = $nama . '_' . $nim . " Bu;
+        $config = [
+            'upload_path'   => './assets/upload/Folder_krs',
+            'allowed_types' => 'pdf',
+            'max_size'      => 1000,
+            'file_name'     =>  $file_name,
+        ];
+
+        if ($file_bukti != '') {
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload('file_bukti')) {
+                $data['error'] = $this->upload->display_errors();
+                $this->session->set_flashdata('file_error', $data['error']);
+                redirect('Krs/upload_bukti');
+            } else {
+
+                $path =  substr($this->upload->data('full_path'), 48);
+                $data = [
+                    'mahasiswa_id' => $id_mahasiswa,
+                    'form_bukti_id' => $form_id,
+                    'deskripsi' => '',
+                    'file_path' => $path,
+                    'created_at'    => mdate('%Y-%m-%d %H:%i:%s', now())
+                ];
+
+                $this->db->insert('s6_bukti', $data);
+                redirect('krs/halaman_bukti');
+            }
         }
     }
 
-    // Method Untuk Dosen
+    //handle data bukti from upload bukti end------
+
+
+
     // Start View Mahasiswa
+
     public function viewMahasiswa()
     {
         $this->data['title'] = "KRS - Data Mahasiswa";

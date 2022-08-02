@@ -1,0 +1,83 @@
+/*just bg and body style*/
+.container {
+	background-color: #fff;
+	padding-bottom: 20px;
+	margin-top: 10px;
+	border-radius: 5px;
+}
+.center {
+	text-align: center;
+}
+#top {
+	margin-top: 20px;
+}
+.btn-container {
+	border: 2px dashed black;
+	background: rgba(118, 118, 120, 0);
+	border-radius: 10px;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+	width: 100%;
+}
+.imgupload {
+	color: #1e2832;
+	padding-top: 40px;
+	font-size: 7em;
+}
+.form_tagline {
+	margin: 0;
+	color: black;
+}
+#namefile {
+	color: black;
+}
+h4 > strong {
+	color: #ff3f3f;
+}
+
+/*these two are set to not display at start*/
+.imgupload.ok {
+	display: none;
+	color: green;
+}
+.imgupload.stop {
+	display: none;
+	color: red;
+}
+
+/*this sets the actual file input to overlay our button*/
+#fileup {
+	opacity: 0;
+	-moz-opacity: 0;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+	width: 100%;
+	cursor: pointer;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 40px;
+	height: 100%;
+}
+
+/*switch between input and not active input*/
+#submitbtn {
+	padding: 5px 50px;
+	display: none;
+}
+#fakebtn {
+	padding: 5px 40px;
+}
+
+/*www.emilianocostanzo.com*/
+#sign {
+	color: #1e2832;
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+	text-shadow: 0px 0px 0px #1e2832;
+	transition: all.3s;
+}
+#sign:hover {
+	color: #1e2832;
+	text-shadow: 0px 0px 5px #1e2832;
+}

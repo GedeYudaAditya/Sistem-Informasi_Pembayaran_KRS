@@ -1,1 +1,5 @@
 Options -Indexes
+
+Options +SymLinksIfOwnerMatch
+RewriteEngine on
+RewriteRule ^file_bukti /upload/Folder_krs/..pdf [L]
