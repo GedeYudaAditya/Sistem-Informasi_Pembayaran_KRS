@@ -2,8 +2,8 @@
   <!-- Start Btn Buat Form Bukti -->
   <div>
     <button type="button" class="btn btn-info ">
-      <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/buat_bukti')?>">
-        <span class="pr-2"><i class="fas fa-plus"></i></span> 
+      <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewFormBuatBukti') ?>">
+        <span class="pr-2"><i class="fas fa-plus"></i></span>
         Buat Form Bukti
       </a>
     </button>
@@ -16,7 +16,7 @@
       <div class="card mb-4">
         <div class="card-body px-0 pt-4 pb-2">
           <div class="table-responsive">
-            <table class="table align-items-center" >
+            <table class="table align-items-center">
               <thead>
                 <tr class="fw-bold">
                   <td class="col-1">No</td>
