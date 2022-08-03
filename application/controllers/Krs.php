@@ -753,7 +753,7 @@ class Krs extends CI_Controller
         $bukti_m = $this->All_model->checkBuktiSudahDiKirim($id_form, $this->data['mahasiswa']['id']);
 
         //cek bukti sudah diupload;
-        if ($bukti_m == 0) {
+        if ($bukti_m == 1) {
             redirect('formulir');
         }
 
