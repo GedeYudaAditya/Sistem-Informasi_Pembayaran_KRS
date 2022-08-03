@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">Cek Status Validasi Pembayaran KRS</h1>
+    <h1 class="h3 mb-2 text-gray-800">Status Validasi Pembayaran KRS</h1>
     <!-- <form id="contact-form" method="POST" action="">
         <p class="mb-4">Silakan masukkan informasi berikut untuk mengecek status validasi pembayaran KRS mahasiswa</p>
         <div class="row">
@@ -46,6 +46,7 @@
                                 <th scope="col">Dosen PA</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">File</th>
+                                <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,8 +66,10 @@
                                     </td>
                                     <td scope="row" class="text-center">
                                         <!-- check validasi bukti -->
-                                        <?php if ($b['valid'] == 0) : ?>
-                                            <span class="badge badge-danger">Belum di Validasi</span>
+                                        <?php if ($b['valid'] == NULL) : ?>
+                                            <span class="badge badge-info">Menunggu Validasi</span>
+                                        <?php elseif ($b['valid'] == 0) : ?>
+                                            <span class="badge badge-danger">Validasi ditolak</span>
                                         <?php else : ?>
                                             <span class="badge badge-success">Sudah di Validasi</span>
                                         <?php endif; ?>
@@ -76,6 +79,15 @@
                                         <a href="<?= base_url($b['file_path']) ?>"><img src="<?= base_url('assets/img/icon/file-icon/pdf-24.png'); ?>" alt="">Your File
                                             Name.pdf</a>
                                     </th>
+                                    <th scope="row">
+                                        <?php if ($b['valid'] != 1) : ?>
+                                            <div class="justify-content-center text-center">
+                                                <button type="button" class="btn btn-sm btn-primary py-0" data-toggle="modal" data-target="#confirm"><i class="fa fa-trash mr-2"></i>Hapus</button>
+                                            </div>
+                                            <?php else : ?>
+                                            <div class="text-center">-</div>
+                                        <?php endif; ?>
+                                    </th>
                                 </tr>
                             <?php endforeach ?>
                         </tbody>
@@ -84,4 +96,25 @@
             <?php endif ?>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">Konfirmasi Penghapusan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Apakah anda yakin akan menghapus berkas ini?
+      </div>
+      <div class="modal-footer">
+        <a type="button" class="btn btn-outline-secondary" data-dismiss="modal">Batal</a>
+        <a type="button" class="btn btn-danger" href="<?= base_url('krs/delete_bukti'); ?>">Hapus</a>
+      </div>
+    </div>
+  </div>
 </div>

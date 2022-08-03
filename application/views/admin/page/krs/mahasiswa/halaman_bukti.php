@@ -98,7 +98,7 @@
                                             $bukti_m = $this->All_model->checkBuktiSudahDiKirim($b['id_form'], $id['id_mhs']);
                                             ?>
                                             <?php if ($bukti_m == 0) : ?>
-                                                <a href="<?= base_url('krs/upload_bukti/' . $b['id_form']); ?>" class="btn btn-sm btn-success shadow-sm"><i class="fas fa-upload fa-sm"></i></i>Upload Bukti Pembayaran</a>
+                                                <a href="<?= base_url('krs/upload_bukti/' . $b['id_form']); ?>" class="btn btn-sm btn-success shadow-sm"><i class="fas fa-upload fa-sm mr-2"></i></i>Upload Bukti Pembayaran</a>
                                             <?php else : ?>
                                                 <span class="badge badge-success">Bukti Sudah Diupload</span>
                                             <?php endif; ?>
@@ -124,7 +124,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('krs/importCSV'); ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php /* base_url('krs/importCSV'); */ ?>" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <h6>Perhatian!</h6>
                     <ul>

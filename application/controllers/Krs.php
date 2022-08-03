@@ -799,7 +799,6 @@ class Krs extends CI_Controller
         $nama = $this->input->post('nama');
         $nim = $this->input->post('nim');
         $file_bukti = $_FILES['file_bukti'];
-
         $this->load->helper('string');
 
         $file_name = random_string('alnum', 35);
@@ -818,8 +817,7 @@ class Krs extends CI_Controller
                 $this->session->set_flashdata('file_error', $data['error']);
                 redirect('Krs/upload_bukti');
             } else {
-
-                $path =  substr($this->upload->data('full_path'), 48);
+                $path =  substr($this->upload->data('full_path'), 51);
                 $data = [
                     'mahasiswa_id' => $id_mahasiswa,
                     'form_bukti_id' => $form_id,
@@ -827,12 +825,38 @@ class Krs extends CI_Controller
                     'file_path' => $path,
                     'created_at'    => mdate('%Y-%m-%d %H:%i:%s', now())
                 ];
-
                 $this->db->insert('s6_bukti', $data);
                 redirect('krs/halaman_bukti');
             }
         }
     }
+
+    public function delete_bukti()
+    {   
+        $this->load->model('All_model');
+
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = "9";
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $this->data['title'] = "Edit Bukti";
+        // ambil data 
+        $mhs_id = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
+        $id = $this->All_model->getIdAndPathDataBuktiMahasiswa($mhs_id)['id'];
+        $file_path = $this->All_model->getIdAndPathDataBuktiMahasiswa($mhs_id)['file_path'];
+        //var_dump($id);
+        $this->load->helper("file");
+        unlink($file_path);
+        delete_files($file_path);
+
+        $this->db->where('s6_bukti.id', $id);
+        $this->db->delete('s6_bukti');
+        redirect('krs/pilih_validasi');
+}
 
     //handle data bukti from upload bukti end------
 
@@ -925,26 +949,6 @@ class Krs extends CI_Controller
         $this->load->view("admin/master/footer", $this->data);
     }
     // End View Form Buat Bukti
-
-
-    // Method untuk menampilkan status validasi
-    public function status_validasi()
-    {
-        $this->load->library('form_validation');
-        $this->load->model('All_model');
-
-        $this->data['active'] = "11";
-        $this->data['flip'] = "false";
-        $this->data['ckeditor'] = "krs";
-
-        $id = $_SESSION['user_id'];
-
-        $this->data['group'] = $this->ion_auth_model->getGroup($id);
-        $this->data['title'] = "Tampilan Validasi";
-        $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/mahasiswa/status_validasi", $this->data);
-        $this->load->view("admin/master/footer", $this->data);
-    }
 
     // Start Detail Bukti Dosen
     public function viewDetailBukti($id_bukti)
