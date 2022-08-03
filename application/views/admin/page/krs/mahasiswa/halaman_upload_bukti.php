@@ -13,7 +13,6 @@
                                 <div class="btn-container shadow ">
                                     <!-- Hidden input -->
                                     <input type="hidden" name="mahasiswa_id" value="<?= $mahasiswa['id_mhs']; ?>">
-                                    <input type="hidden" name="nama" value="<?= $mahasiswa['first_name']; ?>">
                                     <input type="hidden" name="nim" value="<?= $mahasiswa['last_name']; ?>">
                                     <input type="hidden" name="id_form" value="<?= $form['id_form']; ?>">
                                     <p class="form_tagline">Drag & Drop Your File Here...</p>

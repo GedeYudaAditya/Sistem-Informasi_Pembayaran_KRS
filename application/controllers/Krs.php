@@ -780,7 +780,6 @@ class Krs extends CI_Controller
 
         $id_mahasiswa = $this->input->post('mahasiswa_id');
         $id_form = $this->input->post('id_form');
-        $nama = $this->input->post('nama');
         $nim = $this->input->post('nim');
         $file_bukti = $_FILES['file_bukti'];
 
@@ -788,7 +787,7 @@ class Krs extends CI_Controller
         $data_form = $this->All_model->getForm($id_form);
 
         //generate nama file dan deskripsi
-        $file_name = $nama . ' ' . $nim . ' ' . random_string('alnum', 35);
+        $file_name = $nim . '_' . random_string('alnum', 20);
         $deskripsi = 'Pembayaran Iuran KRS tahun ' . $data_form['tahun'] . ', semester ' . $data_form['semester'];
         $config = [
             'upload_path'   => './assets/upload/Folder_krs',
@@ -804,13 +803,11 @@ class Krs extends CI_Controller
                 $this->session->set_flashdata('file_error', $data['error']);
                 redirect('Krs/upload_bukti');
             } else {
-
-                $path =  substr($this->upload->data('full_path'), 48);
                 $data = [
-                    'mahasiswa_id' => $id_mahasiswa,
+                    'mahasiswa_id'  => $id_mahasiswa,
                     'form_bukti_id' => $id_form,
-                    'deskripsi' => $deskripsi,
-                    'file_path' => $path,
+                    'deskripsi'     => $deskripsi,
+                    'file_path'     => $file_name . $this->upload->data('file_ext'),
                     'created_at'    => mdate('%Y-%m-%d %H:%i:%s', now())
                 ];
                 $this->session->set_flashdata('suksesup', 'diupload');
