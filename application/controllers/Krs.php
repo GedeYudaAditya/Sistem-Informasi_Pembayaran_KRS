@@ -750,6 +750,12 @@ class Krs extends CI_Controller
         $this->data['title'] = "Upload Bukti Pembayaran";
         $form = $this->All_model->getForm($id_form);
         $this->data['form'] =  $form;
+        $bukti_m = $this->All_model->checkBuktiSudahDiKirim($id_form, $this->data['mahasiswa']['id']);
+
+        //cek bukti sudah diupload;
+        if ($bukti_m == 0) {
+            redirect('formulir');
+        }
 
         $this->load->view("admin/master/header", $this->data);
         $this->load->view("admin/page/krs/mahasiswa/halaman_upload_bukti", $this->data);
@@ -765,15 +771,12 @@ class Krs extends CI_Controller
         $this->data['active'] = "11";
         $this->data['flip'] = "false";
         $this->data['ckeditor'] = "krs";
-
         $id = $_SESSION['user_id'];
 
 
         $this->data['group'] = "9";
         $this->data['group'] = $this->ion_auth_model->getGroup($id);
         $this->data['title'] = "Upload Bukti";
-        // ambil data 
-        $this->data['mahasiswa'] = $this->All_model->getMahasiswaByUserId($id);
 
         $id_mahasiswa = $this->input->post('mahasiswa_id');
         $id_form = $this->input->post('id_form');
@@ -783,12 +786,14 @@ class Krs extends CI_Controller
 
         $this->load->helper('string');
         $data_form = $this->All_model->getForm($id_form);
-        $file_name = $nama . $nim . random_string('alnum', 35);
+
+        //generate nama file dan deskripsi
+        $file_name = $nama . ' ' . $nim . ' ' . random_string('alnum', 35);
         $deskripsi = 'Pembayaran Iuran KRS tahun ' . $data_form['tahun'] . ', semester ' . $data_form['semester'];
         $config = [
             'upload_path'   => './assets/upload/Folder_krs',
             'allowed_types' => 'pdf',
-            'max_size'      => 1000,
+            'max_size'      => 1024,
             'file_name'     =>  $file_name,
         ];
 
@@ -808,7 +813,7 @@ class Krs extends CI_Controller
                     'file_path' => $path,
                     'created_at'    => mdate('%Y-%m-%d %H:%i:%s', now())
                 ];
-
+                $this->session->set_flashdata('suksesup', 'diupload');
                 $this->db->insert('s6_bukti', $data);
                 redirect('krs/halaman_bukti');
             }

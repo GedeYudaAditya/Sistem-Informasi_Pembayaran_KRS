@@ -16,11 +16,11 @@
             </div>
         </div>
     <?php endif; ?>
-    <?php if ($this->session->flashdata('flash')) : ?>
+    <?php if ($this->session->flashdata('suksesup')) : ?>
         <div class="row mt-3">
             <div class="col-md-12 text-center">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Data Mahasiswa <strong>Gagal</strong> <?= $this->session->flashdata('sukses'); ?>
+                    file <strong>Berhasil</strong> <?= $this->session->flashdata('suksesup'); ?>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -97,7 +97,7 @@
                                             $bukti_m = $this->All_model->checkBuktiSudahDiKirim($b['id_form'], $id['id_mhs']);
                                             ?>
                                             <?php if ($bukti_m == 0) : ?>
-                                                <a href="<?= base_url('krs/upload_bukti/' . $b['id_form']); ?>" class="btn btn-sm btn-success shadow-sm"><i class="fas fa-upload fa-sm"></i></i>Upload Bukti Pembayaran</a>
+                                                <a href="<?= base_url('mahasiswa/upload/' . $b['id_form']); ?>" class="btn btn-sm btn-success shadow-sm"><i class="fas fa-upload fa-sm"></i></i>Upload Bukti Pembayaran</a>
                                             <?php else : ?>
                                                 <span class="badge badge-secondary">Bukti Sudah Diupload</span>
                                             <?php endif; ?>

@@ -68,6 +68,12 @@ $route['admin/ubah_password'] = 'auth/change_password';
 
 //Routes tambah user Mahasiswa
 $route['admin/tambah_user_mahasiswa'] = 'auth/create_user_mahasiswa';
+
+// Marsel routes ke halaman upload
+$route['mahasiswa/upload/(:any)'] = 'krs/upload_bukti/$1';
+$route['formulir'] = 'krs/halaman_bukti';
+$route['status_validasi'] = 'krs/pilih_validasi';
+$route['mahasiswa/bukti/(:any)'] = 'assets/upload/Folder_krs/$1';
 /*<<<<<<< HEAD
 =======
 

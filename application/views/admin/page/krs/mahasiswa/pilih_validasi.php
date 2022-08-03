@@ -73,7 +73,7 @@
                                     </td>
                                     <th scope="row" class="text-center">
                                         <!-- <embed src=" //base_url('assets/upload/Folder_krs/' . $bukti//['file_path']) ?>" width="100%" height="100%" type="application/pdf" /> -->
-                                        <a href="<?= base_url($b['file_path']) ?>"><img src="<?= base_url('assets/img/icon/file-icon/pdf-24.png'); ?>" alt=""></a>
+                                        <a href="<?= base_url($b['file_path']) ?>" target="blank"><img src="<?= base_url('assets/img/icon/file-icon/pdf-24.png'); ?>" alt=""></a>
                                     </th>
                                 </tr>
                             <?php endforeach ?>
