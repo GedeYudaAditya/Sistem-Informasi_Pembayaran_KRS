@@ -6,10 +6,10 @@
   <div class="row">
     <div class="col-12">
       <div class="card mb-4">
-        <div class="row py-2 px-4 d-flex align-items-center">
-          <h5 class="col-3 py-3 text-dark user-select-none font-weight-bold">Validasi Bukti Iuran</h5>
+        <div class="row py-2 px-4 d-flex flex-column flex-md-row align-items-center">
+          <h5 class="col-12 col-md-3 py-3 text-dark user-select-none font-weight-bold">Validasi Bukti Iuran</h5>
           <div class="col-6"></div>
-          <div class="col-3 form-group input-group">
+          <div class="col-12 col-md-3 form-group input-group">
             <select class="custom-select" id="inputGroupSelect01">
               <option selected disabled>Pilih Tahun Ajaran</option>
               <option value="ganjil21">Ganjil 2021/2022</option>
@@ -69,9 +69,11 @@
                     </td>
                     <td>
                       <div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLihatBukti">Lihat Detail
+                        <button type="button" class="btn btn-primary">
+                          <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewDetailBukti/' . $mhs->id) ?>">
+                            Lihat Detail
+                          </a>
                         </button>
-
                       </div>
                     </td>
                   </tr>
@@ -84,39 +86,6 @@
     </div>
   </div>
   <!-- End Table -->
-
-  <!-- Start Modal -->
-  <div class="modal fade" id="modalLihatBukti" tabindex="-1" aria-labelledby="modalLableTitle" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalLableTitle">Bukti Iuran</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body ">
-          <label for="deskripsi">
-            <p>Deskripsi</p>
-          </label>
-          <li class="list-group-item gap-1"><?php echo $mhs->deskripsi ?></li>
-          <label for="deskripsi">
-            <p>File Bukti</p>
-          </label>
-          <li class="list-group-item gap-1">
-            <iframe class="embed-responsive-item" type="text/html" src="<?php echo base_url(); ?><?php echo $mhs->file_path ?>#toolbar=0" width="455" height="500"></iframe>
-          </li>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $mhs->id ?>/<?php echo 0 ?>"><button type="submit" class="btn btn-danger">Tolak</button></a>
-          <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $mhs->id ?>/<?php echo 1 ?>"><button type="submit" class="btn btn-primary">Terima</button></a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End Modal  -->
 
 </div>
 <!-- End Container -->
