@@ -31,9 +31,10 @@
                           Close
                         </a>
                       </button>
-
+                      <?php if ($value[0]->valid==NULL) :?>
                       <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $value[0]->id ?>/<?php echo 0 ?>"><button type="submit" class="btn btn-danger m-2">Tolak</button></a>
                       <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $value[0]->id ?>/<?php echo 1 ?>"><button type="submit" class="btn btn-primary m-2">Terima</button></a>
+                      <?php endif; ?>
                     </div>
                   </td>
                 </tr>
