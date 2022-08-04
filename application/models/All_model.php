@@ -3116,6 +3116,11 @@ class All_model extends CI_Model
 		$data = $this->db->get();
 		return $data->num_rows();
 	}
+
+	public function getForm($where)
+	{
+		return $this->db->get_where('s6_form_bukti', ['id_form' => $where])->row_array();
+	}
 	//   End Of Marchel 
 
 	// Start Of Adi Sastrawan

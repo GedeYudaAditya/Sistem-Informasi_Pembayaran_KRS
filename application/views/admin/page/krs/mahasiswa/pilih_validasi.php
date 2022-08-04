@@ -40,11 +40,11 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead class="text-center thead-light">
                             <tr>
-                                <th scope="col">Nama Mahasiswa</th>
-                                <th scope="col">NIM Mahasiswa</th>
-                                <th scope="col">TA - Semester</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">NIM</th>
+                                <th scope="col">TA-Semester</th>
                                 <th scope="col">Dosen PA</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">valid</th>
                                 <th scope="col">File</th>
                             </tr>
                         </thead>
@@ -66,15 +66,14 @@
                                     <td scope="row" class="text-center">
                                         <!-- check validasi bukti -->
                                         <?php if ($b['valid'] == 0) : ?>
-                                            <span class="badge badge-danger">Belum di Validasi</span>
+                                            <span class="badge badge-danger"><i class="fa fa-times-circle"></i></span>
                                         <?php else : ?>
-                                            <span class="badge badge-success">Sudah di Validasi</span>
+                                            <span class="badge badge-success"><i class="fa fa-check-circle"></i></span>
                                         <?php endif; ?>
                                     </td>
-                                    <th scope="row">
+                                    <th scope="row" class="text-center">
                                         <!-- <embed src=" //base_url('assets/upload/Folder_krs/' . $bukti//['file_path']) ?>" width="100%" height="100%" type="application/pdf" /> -->
-                                        <a href="<?= base_url($b['file_path']) ?>"><img src="<?= base_url('assets/img/icon/file-icon/pdf-24.png'); ?>" alt="">Your File
-                                            Name.pdf</a>
+                                        <a href="<?= base_url('assets/upload/Folder_krs/' . $b['file_path']) ?>" target="blank"><img src="<?= base_url('assets/img/icon/file-icon/pdf-24.png'); ?>" alt=""></a>
                                     </th>
                                 </tr>
                             <?php endforeach ?>
