@@ -10,13 +10,15 @@
           <h5 class="col-12 col-md-3 py-3 text-dark user-select-none font-weight-bold">Validasi Bukti Iuran</h5>
           <div class="col-6"></div>
           <div class="col-12 col-md-3 form-group input-group">
-            <select class="custom-select" id="inputGroupSelect01">
+            <!-- <form action="<?php echo base_url(); ?>krs/filterBukti" method="post" enctype="multipart/form"> -->
+            <select name="select" class="custom-select" id="inputGroupSelect01">
               <option selected disabled>Pilih Tahun Ajaran</option>
-              <option value="ganjil21">Ganjil 2021/2022</option>
-              <option value="genap21">Genap 2021/2022</option>
-              <option value="ganjil22">Ganjil 2022/2023</option>
-              <option value="genap22">Genap 2022/2023</option>
+              <?php foreach ($formBukti as $bukti):?>
+              <option value="<?php echo $bukti['id_form']?>"><?php echo $bukti['semester']?> <?php echo $bukti['tahun']?>/<?php echo $bukti['tahun']+1?></option>
+              <?php endforeach;?>
             </select>
+            <!-- <button type="submit" class="btn btn-primary">Filter</button> -->
+            <!-- </form> -->
           </div>
         </div>
         <div class="card-body px-0 pt-2 pb-2">
@@ -60,10 +62,12 @@
                     </td>
                     <td>
                       <div>
-                        <?php if ($mhs->valid == false) : ?>
+                        <?php if ($mhs->valid == NULL) : ?>
                           <p class="text-danger">Belum Divalidasi</p>
-                        <?php else : ?>
-                          <p class="text-success">Sudah Divalidasi</p>
+                        <?php elseif($mhs->valid == 0) : ?>
+                          <p class="text-danger">Ditolak</p>
+                        <?php elseif($mhs->valid == 1) : ?>
+                          <p class="text-danger">Sudah Divalidasi</p>
                         <?php endif; ?>
                       </div>
                     </td>
