@@ -3077,7 +3077,8 @@ class All_model extends CI_Model
 				'tahun',
 				'semester',
 				'valid',
-				'file_path'
+				'file_path',
+				's6_form_bukti.id_form'
 			]
 		);
 		$this->db->join('s6_form_bukti', 's6_form_bukti.id_form = s6_bukti.form_bukti_id');
@@ -3089,6 +3090,19 @@ class All_model extends CI_Model
 		return $data->result_array();
 	}
 
+	public function getIdAndPathDataBuktiMahasiswa($where) 
+	{
+		$this->db->select(
+			[
+				'id',
+				'file_path'
+			]
+		);
+		$this->db->join('s6_form_bukti', 's6_form_bukti.id_form = s6_bukti.form_bukti_id');
+		$data = $this->db->get_where('s6_bukti', ['mahasiswa_id' => $where]);
+		return $data->row_array();
+	}
+
 	public function getDataFormBuktiDosen($where) // di tambah oleh yuda
 	{
 		$this->db->select([
@@ -3097,7 +3111,7 @@ class All_model extends CI_Model
 			'tahun',
 			'semester',
 			'expire_date',
-			'id_form',
+			'dosen_id',
 		]);
 		$this->db->from('s6_form_bukti');
 		$this->db->join('s6_dosen', 's6_dosen.id = s6_form_bukti.dosen_id');
@@ -3106,6 +3120,7 @@ class All_model extends CI_Model
 		$data = $this->db->where('dosen_id', $where);
 		return $data->get()->result_array();
 	}
+
 
 	public function checkBuktiSudahDiKirim($form_bukti_id, $id)
 	{
