@@ -23,7 +23,8 @@
                   <td class="col-3">Judul</td>
                   <td class="col-2">Tahun Ajaran</td>
                   <td class="col-2">Semester</td>
-                  <!-- <td class="col-2">Lihat Semua Bukti</td> -->
+                  <td class="col-2">Expired_Date</td>
+                  <td class="col-2">Lihat Semua Bukti</td>
                 </tr>
               </thead>
               <tbody>
@@ -52,13 +53,18 @@
                         <p><?= $bukti['semester'] ?></p>
                       </div>
                     </td>
-                    <!-- <td>
+                    <td>
+                      <div>
+                        <p class="text-primary"><?= $bukti['expire_date'] ?></p>
+                      </div>
+                    </td>
+                    <td>
                     <div>
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLihatBukti">
-                        Lihat Bukti
+                      <button type="button" class="btn btn-primary" ><a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url() ?>/krs/lihatBukti/<?php echo $bukti['id_form']?>">Lihat Bukti</a>
+
                       </button>
                     </div>
-                  </td> -->
+                  </td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>

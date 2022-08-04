@@ -3131,6 +3131,11 @@ class All_model extends CI_Model
 		$data = $this->db->get();
 		return $data->num_rows();
 	}
+
+	public function getForm($where)
+	{
+		return $this->db->get_where('s6_form_bukti', ['id_form' => $where])->row_array();
+	}
 	//   End Of Marchel 
 
 	// Start Of Adi Sastrawan
@@ -3182,5 +3187,15 @@ class All_model extends CI_Model
 		$this->db->join('users', 's6_dosen.user_id = users.id');
 		$this->db->where('s6_form_bukti.dosen_id', $id_dosen);
 		return $this->db->get()->result_array();
+	}
+	public function filteredData($id_form,$id_dosen){
+		$this->db->select('*,users.first_name,users.last_name');
+		$this->db->from('s6_mahasiswa',);
+		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
+		$this->db->join('s6_bukti', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
+		$this->db->join('s6_form_bukti', 's6_bukti.form_bukti_id=s6_form_bukti.id_form');
+		$this->db->where('id_form',$id_form);
+		$this->db->where($id_dosen);
+		return $this->db->get();
 	}
 }

@@ -13,7 +13,7 @@
 }
 .btn-container {
 	border: 2px dashed black;
-	background: rgba(118, 118, 120, 0);
+	background: #fff;
 	border-radius: 10px;
 	padding-bottom: 20px;
 	margin-bottom: 20px;
@@ -52,11 +52,11 @@ h4 > strong {
 	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
 	width: 100%;
 	cursor: pointer;
+	top: 0px;
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
-	bottom: 40px;
-	height: 100%;
+	bottom: 30px;
 }
 
 /*switch between input and not active input*/
