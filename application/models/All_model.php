@@ -3090,7 +3090,7 @@ class All_model extends CI_Model
 		return $data->result_array();
 	}
 
-	public function getIdAndPathDataBuktiMahasiswa($where) 
+	public function getIdAndPathDataBuktiMahasiswa($where)
 	{
 		$this->db->select(
 			[
@@ -3154,7 +3154,21 @@ class All_model extends CI_Model
 		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
 		$this->db->join('s6_bukti', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
 		$this->db->join('s6_form_bukti', 's6_bukti.form_bukti_id=s6_form_bukti.id_form');
+		$this->db->order_by('expire_date', 'desc');
 		$this->db->where($id);
+		return $this->db->get();
+	}
+
+	// tidak digunakan
+	public function gatherDataSpecific($id, $tahun)
+	{
+		$this->db->select('*,users.first_name,users.last_name');
+		$this->db->from('s6_mahasiswa',);
+		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
+		$this->db->join('s6_bukti', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
+		$this->db->join('s6_form_bukti', 's6_bukti.form_bukti_id=s6_form_bukti.id_form');
+		$this->db->order_by('expire_date', 'desc');
+		$this->db->where(['id_pa' => $id, 'tahun' => $tahun]);
 		return $this->db->get();
 	}
 
@@ -3185,16 +3199,18 @@ class All_model extends CI_Model
 		$this->db->from('s6_form_bukti');
 		$this->db->join('s6_dosen', 's6_dosen.id = s6_form_bukti.dosen_id');
 		$this->db->join('users', 's6_dosen.user_id = users.id');
+		$this->db->order_by('expire_date', 'desc');
 		$this->db->where('s6_form_bukti.dosen_id', $id_dosen);
 		return $this->db->get()->result_array();
 	}
-	public function filteredData($id_form,$id_dosen){
+	public function filteredData($id_form, $id_dosen)
+	{
 		$this->db->select('*,users.first_name,users.last_name');
 		$this->db->from('s6_mahasiswa',);
 		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
 		$this->db->join('s6_bukti', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
 		$this->db->join('s6_form_bukti', 's6_bukti.form_bukti_id=s6_form_bukti.id_form');
-		$this->db->where('id_form',$id_form);
+		$this->db->where('id_form', $id_form);
 		$this->db->where($id_dosen);
 		return $this->db->get();
 	}

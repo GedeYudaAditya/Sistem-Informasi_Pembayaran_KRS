@@ -817,7 +817,7 @@ class Krs extends CI_Controller
     }
 
     public function delete_bukti()
-    {   
+    {
         $this->load->model('All_model');
 
         $this->data['active'] = "11";
@@ -841,7 +841,7 @@ class Krs extends CI_Controller
         $this->db->where('s6_bukti.id', $id);
         $this->db->delete('s6_bukti');
         redirect('krs/pilih_validasi');
-}
+    }
 
     //handle data bukti from upload bukti end------
 
@@ -860,13 +860,15 @@ class Krs extends CI_Controller
         $where = array('user_id' => $id);
         $dosen_id['pa_id'] = $this->All_model->findDosen($where)->result_array();
         $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
-        $mahasiswa['value'] = $this->All_model->gatherData($find)->result();
+        $this->data['id_dosen'] = $dosen_id['pa_id'][0]['id'];
+        $this->data['value'] = $this->All_model->gatherData($find)->result();
+        // $mahasiswa['value'] = $this->All_model->gatherData($find)->result();
         $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
         $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
+        $this->data['id_forms'] = $this->input->post('select');
         $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $mahasiswa);
+        $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $this->data);
         $this->load->view("admin/master/footer", $this->data);
-
     }
 
     // End View Validasi Mahasiswa
@@ -959,7 +961,8 @@ class Krs extends CI_Controller
     }
     // End Detail Bukti Dosen
     // Start Lihat Bukti 
-    public function lihatBukti($id_form){
+    public function lihatBukti($id_form)
+    {
         $this->data['title'] = "KRS - Data Mahasiswa";
         $this->data['active'] = "11";
         $this->data['flip'] = "false";
@@ -971,14 +974,15 @@ class Krs extends CI_Controller
         $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
         $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
         $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
-        $mahasiswa['value']=$this->All_model->filteredData($id_form,$find)->result();
+        $mahasiswa['value'] = $this->All_model->filteredData($id_form, $find)->result();
         $this->load->view("admin/master/header", $this->data);
         $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $mahasiswa);
         $this->load->view("admin/master/footer", $this->data);
     }
     // End Lihat Bukti
     // Start Filter Bukti
-    public function filterBukti(){
+    public function filterBukti()
+    {
         $this->data['title'] = "KRS - Data Mahasiswa";
         $this->data['active'] = "11";
         $this->data['flip'] = "false";
@@ -991,9 +995,10 @@ class Krs extends CI_Controller
         $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
         $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
         $keyword = $this->input->post('select');
-        $mahasiswa['value']=$this->All_model->filteredData($keyword,$find)->result();
+        $this->data['id_forms'] = $this->input->post('select');
+        $this->data['value'] = $this->All_model->filteredData($keyword, $find)->result();
         $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $mahasiswa);
+        $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $this->data);
         $this->load->view("admin/master/footer", $this->data);
     }
 }

@@ -24,16 +24,16 @@
                         <?php endif; ?>
                       </b></p>
 
-                    <iframe class="container-fluid" height="500" type="text/html" src="<?php echo base_url(); ?><?php echo $value[0]->file_path ?>" frameborder="0"></iframe>
+                    <iframe class="container-fluid" height="500" type="text/html" src="<?php echo base_url() . 'assets/upload/Folder_krs/'; ?><?php echo $value[0]->file_path ?>" frameborder="0"></iframe>
                     <div class="d-flex justify-content-center p-3">
                       <button type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">
                         <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewValidasiMahasiswa') ?>">
                           Close
                         </a>
                       </button>
-                      <?php if ($value[0]->valid==NULL) :?>
-                      <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $value[0]->id ?>/<?php echo 0 ?>"><button type="submit" class="btn btn-danger m-2">Tolak</button></a>
-                      <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $value[0]->id ?>/<?php echo 1 ?>"><button type="submit" class="btn btn-primary m-2">Terima</button></a>
+                      <?php if ($value[0]->valid == NULL) : ?>
+                        <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $value[0]->id ?>/<?php echo 0 ?>"><button type="submit" class="btn btn-danger m-2">Tolak</button></a>
+                        <a href="<?php echo base_url(); ?>Krs/memvalidkanBukti/<?php echo $value[0]->id ?>/<?php echo 1 ?>"><button type="submit" class="btn btn-primary m-2">Terima</button></a>
                       <?php endif; ?>
                     </div>
                   </td>
