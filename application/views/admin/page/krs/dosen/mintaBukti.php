@@ -1,12 +1,10 @@
 <div class="container-fluid">
   <!-- Start Btn Buat Form Bukti -->
   <div>
-    <button type="button" class="btn btn-info ">
-      <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewFormBuatBukti') ?>">
-        <span class="pr-2"><i class="fas fa-plus"></i></span>
-        Buat Form Bukti
-      </a>
-    </button>
+    <a class="btn btn-info font-weight-bolder" href="<?= base_url('krs/viewFormBuatBukti') ?>">
+      <span class="pr-2"><i class="fas fa-plus"></i></span>
+      Buat Form Bukti
+    </a>
   </div>
   <!-- End Btn Buat Form Bukti -->
 
@@ -40,12 +38,12 @@
                     </td>
                     <td>
                       <div>
-                        <p>Bukti Iuran Mahasiswa <?= $bukti['tahun'] ?>/ <?= $bukti['tahun'] + 1 ?></p>
+                        <p>Bukti Iuran Mahasiswa <?= $bukti['tahun'] ?>/<?= $bukti['tahun'] + 1 ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <p><?= $bukti['tahun'] ?>/ <?= $bukti['tahun'] + 1 ?></p>
+                        <p><?= $bukti['tahun'] ?>/<?= $bukti['tahun'] + 1 ?></p>
                       </div>
                     </td>
                     <td>
@@ -59,12 +57,10 @@
                       </div>
                     </td>
                     <td>
-                    <div>
-                      <button type="button" class="btn btn-primary" ><a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url() ?>/krs/lihatBukti/<?php echo $bukti['id_form']?>">Lihat Bukti</a>
-
-                      </button>
-                    </div>
-                  </td>
+                      <div>
+                        <a class="btn btn-primary font-weight-bolder" href="<?= base_url() ?>/krs/lihatBukti/<?php echo $bukti['id_form'] ?>">Lihat Bukti</a>
+                      </div>
+                    </td>
                   </tr>
                 <?php endforeach; ?>
               </tbody>

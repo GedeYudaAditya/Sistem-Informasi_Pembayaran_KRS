@@ -65,11 +65,14 @@
                                         <?= $b['dosen'] ?>
                                     </td>
                                     <td scope="row" class="text-center">
+
                                         <!-- check validasi bukti -->
-                                        <?php if ($b['valid'] == 0) : ?>
-                                            <span class="badge badge-danger"><i class="fa fa-times-circle"></i></span>
+                                        <?php if ($b['valid'] === NULL) : ?>
+                                            <span style="height: 30px; width: 30px; padding:9px;" class="badge badge-warning"><i class="fa fa-hourglass"></i></span>
+                                        <?php elseif ($b['valid'] === '0') : ?>
+                                            <span style="height: 30px; width: 30px; padding:9px;" class="badge badge-danger"><i class="fa fa-times"></i></span>
                                         <?php else : ?>
-                                            <span class="badge badge-success"><i class="fa fa-check-circle"></i></span>
+                                            <span style="height: 30px; width: 30px; padding:9px;" class="badge badge-success"><i class="fa fa-check"></i></span>
                                         <?php endif; ?>
                                     </td>
                                     <th scope="row" class="text-center">
@@ -81,7 +84,7 @@
                                             <div class="justify-content-center text-center">
                                                 <button type="button" class="btn btn-sm btn-primary py-0" data-toggle="modal" data-target="#confirm"><i class="fa fa-trash mr-2"></i>Hapus</button>
                                             </div>
-                                            <?php else : ?>
+                                        <?php else : ?>
                                             <div class="text-center">-</div>
                                         <?php endif; ?>
                                     </th>
@@ -97,21 +100,21 @@
 
 <!-- Modal -->
 <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmModalLabel">Konfirmasi Penghapusan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Apakah anda yakin akan menghapus berkas ini?
-      </div>
-      <div class="modal-footer">
-        <a type="button" class="btn btn-outline-secondary" data-dismiss="modal">Batal</a>
-        <a type="button" class="btn btn-danger" href="<?= base_url('krs/delete_bukti'); ?>">Hapus</a>
-      </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Konfirmasi Penghapusan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Apakah anda yakin akan menghapus berkas ini?
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-outline-secondary" data-dismiss="modal">Batal</a>
+                <a type="button" class="btn btn-danger" href="<?= base_url('krs/delete_bukti'); ?>">Hapus</a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
