@@ -66,11 +66,11 @@
                     </td>
                     <td>
                       <div>
-                        <?php if ($mhs->valid == NULL) : ?>
+                        <?php if ($mhs->valid === NULL) : ?>
                           <p class="text-warning">Belum Divalidasi</p>
-                        <?php elseif ($mhs->valid == 0) : ?>
+                        <?php elseif ($mhs->valid === '0') : ?>
                           <p class="text-danger">Ditolak</p>
-                        <?php elseif ($mhs->valid == 1) : ?>
+                        <?php elseif ($mhs->valid === '1') : ?>
                           <p class="text-success">Sudah Divalidasi</p>
                         <?php endif; ?>
                       </div>

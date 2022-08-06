@@ -3214,4 +3214,19 @@ class All_model extends CI_Model
 		$this->db->where($id_dosen);
 		return $this->db->get();
 	}
+
+	public function getsemuaDosen()
+	{
+		$this->db->select('*, users.id as idUser, s6_dosen.id as idDosen');
+		$this->db->from('s6_dosen');
+		$this->db->join('users', 's6_dosen.user_id = users.id');
+		return $this->db->get()->result_array();
+	}
+
+	public function updateDosenPA($id_mahasiswa, $id_dosen)
+	{
+		// Update Data Dosen PA Mahasiswa
+		$this->db->where('id_mhs', $id_mahasiswa);
+		return $this->db->update('s6_mahasiswa', ['pa_id' => $id_dosen]);
+	}
 }
