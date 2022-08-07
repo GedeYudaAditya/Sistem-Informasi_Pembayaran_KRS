@@ -28,6 +28,18 @@
             </div>
         </div>
     <?php endif; ?>
+    <?php if ($this->session->flashdata('suksespa')) : ?>
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Dosen Pa <strong>Berhasil</strong> <?= $this->session->flashdata('suksespa'); ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
     <?php if ($this->session->flashdata('suksesth')) : ?>
         <div class="row mt-3">
             <div class="col-md-12 text-center">
@@ -112,4 +124,3 @@
         </div>
     </div>
 </div>
-

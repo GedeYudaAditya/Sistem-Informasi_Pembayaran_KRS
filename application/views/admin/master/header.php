@@ -219,7 +219,7 @@
 							<li class="nav-item">
 								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDosen" aria-expanded="true" aria-controls="collapseDosen">
 									<i class="fas fa-hotel"></i>
-									<i><span class="text-warning">Menu Dosen 1</span></i>
+									<i><span class="text-warning">Validasi Iuran KRS</span></i>
 								</a>
 								<div id="collapseDosen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 									<div class="bg-white py-2 collapse-inner rounded">
@@ -245,8 +245,10 @@
 								<div id="collapseMahasiswa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 									<div class="bg-white py-2 collapse-inner rounded">
 										<h6 class="collapse-header">Daftar Fitur:</h6>
+										<?php if ($group[0]['nama_pilihan'] == 'Mahasiswa') : ?>
+											<a class="collapse-item <?= $this->All_model->getMahasiswaByUserId($_SESSION['user_id'])['pa_id'] === NULL ? 'bg-warning text-danger' : '' ?>" href="<?= base_url() ?>krs/pilihPA">Pilih PA</a>
+										<?php endif; ?>
 										<a class="collapse-item" href="<?= base_url() ?>formulir">Permintaan Bukti</a>
-										<!-- <a class="collapse-item" href="<?= base_url() ?>">Cek validasi Pembayaran</a> -->
 										<a class="collapse-item" href="<?= base_url('status_validasi') ?>">Status Validasi Bukti</a>
 									</div>
 								</div>

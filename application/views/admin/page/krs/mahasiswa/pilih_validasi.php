@@ -1,5 +1,17 @@
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Status Validasi Pembayaran KRS</h1>
+    <?php if ($this->session->flashdata('suksespa')) : ?>
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Dosen PA <strong>Berhasil</strong> <?= $this->session->flashdata('suksespa'); ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
     <!-- <form id="contact-form" method="POST" action="">
         <p class="mb-4">Silakan masukkan informasi berikut untuk mengecek status validasi pembayaran KRS mahasiswa</p>
         <div class="row">
