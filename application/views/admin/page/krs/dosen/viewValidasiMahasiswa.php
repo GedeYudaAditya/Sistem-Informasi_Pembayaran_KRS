@@ -33,7 +33,7 @@
                 </tr>
               </thead>
               <tbody >
-                <?php for($i = 1; $i <= 20; $i++) : ?>
+                <?php for($i = 1; $i <= 10; $i++) : ?>
                 <tr>
                   <td>
                     <?php if($i > 9) :?>
@@ -65,7 +65,7 @@
                   <td>
                     <div>
                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLihatBukti">
-                        Lihat Detail 
+                        Lihat Detail
                       </button>
                     </div>
                   </td>
@@ -90,10 +90,10 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body ">        
+        <div class="modal-body ">
             <img src="<?= base_url() ?>assets/img/lomba/dance2.png" class="navbar-brand-img img-fluid ">
             <img src="<?= base_url() ?>assets/img/lomba/dance2.png" class="navbar-brand-img img-fluid ">
-          
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

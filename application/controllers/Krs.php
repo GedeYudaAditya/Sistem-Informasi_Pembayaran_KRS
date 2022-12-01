@@ -1,13 +1,70 @@
 <?php
 class Krs extends CI_Controller
 {
+	// Method Index Lama
+    // public function index()
+    // {
+    //     if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+    //         redirect('krs', 'home');
+    //     } else {
+    //         $this->data['title'] = "KRS - Data Mahasiswa";
+    //         $this->data['active'] = "11";
+    //         $id = $_SESSION['user_id'];
+    //         $this->data['flip'] = "false";
+    //         $this->data['ckeditor'] = "krs";
 
-    public function index()
+    //         $this->data['group'] = $this->ion_auth_model->getGroup($id);
+    //         $this->load->model('All_model');
+    //         $data['th'] = $this->All_model->getThn();
+    //         $data['info'] = $this->All_model->infos();
+    //         unset($_SESSION['flash']);
+    //         //var_dump($data['info']);
+    //         if (empty($data['info'])) {
+    //             $data = [
+    //                 'id-info' => 1,
+    //                 'info' => 'Data update kosong',
+    //                 'ket' => 'Tidak ada yang di ubah sebelumnya'
+    //             ];
+    //             $this->All_model->defaultInfo($data);
+    //             $data['info'] = $this->All_model->infos();
+    //             $data['infos'] = false;
+    //         } else {
+    //             $data['infos'] = true;
+    //         }
+    //         $data['prodis'] = [
+    //             [
+    //                 'id' => 'PTI',
+    //                 'prodi' => 'Pendidikan Teknik Informatika'
+    //             ],
+    //             [
+    //                 'id' => 'SI',
+    //                 'prodi' => 'Sistem Informatika'
+    //             ],
+    //             [
+    //                 'id' => 'ILKOM',
+    //                 'prodi' => 'Ilmu Komputer'
+    //             ],
+    //             [
+    //                 'id' => 'MI',
+    //                 'prodi' => 'Manajemen Informasi'
+    //             ]
+    //         ];
+
+    //         //var_dump($this->All_model->getingAll());
+    //         $data['siswa'] = $this->All_model->getingAll();
+    //         $this->load->view("admin/master/header", $this->data);
+    //         $this->load->view("admin/page/krs/index", $data);
+    //         $this->load->view("admin/master/footer", $this->data);
+    //     }
+    // }
+
+	// Method Index Baru
+	public function index()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
             redirect('krs', 'home');
         } else {
-            $this->data['title'] = "KRS - Data Mahasiswa";
+            $this->data['title'] = "KRS - Data Akun Mahasiswa";
             $this->data['active'] = "11";
             $id = $_SESSION['user_id'];
             $this->data['flip'] = "false";
@@ -538,7 +595,7 @@ class Krs extends CI_Controller
 
     // End View Mahasiswa
 
-    // Start View MintaBukti 
+    // Start View MintaBukti
     public function viewMintaBukti()
     {
         $this->data['title'] = "KRS - Data Mahasiswa";
@@ -608,6 +665,5 @@ class Krs extends CI_Controller
             $this->load->view("admin/page/krs/mahasiswa/pilih_validasi", $this->data);
             $this->load->view("admin/master/footer", $this->data);
     }
-
 
 }
