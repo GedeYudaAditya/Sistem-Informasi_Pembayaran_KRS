@@ -1,47 +1,46 @@
 <div class="text-center">
-    <h3 class="text-dark">Upload Bukti Pembayaran</h3>
+    <h2 class="text-primary"><?= $title; ?></h2>
 </div>
 <div class="container h-100 mb-3">
-    <div class="row justify-content-center h-100">
-        <div class="col-12 col-md-10 col-lg-12">
-            <div class="subscribe-content contact-box rounded p-4  mt-5 mt-lg-0">
-                <div class="row">
-                    <div class="col-12">
-                        <form action="" method="post" enctype="multipart/form-data">
-                            <div class="form-group ">
-                                <label for="nama_lengkap">Nama</label>
-                                <input type="text" class="form-control <?= form_error('nama_lengkap') ? 'is-invalid' : NULL; ?>" id="nama_lengkap" name="nama_lengkap" value="<?= set_value('nama_lengkap', $this->session->userdata('current_client')); ?>">
-                                <div class="invalid-feedback">
-                                    <?= form_error('nama_lengkap'); ?>
+    <div class="subscribe-content contact-box rounded p-4  mt-5 mt-lg-0">
+        <div class="row">
+            <div class="col-12">
+                <div class="container center">
+                    <!-- Form -->
+                    <form name="upload" method="post" action="<?= base_url(); ?>krs/simpan_bukti" enctype="multipart/form-data" accept-charset="utf-8">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12">
+                                <div class="btn-container shadow ">
+                                    <!-- Hidden input -->
+                                    <input type="hidden" name="mahasiswa_id" value="<?= $mahasiswa['id_mhs']; ?>">
+                                    <input type="hidden" name="nim" value="<?= $mahasiswa['last_name']; ?>">
+                                    <input type="hidden" name="id_form" value="<?= $form['id_form']; ?>">
+                                    <p class="form_tagline">Drag & Drop Your File Here...</p>
+                                    <h1 class="imgupload"><i class="fa fa-file-pdf" aria-hidden="true"></i></h1>
+                                    <h1 class="imgupload ok"><i class="fa fa-check-circle"></i></h1>
+                                    <h1 class="imgupload stop"><i class="fa fa-times-circle"></i></h1>
+                                    <p id="namefile">Only document allowed! (pdf)</p>
+
+                                    <!--Show file error message  start-->
+                                    <?php if ($this->session->flashdata('file_error')) : ?>
+                                        <p class="text-danger"><?= $this->session->flashdata('file_error'); ?></p>
+                                    <?php endif ?>
+                                    <!--Show file error message end  -->
+                                    <input type="file" value="" name="file_bukti" id="fileup">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nim">NIM</label>
-                                <input type="text" class="form-control <?= form_error('nim') ? 'is-invalid' : NULL; ?>" id="nim" name="nim">
-                                <div class="invalid-feedback">
-                                    <?= form_error('nim'); ?>
-                                </div>
+                        </div>
+                        <!--additional fields-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!--the defauld disabled btn and the actual one shown only if the three fields are valid-->
+                                <input type="submit" value="Submit!" class="btn btn-primary" id="submitbtn">
+                                <button type="button" class="btn btn-default" disabled="disabled" id="fakebtn">Submit! <i class="fa fa-minus-circle"></i></button>
+
                             </div>
-                            <div class="form-group">
-                                <label for="prodi">Prodi</label>
-                                <select class="form-control" id="prodi" name="prodi">
-                                    <?php foreach ($prodis as $prodi) : ?>
-                                        <option><?= $prodi['prodi']; ?></option>
-                                    <?php endforeach ?>
-                                </select>
-                            </div>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="file_bukti" name="file_bukti">
-                                    <label class="custom-file-label" for="file_bukti">Choose file</label>
-                                </div>
-                            </div>
-                            <div class="float-right my-3">
-                                <button type="reset" class="btn btn-danger">Reset</button>
-                                <button type="submit" class="btn btn-success">Kirim</button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <!-- Form -->
+                    </form>
                 </div>
             </div>
         </div>

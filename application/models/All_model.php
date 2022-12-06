@@ -3047,4 +3047,186 @@ class All_model extends CI_Model
 			return false;
 		}
 	}
+
+
+	/*Method baru bagian KRS mahasiswa
+	Perbaruan -- Marchel
+	*/
+
+	public function getMahasiswa()
+	{
+		$this->db->select('*');
+		$this->db->join('users', 'users.id = s6_mahasiswa.user_id');
+		return $this->db->get('s6_mahasiswa')->result_array();
+	}
+	public function getMahasiswaByUserId($id)
+	{
+		$this->db->select('*');
+		$this->db->join('users', 'users.id = s6_mahasiswa.user_id');
+		$data = $this->db->get_where('s6_mahasiswa', ['user_id' => $id]);
+		return $data->row_array();
+	}
+
+	public function getDataBuktiMahasiswa($where) // di ubah oleh yuda
+	{
+		$this->db->select(
+			[
+				'um.first_name as mahasiswa',
+				'um.last_name as nim',
+				'ud.first_name as dosen',
+				'tahun',
+				'semester',
+				'valid',
+				'file_path',
+				's6_form_bukti.id_form'
+			]
+		);
+		$this->db->join('s6_form_bukti', 's6_form_bukti.id_form = s6_bukti.form_bukti_id');
+		$this->db->join('s6_dosen', 's6_dosen.id = s6_form_bukti.dosen_id');
+		$this->db->join('s6_mahasiswa', 's6_mahasiswa.id_mhs = s6_bukti.mahasiswa_id');
+		$this->db->join('users as um', 'um.id = s6_mahasiswa.user_id');
+		$this->db->join('users as ud', 'ud.id = s6_dosen.user_id');
+		$data = $this->db->get_where('s6_bukti', ['mahasiswa_id' => $where]);
+		return $data->result_array();
+	}
+
+	public function getIdAndPathDataBuktiMahasiswa($where)
+	{
+		$this->db->select(
+			[
+				'id',
+				'file_path'
+			]
+		);
+		$this->db->join('s6_form_bukti', 's6_form_bukti.id_form = s6_bukti.form_bukti_id');
+		$data = $this->db->get_where('s6_bukti', ['mahasiswa_id' => $where]);
+		return $data->row_array();
+	}
+
+	public function getDataFormBuktiDosen($where) // di tambah oleh yuda
+	{
+		$this->db->select([
+			'id_form',
+			'first_name',
+			'tahun',
+			'semester',
+			'expire_date',
+			'dosen_id',
+		]);
+		$this->db->from('s6_form_bukti');
+		$this->db->join('s6_dosen', 's6_dosen.id = s6_form_bukti.dosen_id');
+		$this->db->join('users', 's6_dosen.user_id = users.id');
+		$this->db->order_by('expire_date', 'desc');
+		$data = $this->db->where('dosen_id', $where);
+		return $data->get()->result_array();
+	}
+
+
+	public function checkBuktiSudahDiKirim($form_bukti_id, $id)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_bukti');
+		$this->db->where('form_bukti_id', $form_bukti_id);
+		$this->db->where('mahasiswa_id', $id);
+		$data = $this->db->get();
+		return $data->num_rows();
+	}
+
+	public function getForm($where)
+	{
+		return $this->db->get_where('s6_form_bukti', ['id_form' => $where])->row_array();
+	}
+	//   End Of Marchel 
+
+	// Start Of Adi Sastrawan
+	public function findDosen($id)
+	{
+		$this->db->select('id');
+		$this->db->from('s6_dosen');
+		$this->db->where($id);
+		return $this->db->get();
+	}
+
+	public function gatherData($id)
+	{
+		$this->db->select('*,users.first_name,users.last_name');
+		$this->db->from('s6_mahasiswa',);
+		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
+		$this->db->join('s6_bukti', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
+		$this->db->join('s6_form_bukti', 's6_bukti.form_bukti_id=s6_form_bukti.id_form');
+		$this->db->order_by('expire_date', 'desc');
+		$this->db->where($id);
+		return $this->db->get();
+	}
+
+	// tidak digunakan
+	public function gatherDataSpecific($id, $tahun)
+	{
+		$this->db->select('*,users.first_name,users.last_name');
+		$this->db->from('s6_mahasiswa',);
+		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
+		$this->db->join('s6_bukti', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
+		$this->db->join('s6_form_bukti', 's6_bukti.form_bukti_id=s6_form_bukti.id_form');
+		$this->db->order_by('expire_date', 'desc');
+		$this->db->where(['id_pa' => $id, 'tahun' => $tahun]);
+		return $this->db->get();
+	}
+
+	public function getByIdData($id_bukti)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_mahasiswa');
+		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
+		$this->db->join('s6_bukti', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
+		$this->db->where('s6_bukti.id', $id_bukti);
+		return $this->db->get();
+	}
+
+	public function validateBukti($valid, $id)
+	{
+		$this->db->where($id);
+		$this->db->update('s6_bukti', $valid);
+	}
+
+	public function insertFormBukti($data)
+	{
+		$this->db->insert('s6_form_bukti', $data);
+	}
+
+	public function formBuktiDosen($id_dosen)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_form_bukti');
+		$this->db->join('s6_dosen', 's6_dosen.id = s6_form_bukti.dosen_id');
+		$this->db->join('users', 's6_dosen.user_id = users.id');
+		$this->db->order_by('expire_date', 'desc');
+		$this->db->where('s6_form_bukti.dosen_id', $id_dosen);
+		return $this->db->get()->result_array();
+	}
+	public function filteredData($id_form, $id_dosen)
+	{
+		$this->db->select('*,users.first_name,users.last_name');
+		$this->db->from('s6_mahasiswa',);
+		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
+		$this->db->join('s6_bukti', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
+		$this->db->join('s6_form_bukti', 's6_bukti.form_bukti_id=s6_form_bukti.id_form');
+		$this->db->where('id_form', $id_form);
+		$this->db->where($id_dosen);
+		return $this->db->get();
+	}
+
+	public function getsemuaDosen()
+	{
+		$this->db->select('*, users.id as idUser, s6_dosen.id as idDosen');
+		$this->db->from('s6_dosen');
+		$this->db->join('users', 's6_dosen.user_id = users.id');
+		return $this->db->get()->result_array();
+	}
+
+	public function updateDosenPA($id_mahasiswa, $id_dosen)
+	{
+		// Update Data Dosen PA Mahasiswa
+		$this->db->where('id_mhs', $id_mahasiswa);
+		return $this->db->update('s6_mahasiswa', ['pa_id' => $id_dosen]);
+	}
 }

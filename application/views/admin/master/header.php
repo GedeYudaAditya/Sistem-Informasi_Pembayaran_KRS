@@ -11,6 +11,7 @@
 			<link rel="shortcut icon" href="<?= base_url() ?>assets/img/sso-logo.png" type="image/x-icon">
 			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 			<script src="<?= base_url() ?>assets/vendor/jquery/jquery.min.js"></script>
+			<!-- dropify -->
 		</head>
 
 		<body>
@@ -40,6 +41,9 @@
 				<!-- Lazyload Plugin -->
 				<script src="<?= base_url() ?>assets/js/plugins/lazysizes.min.js" async=""></script>
 
+
+				<!-- css form bukti -->
+				<link rel="stylesheet" href="<?= base_url('assets/css/form_upload.css'); ?>">
 			</head>
 
 			<body id="page-top">
@@ -165,6 +169,7 @@
 								<div id="collapseFive" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 									<div class="bg-white py-2 collapse-inner rounded">
 										<h6 class="collapse-header">Daftar Fitur:</h6>
+										<a class="collapse-item" href="<?= base_url() ?>admin/tambah_user_mahasiswa">Tambah akun Mahasiswa</a>
 										<a class="collapse-item" href="<?= base_url() ?>krs/">Data Mahasiswa</a>
 										<a class="collapse-item" href="<?= base_url() ?>krs/tambah_Mahasiswa">Tambah Mahasiswa</a>
 										<a class="collapse-item" href="<?= base_url() ?>krs/tambah_tahun">Tambah Tahun</a>
@@ -212,16 +217,16 @@
 							</div>
 							<!-- Nav Item - Pages Collapse Menu -->
 							<li class="nav-item">
-							<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDosen" aria-expanded="true" aria-controls="collapseDosen">
-								<i class="fas fa-hotel"></i>
-								<i><span class="text-warning">Menu Dosen 1</span></i>
-							</a>
-							<div id="collapseDosen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-								<div class="bg-white py-2 collapse-inner rounded">
-									<h6 class="collapse-header">Daftar Fitur:</h6>
-									<a class="collapse-item" href="<?= base_url('krs/validasi_mahasiswa') ?>"><i class="fas fa-user-check mr-2"></i>Validasi Mahasiswa</a>
-									<a class="collapse-item" href="<?= base_url('krs/minta_bukti') ?>"><i class="fas fa-edit mr-1"></i> Minta Bukti</a>
-								</div>
+								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDosen" aria-expanded="true" aria-controls="collapseDosen">
+									<i class="fas fa-hotel"></i>
+									<i><span class="text-warning">Validasi Iuran KRS</span></i>
+								</a>
+								<div id="collapseDosen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+									<div class="bg-white py-2 collapse-inner rounded">
+										<h6 class="collapse-header">Daftar Fitur:</h6>
+										<a class="collapse-item" href="<?= base_url('krs/viewValidasiMahasiswa') ?>"><i class="fas fa-user-check mr-2"></i>Validasi Mahasiswa</a>
+										<a class="collapse-item" href="<?= base_url('krs/viewMintaBukti') ?>"><i class="fas fa-edit mr-1"></i> Minta Bukti</a>
+									</div>
 							</li>
 						<?php } ?>
 
@@ -235,13 +240,16 @@
 							<li class="nav-item">
 								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMahasiswa" aria-expanded="true" aria-controls="collapseMahasiswa">
 									<i class="fas fa-hotel"></i>
-									<i><span class="text-warning">KRS Checker</span></i>
+									<i><span class="text-warning">Validasi Iuran</span></i>
 								</a>
 								<div id="collapseMahasiswa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 									<div class="bg-white py-2 collapse-inner rounded">
 										<h6 class="collapse-header">Daftar Fitur:</h6>
-										<a class="collapse-item" href="<?= base_url() ?>Krs/upload_bukti">Upload Bukti Pembayaran</a>
-										<a class="collapse-item" href="<?= base_url('krs/pilih_validasi') ?>">Cek Status Validasi</a>
+										<?php if ($group[0]['nama_pilihan'] == 'Mahasiswa') : ?>
+											<a class="collapse-item <?= $this->All_model->getMahasiswaByUserId($_SESSION['user_id'])['pa_id'] === NULL ? 'bg-warning text-danger' : '' ?>" href="<?= base_url() ?>krs/pilihPA">Pilih PA</a>
+										<?php endif; ?>
+										<a class="collapse-item" href="<?= base_url() ?>formulir">Permintaan Bukti</a>
+										<a class="collapse-item" href="<?= base_url('status_validasi') ?>">Status Validasi Bukti</a>
 									</div>
 								</div>
 							</li>
