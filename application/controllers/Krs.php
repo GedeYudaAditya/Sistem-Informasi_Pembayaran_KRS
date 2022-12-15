@@ -7,7 +7,7 @@ class Krs extends CI_Controller
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
             redirect('krs/home');
         } else {
-            $this->data['title'] = "KRS - Data Mahasiswa";
+            $this->data['title'] = "KRS - Data Akun Mahasiswa";
             $this->data['active'] = "11";
             $id = $_SESSION['user_id'];
             $this->data['flip'] = "false";
@@ -893,7 +893,7 @@ class Krs extends CI_Controller
             $this->data['group'] = "9";
             $this->data['group'] = $this->ion_auth_model->getGroup($id);
             $this->data['title'] = "Edit Bukti";
-            // ambil data 
+            // ambil data
             $mhs_id = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
             $id = $this->All_model->getIdAndPathDataBuktiMahasiswa($mhs_id)['id'];
             $file_path = $this->All_model->getIdAndPathDataBuktiMahasiswa($mhs_id)['file_path'];
@@ -990,7 +990,7 @@ class Krs extends CI_Controller
 
     // End View Validasi Mahasiswa
 
-    // Start View MintaBukti 
+    // Start View MintaBukti
     public function viewMintaBukti()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
@@ -1096,7 +1096,7 @@ class Krs extends CI_Controller
         }
     }
     // End Detail Bukti Dosen
-    // Start Lihat Bukti 
+    // Start Lihat Bukti
     public function lihatBukti($id_form)
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
