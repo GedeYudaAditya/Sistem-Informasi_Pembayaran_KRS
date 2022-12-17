@@ -55,7 +55,7 @@
                     </td>
                     <td>
                       <div>
-                        <button type="button" class="btn btn-primary"><a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url() ?>krs/viewValidasiMahasiswa/<?php echo $bukti['id'] ?>">Lihat Bukti</a>
+                        <button type="button" class="btn btn-primary"><a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url() ?>krs/viewBukti/<?php echo $bukti['id'] ?>">Lihat Bukti</a>
 
                         </button>
                       </div>

@@ -3168,17 +3168,7 @@ class All_model extends CI_Model
 		return $this->db->get();
 	}
 
-	// filter By status
-	public function getBuktiByStatus($where)
-	{
-		$this->db->select('*');
-		$this->db->from('s6_bukti');
-		$this->db->join('s6_mahasiswa', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
-		$this->db->join('users', 'users.id=s6_mahasiswa.user_id');
-		$this->db->where("valid", $where);
-		return $this->db->get();
-	}
-	// filter 
+
 
 
 	public function getByIdData($id_bukti)
@@ -3238,6 +3228,26 @@ class All_model extends CI_Model
 		$this->db->from("s6_iuran");
 		$this->db->join("s6_data_pembayaran", 's6_iuran.id = s6_data_pembayaran.id_iuran');
 		$this->db->where('s6_iuran.id', $where);
+		return $this->db->get();
+	}
+
+	// filter By status
+	public function getBuktiByStatus($where)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_iuran');
+		$this->db->join('s6_data_pembayaran', 's6_iuran.id=s6_data_pembayaran.id_iuran');
+		$this->db->where("s6_iuran.id", $where[0]);
+		$this->db->where("s6_data_pembayaran.valid", $where[1]);
+		return $this->db->get();
+	}
+	// filter 
+
+	public function getDataPembayaran($where)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_data_pembayaran');
+		$this->db->where('id', $where);
 		return $this->db->get();
 	}
 	// Admin site End - Marsell

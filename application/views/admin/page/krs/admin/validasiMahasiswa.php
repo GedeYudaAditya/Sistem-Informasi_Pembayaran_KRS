@@ -9,7 +9,7 @@
         <div class="row px-4 d-flex flex-md-row justify-content-between align-items-center">
           <h5 class="col-4 col-md-3 py-2 text-dark user-select-none font-weight-bold">Validasi Bukti Iuran</h5>
           <div class="col-8  form-group justify-content-end input-group ">
-            <form class="d-flex py-2  align-items-center" action="<?php echo base_url(); ?>krs/lihatBukti/10" method="post" enctype="multipart/form">
+            <form class="d-flex py-2  align-items-center" action="" method="post" enctype="multipart/form">
               <select name="select" class="custom-select mx-1" id="inputGroupSelect01">
                 <option selected disabled>Select Dosen</option>
                 <option value='1'>Pak Ardwi</option>
@@ -45,7 +45,7 @@
               </thead>
               <tbody>
                 <?php $i = 1 ?>
-                <?php foreach ($bukti as $mhs) : ?>
+                <?php foreach ($bukti as $b) : ?>
                   <tr>
                     <td>
                       <?php if ($i > 9) : ?>
@@ -56,24 +56,24 @@
                     </td>
                     <td>
                       <div>
-                        <p><?php echo $mhs->nama_mhs ?></p>
+                        <p><?php echo $b->nama_mhs ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <p><?php echo $mhs->nim ?></p>
+                        <p><?php echo $b->nim ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <p><?php echo $mhs->prodi ?></p>
+                        <p><?php echo $b->prodi ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <?php if ($mhs->valid == 0) : ?>
+                        <?php if ($b->valid == 0) : ?>
                           <p class="text-danger">Belum tervalidasi</p>
-                        <?php elseif ($mhs->valid == 1) : ?>
+                        <?php elseif ($b->valid == 1) : ?>
                           <p class="text-success">Tervalidasi</p>
                         <?php endif; ?>
                       </div>
@@ -81,7 +81,7 @@
                     <td>
                       <div>
                         <button type="button" class="btn btn-sm btn-primary">
-                          <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewDetailBukti/' . $mhs->id) ?>">
+                          <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewDetailBukti/' . $b->id) ?>">
                             Lihat Detail
                           </a>
                         </button>
