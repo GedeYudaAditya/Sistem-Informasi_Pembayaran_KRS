@@ -18,10 +18,8 @@
               </select>
               <select name="select" class="custom-select mx-1" id="inputGroupSelect01">
                 <option selected disabled>Semester</option>
-                <option value='1'>1</option>
-                <option value='3'>3</option>
-                <option value='5'>5</option>
-                <option value='7'>7</option>
+                <option value='genap'>Genap</option>
+                <option value='ganjil'>Ganjil</option>
               </select>
               <select class="custom-select mx-1" name="validStatus" id="validStatus">
                 <option selected disabled>Select Status</option>
@@ -47,7 +45,7 @@
               </thead>
               <tbody>
                 <?php $i = 1 ?>
-                <?php foreach ($bukti as $b) : ?>
+                <?php foreach ($bukti as $mhs) : ?>
                   <tr>
                     <td>
                       <?php if ($i > 9) : ?>
@@ -58,24 +56,24 @@
                     </td>
                     <td>
                       <div>
-                        <p><?php echo $b->nama_mhs ?></p>
+                        <p><?php echo $mhs->nama_mhs ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <p><?php echo $b->nim ?></p>
+                        <p><?php echo $mhs->nim ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <p><?php echo $b->prodi ?></p>
+                        <p><?php echo $mhs->prodi ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <?php if ($b->valid == 0) : ?>
+                        <?php if ($mhs->valid == 0) : ?>
                           <p class="text-danger">Belum tervalidasi</p>
-                        <?php elseif ($b->valid == 1) : ?>
+                        <?php elseif ($mhs->valid == 1) : ?>
                           <p class="text-success">Tervalidasi</p>
                         <?php endif; ?>
                       </div>

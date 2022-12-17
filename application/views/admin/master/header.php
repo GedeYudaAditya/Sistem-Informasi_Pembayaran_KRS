@@ -210,48 +210,25 @@
 						<?php endif; ?>
 
 						<!-- Menu Untuk User Dosen Sistem KRS -->
-						<?php if ($group[0]['group_id'] == "9") { ?>
+						<?php if ($group[0]['group_id'] == "10") { ?>
 							<!-- Heading -->
 							<div class="sidebar-heading">
-								Layanan Dosen
+								Layanan Bendahara
 							</div>
 							<!-- Nav Item - Pages Collapse Menu -->
 							<li class="nav-item">
 								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDosen" aria-expanded="true" aria-controls="collapseDosen">
 									<i class="fas fa-hotel"></i>
-									<i><span class="text-warning">Menu Dosen 1</span></i>
+									<i><span class="text-warning">Menu Bendahara</span></i>
 								</a>
 								<div id="collapseDosen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 									<div class="bg-white py-2 collapse-inner rounded">
-										<h6 class="collapse-header">Daftar Fitur:</h6
-										<a class="collapse-item" href="<?= base_url('krs/viewValidasiMahasiswa') ?>"><i class="fas fa-user-check mr-2"></i>Validasi Mahasiswa</a>
-										<a class="collapse-item" href="<?= base_url('krs/viewMintaBukti') ?>"><i class="fas fa-edit mr-1"></i> Minta Bukti</a>
+										<h6 class="collapse-header">Daftar Fitur:</h6>
+										<a class="collapse-item" href="<?= base_url('krs/viewMintaBukti') ?>"><i class="fas fa-edit mr-1"></i>Bukti Iuran</a>
 									</div>
 							</li>
 						<?php } ?>
 
-						<!-- Menu Untuk User Mahasiswa Sistem KRS -->
-						<?php if ($group[0]['group_id'] == "10") { ?>
-							<!-- Heading -->
-							<div class="sidebar-heading">
-								Layanan Mahasiswa
-							</div>
-							<!-- Nav Item - Pages Collapse Menu -->
-							<li class="nav-item">
-								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMahasiswa" aria-expanded="true" aria-controls="collapseMahasiswa">
-									<i class="fas fa-hotel"></i>
-									<i><span class="text-warning">Validasi Iuran</span></i>
-								</a>
-								<div id="collapseMahasiswa" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-									<div class="bg-white py-2 collapse-inner rounded">
-										<h6 class="collapse-header">Daftar Fitur:</h6>
-										<a class="collapse-item" href="<?= base_url() ?>formulir">Permintaan Bukti</a>
-										<!-- <a class="collapse-item" href="<?= base_url() ?>">Cek validasi Pembayaran</a> -->
-										<a class="collapse-item" href="<?= base_url('status_validasi') ?>">Status Validasi Bukti</a>
-									</div>
-								</div>
-							</li>
-						<?php } ?>
 
 						<!-- Divider -->
 						<hr class="sidebar-divider">

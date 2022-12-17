@@ -23,13 +23,13 @@
                   <td class="col-3">Judul</td>
                   <td class="col-2">Tahun Ajaran</td>
                   <td class="col-2">Semester</td>
-                  <td class="col-2">Expired_Date</td>
+                  <!-- <td class="col-2">Expired_Date</td> -->
                   <td class="col-2">Lihat Semua Bukti</td>
                 </tr>
               </thead>
               <tbody>
                 <?php $i = 1 ?>
-                <?php foreach ($formBukti as $bukti) : ?>
+                <?php foreach ($iuran as $bukti) : ?>
                   <tr>
                     <td>
                       <?php if ($i > 9) : ?>
@@ -40,12 +40,12 @@
                     </td>
                     <td>
                       <div>
-                        <p>Bukti Iuran Mahasiswa <?= $bukti['tahun'] ?>/ <?= $bukti['tahun'] + 1 ?></p>
+                        <p>Bukti Iuran Mahasiswa <?= $bukti['tahun_ajaran'] ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <p><?= $bukti['tahun'] ?>/ <?= $bukti['tahun'] + 1 ?></p>
+                        <p><?= $bukti['tahun_ajaran'] ?>/ <?= $bukti['tahun_ajaran'] + 1 ?></p>
                       </div>
                     </td>
                     <td>
@@ -55,12 +55,7 @@
                     </td>
                     <td>
                       <div>
-                        <p class="text-primary"><?= $bukti['expire_date'] ?></p>
-                      </div>
-                    </td>
-                    <td>
-                      <div>
-                        <button type="button" class="btn btn-primary"><a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url() ?>/krs/lihatBukti/<?php echo $bukti['id_form'] ?>">Lihat Bukti</a>
+                        <button type="button" class="btn btn-primary"><a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url() ?>krs/viewValidasiMahasiswa/<?php echo $bukti['id'] ?>">Lihat Bukti</a>
 
                         </button>
                       </div>

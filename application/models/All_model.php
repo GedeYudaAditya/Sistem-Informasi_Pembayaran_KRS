@@ -3090,7 +3090,7 @@ class All_model extends CI_Model
 		return $data->result_array();
 	}
 
-	public function getIdAndPathDataBuktiMahasiswa($where) 
+	public function getIdAndPathDataBuktiMahasiswa($where)
 	{
 		$this->db->select(
 			[
@@ -3157,6 +3157,29 @@ class All_model extends CI_Model
 		$this->db->where($id);
 		return $this->db->get();
 	}
+	public function gatherAllDataBukti()
+	{
+		$this->db->select('*,users.first_name,users.last_name');
+		$this->db->from('s6_mahasiswa',);
+		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
+		$this->db->join('s6_bukti', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
+		$this->db->join('s6_form_bukti', 's6_bukti.form_bukti_id=s6_form_bukti.id_form');
+		// $this->db->where($id);
+		return $this->db->get();
+	}
+
+	// filter By status
+	public function getBuktiByStatus($where)
+	{
+		$this->db->select('*');
+		$this->db->from('s6_bukti');
+		$this->db->join('s6_mahasiswa', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
+		$this->db->join('users', 'users.id=s6_mahasiswa.user_id');
+		$this->db->where("valid", $where);
+		return $this->db->get();
+	}
+	// filter 
+
 
 	public function getByIdData($id_bukti)
 	{
@@ -3188,14 +3211,34 @@ class All_model extends CI_Model
 		$this->db->where('s6_form_bukti.dosen_id', $id_dosen);
 		return $this->db->get()->result_array();
 	}
-	public function filteredData($id_form,$id_dosen){
+	public function filteredData($id_form, $id_dosen)
+	{
 		$this->db->select('*,users.first_name,users.last_name');
 		$this->db->from('s6_mahasiswa',);
 		$this->db->join('users', 's6_mahasiswa.user_id = users.id');
 		$this->db->join('s6_bukti', 's6_bukti.mahasiswa_id=s6_mahasiswa.id_mhs');
 		$this->db->join('s6_form_bukti', 's6_bukti.form_bukti_id=s6_form_bukti.id_form');
-		$this->db->where('id_form',$id_form);
+		$this->db->where('id_form', $id_form);
 		$this->db->where($id_dosen);
 		return $this->db->get();
 	}
+
+
+	// Admin site Start - Marsell
+	public function getAllIuran()
+	{
+		$this->db->select('*');
+		$this->db->from('s6_iuran');
+		return $this->db->get();
+	}
+
+	public function getDataBuktiPembayaran($where)
+	{
+		$this->db->select("*");
+		$this->db->from("s6_iuran");
+		$this->db->join("s6_data_pembayaran", 's6_iuran.id = s6_data_pembayaran.id_iuran');
+		$this->db->where('s6_iuran.id', $where);
+		return $this->db->get();
+	}
+	// Admin site End - Marsell
 }
