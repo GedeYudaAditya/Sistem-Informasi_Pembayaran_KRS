@@ -402,49 +402,49 @@ class Krs extends CI_Controller
     // BAGIAN CLIENT SIDE
     public function Home()
     {
-        if ($this->ion_auth->logged_in() || $this->ion_auth->in_group(krs)) {
-            redirect('sso_hmj', 'refresh');
-        } else {
+           // if ($this->ion_auth->logged_in() || $this->ion_auth->in_group(krs)) {
+        //     redirect('sso_hmj', 'refresh');
+        // } else {
 
-            $this->data['title'] = $this->lang->line('login_heading');
+        //     $this->data['title'] = $this->lang->line('login_heading');
 
-            // validate form input
-            $this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
-            $this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
+        //     // validate form input
+        //     $this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
+        //     $this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
 
-            if ($this->form_validation->run() === TRUE) {
-                // check to see if the user is logging in
-                // check for "remember me"
-                $remember = (bool) $this->input->post('remember');
+        //     if ($this->form_validation->run() === TRUE) {
+        //         // check to see if the user is logging in
+        //         // check for "remember me"
+        //         $remember = (bool) $this->input->post('remember');
 
-                if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
-                    //if the login is successful
-                    //redirect them back to the home page
-                    $this->session->set_flashdata('message', $this->ion_auth->messages());
-                    redirect('sso_hmj', 'refresh');
-                } else {
-                    // if the login was un-successful
-                    // redirect them back to the login page
-                    $this->session->set_flashdata('message', $this->ion_auth->errors());
-                    redirect('login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
-                }
-            } else {
+        //         if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
+        //             //if the login is successful
+        //             //redirect them back to the home page
+        //             $this->session->set_flashdata('message', $this->ion_auth->messages());
+        //             redirect('sso_hmj', 'refresh');
+        //         } else {
+        //             // if the login was un-successful
+        //             // redirect them back to the login page
+        //             $this->session->set_flashdata('message', $this->ion_auth->errors());
+        //             redirect('login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+        //         }
+        //     } else {
                 // the user is not logging in so display the login page
                 // set the flash data error message if there is one
-                $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+                // $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
-                $this->data['identity'] = [
-                    'name' => 'identity',
-                    'id' => 'identity',
-                    'type' => 'text',
-                    'value' => $this->form_validation->set_value('identity'),
-                ];
+                // $this->data['identity'] = [
+                //     'name' => 'identity',
+                //     'id' => 'identity',
+                //     'type' => 'text',
+                //     'value' => $this->form_validation->set_value('identity'),
+                // ];
 
-                $this->data['password'] = [
-                    'name' => 'password',
-                    'id' => 'password',
-                    'type' => 'password',
-                ];
+                // $this->data['password'] = [
+                //     'name' => 'password',
+                //     'id' => 'password',
+                //     'type' => 'password',
+                // ];
 
                 $nim = $this->input->post('nim');
 
@@ -456,11 +456,17 @@ class Krs extends CI_Controller
 
                 $data['title'] = "Home";
                 $this->load->view("guest/krs/master/header", $data);
-                $this->load->view("guest/krs/page/index", $this->data);
+                $this->load->view("guest/krs/page/index");
                 $this->load->view("guest/krs/master/footer", $data);
-            }
-        }
+            
     }
+
+    // public function Upload_Form () {
+    //     $data['updated_info'] = $this->All_model->infos();
+    //     $this->load->view("guest/krs/master/header", $data);
+    //     $this->load->view("guest/krs/page/form_upload_mhs.php");
+    //     // $this->load->view("guest/krs/master/footer", $data);
+    // }
     // END CLIENT SIDE
 
 
