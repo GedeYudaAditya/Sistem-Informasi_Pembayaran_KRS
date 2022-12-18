@@ -701,8 +701,8 @@ class Krs extends CI_Controller
     }
     // End Admin
 
-    // Start User Mahasiswa
-    // Halaman Bukti mahasiswa - [Marchel]
+    //Start User Mahasiswa
+    //Halaman Bukti mahasiswa - [Marchel]
     public function halaman_bukti()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
@@ -749,6 +749,13 @@ class Krs extends CI_Controller
             $this->load->view("admin/page/krs/mahasiswa/halaman_bukti", $data);
             $this->load->view("admin/master/footer", $this->data);
         }
+    }
+
+
+
+    //tes load filter
+    public function load_data_filter()
+    {
     }
 
     // Method untuk memilih tahun dan semester yang akan dicek
@@ -885,81 +892,29 @@ class Krs extends CI_Controller
 
     public function delete_bukti()
     {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
-        } else {
-            $this->load->model('All_model');
+        $this->load->model('All_model');
 
-            $this->data['active'] = "11";
-            $this->data['flip'] = "false";
-            $this->data['ckeditor'] = "krs";
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
 
-            $id = $_SESSION['user_id'];
+        $id = $_SESSION['user_id'];
 
-            $this->data['group'] = "9";
-            $this->data['group'] = $this->ion_auth_model->getGroup($id);
-            $this->data['title'] = "Edit Bukti";
-            // ambil data
-            $mhs_id = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
-            $id = $this->All_model->getIdAndPathDataBuktiMahasiswa($mhs_id)['id'];
-            $file_path = $this->All_model->getIdAndPathDataBuktiMahasiswa($mhs_id)['file_path'];
-            //var_dump($id);
-            $this->load->helper("file");
-            unlink($file_path);
-            delete_files($file_path);
+        $this->data['group'] = "9";
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $this->data['title'] = "Edit Bukti";
+        // ambil data 
+        $mhs_id = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
+        $id = $this->All_model->getIdAndPathDataBuktiMahasiswa($mhs_id)['id'];
+        $file_path = $this->All_model->getIdAndPathDataBuktiMahasiswa($mhs_id)['file_path'];
+        //var_dump($id);
+        $this->load->helper("file");
+        unlink($file_path);
+        delete_files($file_path);
 
-            $this->db->where('s6_bukti.id', $id);
-            $this->db->delete('s6_bukti');
-            redirect('krs/pilih_validasi');
-        }
-    }
-
-    public function pilihPA()
-    {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
-        } else {
-            $this->data['title'] = "KRS - Pilih Dosen PA";
-            $this->data['active'] = "11";
-            $id = $_SESSION['user_id'];
-            $this->data['flip'] = "false";
-            $this->data['ckeditor'] = "krs";
-
-            $this->data['group'] = $this->ion_auth_model->getGroup($id);
-            $this->load->model('All_model');
-
-            $this->data['mhs_id'] = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
-            $this->data['mahasiswa'] = $this->All_model->getMahasiswaByUserId($id);
-
-            $this->data['dosen'] = $this->All_model->getsemuaDosen();
-
-            $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/mahasiswa/pilih_pa", $this->data);
-            $this->load->view("admin/master/footer", $this->data);
-
-            unset($_SESSION['suksesup']);
-            unset($_SESSION['suksespa']);
-        }
-    }
-
-    public function ubah_pa()
-    {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
-        } else {
-            // update dosen PA
-            $this->load->model('All_model');
-            $id = $_SESSION['user_id'];
-            $id_mahasiswa = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
-            $id_dosen = $this->input->post('pa_id');
-            if ($this->All_model->updateDosenPA($id_mahasiswa, $id_dosen)) {
-                $this->session->set_flashdata('suksespa', 'diubah');
-                redirect('krs/pilih_validasi');
-            } else {
-                $this->session->set_flashdata('gagalpa', 'gagal');
-                redirect('formulir');
-            }
-        }
+        $this->db->where('s6_bukti.id', $id);
+        $this->db->delete('s6_bukti');
+        redirect('krs/pilih_validasi');
     }
 
     //handle data bukti from upload bukti end------
@@ -968,187 +923,352 @@ class Krs extends CI_Controller
     // Start Of Dosen Section - [Adi Sastrawan]
     // Start View Mahasiswa
 
-    public function viewValidasiMahasiswa()
-    {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
-        } else {
-            $this->data['title'] = "KRS - Data Mahasiswa";
-            $this->data['active'] = "11";
-            $this->data['flip'] = "false";
-            $this->data['ckeditor'] = "krs";
-            $id = $_SESSION['user_id'];
-            $this->data['group'] = $this->ion_auth_model->getGroup($id);
-            $where = array('user_id' => $id);
-            $dosen_id['pa_id'] = $this->All_model->findDosen($where)->result_array();
-            $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
-            $this->data['id_dosen'] = $dosen_id['pa_id'][0]['id'];
-            $this->data['value'] = $this->All_model->gatherData($find)->result();
-            // $mahasiswa['value'] = $this->All_model->gatherData($find)->result();
-            $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
-            $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
-            $this->data['id_forms'] = $this->input->post('select');
-            $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $this->data);
-            $this->load->view("admin/master/footer", $this->data);
-        }
-    }
+    // public function viewValidasiMahasiswa()
+    // {
+    //     $this->data['title'] = "KRS - Data Mahasiswa";
+    //     $this->data['active'] = "11";
+    //     $this->data['flip'] = "false";
+    //     $this->data['ckeditor'] = "krs";
+    //     $id = $_SESSION['user_id'];
+    //     $this->data['group'] = $this->ion_auth_model->getGroup($id);
+    //     $where = array('user_id' => $id);
+    //     $dosen_id['pa_id'] = $this->All_model->findDosen($where)->result_array();
+    //     // $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
+    //     $mahasiswa['value'] = $this->All_model->gatherAllDataBukti()->result();
+    //     // $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
+    //     $this->data['formBukti'] = $this->db->get('s6_form_bukti');
+    //     $this->load->view("admin/master/header", $this->data);
+    //     $this->load->view("admin/page/krs/admin/validasiMahasiswa", $mahasiswa);
+    //     $this->load->view("admin/master/footer", $this->data);
+    // }
+
 
     // End View Validasi Mahasiswa
 
-    // Start View MintaBukti
-    public function viewMintaBukti()
-    {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
-        } else {
-            $this->load->model('All_model');
-            $this->data['title'] = "KRS - Data Mahasiswa";
-            $this->data['active'] = "11";
-            $this->data['flip'] = "false";
-            $this->data['ckeditor'] = "krs";
-            $id = $_SESSION['user_id'];
-            $this->data['group'] = $this->ion_auth_model->getGroup($id);
-            $id = $_SESSION['user_id'];
-            $where = array('user_id' => $id);
-            $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
-            $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
-            $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/dosen/mintaBukti", $this->data);
-            $this->load->view("admin/master/footer", $this->data);
-        }
-    }
+    // Start View MintaBukti 
+    // public function viewMintaBukti()
+    // {
+    //     $this->load->model('All_model');
+    //     $this->data['title'] = "KRS - Data Mahasiswa";
+    //     $this->data['active'] = "11";
+    //     $this->data['flip'] = "false";
+    //     $this->data['ckeditor'] = "krs";
+    //     $id = $_SESSION['user_id'];
+    //     $this->data['group'] = $this->ion_auth_model->getGroup($id);
+    //     $id = $_SESSION['user_id'];
+    //     $where = array('user_id' => $id);
+    //     $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
+    //     $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
+    //     $this->load->view("admin/master/header", $this->data);
+    //     $this->load->view("admin/page/krs/admin/mintaBukti", $this->data);
+    //     $this->load->view("admin/master/footer", $this->data);
+    // }
     // End View MintaBukti
 
-    public function tambahFormPengajuan()
-    {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
-        } else {
-            $this->load->model('All_model');
-            $id = $_SESSION['user_id'];
-            $where = array('user_id' => $id);
-            $dosen_id = $this->All_model->findDosen($where)->result_array();
-            $data = [
-                'expire_date' => $this->input->post('expire_date'),
-                'tahun' => $this->input->post('tahun'),
-                'semester' => $this->input->post('semester'),
-                'dosen_id' => $dosen_id[0]['id'],
-            ];
-            $this->All_model->insertFormBukti($data);
-            redirect("Krs/viewMintaBukti");
-        }
-    }
+    // public function tambahFormPengajuan()
+    // {
+
+    //     $this->load->model('All_model');
+    //     $id = $_SESSION['user_id'];
+    //     $where = array('user_id' => $id);
+    //     $dosen_id = $this->All_model->findDosen($where)->result_array();
+    //     $data = [
+    //         'expire_date' => $this->input->post('expire_date'),
+    //         'tahun' => $this->input->post('tahun'),
+    //         'semester' => $this->input->post('semester'),
+    //         'dosen_id' => $dosen_id[0]['id'],
+    //     ];
+    //     $this->All_model->insertFormBukti($data);
+    //     redirect("Krs/viewMintaBukti");
+    // }
 
 
     // Start memvalidkanBukti
     public function memvalidkanBukti($id, $valid)
     {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
-        } else {
-            $this->load->model('All_model');
-            $valid = array('valid' => $valid);
-            $where = array('id' => $id);
-            $this->All_model->validateBukti($valid, $where);
-            redirect("Krs/viewValidasiMahasiswa");
-        }
+        $this->load->model('All_model');
+        $valid = array('valid' => $valid);
+        $where = array('id' => $id);
+        $this->All_model->validateBukti($valid, $where);
+        redirect("Krs/viewValidasiMahasiswa");
     }
     // End memvalidkanBukti
 
 
-    // Start View Form Buat Bukti
-    public function viewFormBuatBukti()
-    {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
-        } else {
-            $this->data['title'] = "KRS - Data Mahasiswa";
-            $this->data['active'] = "11";
-            $this->data['flip'] = "false";
-            $this->data['ckeditor'] = "krs";
-            $id = $_SESSION['user_id'];
-            $this->data['group'] = $this->ion_auth_model->getGroup($id);
-            $this->load->model('All_model');
+    // // Start View Form Buat Bukti
+    // public function viewFormBuatBukti()
+    // {
+    //     $this->data['title'] = "KRS - Data Mahasiswa";
+    //     $this->data['active'] = "11";
+    //     $this->data['flip'] = "false";
+    //     $this->data['ckeditor'] = "krs";
+    //     $id = $_SESSION['user_id'];
+    //     $this->data['group'] = $this->ion_auth_model->getGroup($id);
+    //     $this->load->model('All_model');
 
-            $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/dosen/formBuatBukti");
-            $this->load->view("admin/master/footer", $this->data);
-        }
-    }
-    // End View Form Buat Bukti
+    //     $this->load->view("admin/master/header", $this->data);
+    //     $this->load->view("admin/page/krs/dosen/formBuatBukti");
+    //     $this->load->view("admin/master/footer", $this->data);
+    // }
+    // // End View Form Buat Bukti
 
     // Start Detail Bukti Dosen
-    public function viewDetailBukti($id_bukti)
+    // public function viewDetailBukti($id_bukti)
+    // {
+    //     $this->data['title'] = "KRS - Data Mahasiswa";
+    //     $this->data['active'] = "11";
+    //     $this->data['flip'] = "false";
+    //     $this->data['ckeditor'] = "krs";
+    //     $id = $_SESSION['user_id'];
+    //     $this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+    //     $this->load->model('All_model');
+
+    //     // $mahasiswa[] = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
+    //     $mahasiswa['value'] = $this->All_model->getByIdData($id_bukti)->result();
+    //     print_r($mahasiswa['value']);
+    //     die;
+    //     $this->load->view("admin/master/header", $this->data);
+    //     $this->load->view("admin/page/krs/dosen/detailBukti", $mahasiswa);
+    //     $this->load->view("admin/master/footer", $this->data);
+    // }
+    // End Detail Bukti Dosen
+    // Start Lihat Bukti 
+    public function lihatBukti($id_form)
+    {
+        $this->data['title'] = "KRS - Data Mahasiswa";
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $where = array('user_id' => $id);
+        $dosen_id['pa_id'] = $this->All_model->findDosen($where)->result_array();
+        $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
+        $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
+        $status = $this->input->post('validStatus');
+        if ($status != NULL) {
+            $mahasiswa['value'] = $this->All_model->getBuktiByStatus($status)->result();
+            $mahasiswa['selected'] = $status;
+        } else {
+            $mahasiswa['value'] = $this->All_model->filteredData($id_form, $find)->result();
+        }
+        $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
+        var_dump($status);
+        $this->load->view("admin/master/header", $this->data);
+        $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $mahasiswa);
+        $this->load->view("admin/master/footer", $this->data);
+    }
+    public function lihatBuktiByFilter()
+    {
+        $this->data['title'] = "KRS - Data Mahasiswa";
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $where = array('user_id' => $id);
+        $dosen_id['pa_id'] = $this->All_model->findDosen($where)->result_array();
+        $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
+        $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
+        $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
+        $status = $this->input->post('validStatus');
+        var_dump($status);
+        $mahasiswa['value'] = $this->All_model->getBuktiByStatus($status)->result();
+        // var_dump($mahasiswa['value']);
+        $this->load->view("admin/master/header", $this->data);
+        $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $mahasiswa);
+        $this->load->view("admin/master/footer", $this->data);
+    }
+    // End Lihat Bukti
+
+
+
+
+
+    // Admin Site validasi bukti Pembayaran Iuran
+
+    // Start View Form Buat Iuran
+    public function tambahIuran()
+    {
+        $this->data['title'] = "KRS - Tambah Iuran";
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $this->load->model('All_model');
+
+        $this->load->view("admin/master/header", $this->data);
+        $this->load->view("admin/page/krs/admin/formIuran");
+        $this->load->view("admin/master/footer", $this->data);
+    }
+    // End View Form Buat Iuran
+
+
+    // Start Edit Aktivasi Iuran
+    public function editAktivasiIuran($id_iuran)
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/viewMintaBukti');
         } else {
-            $this->data['title'] = "KRS - Data Mahasiswa";
-            $this->data['active'] = "11";
-            $this->data['flip'] = "false";
-            $this->data['ckeditor'] = "krs";
-            $id = $_SESSION['user_id'];
-            $this->data['group'] = $this->ion_auth_model->getGroup($id);
+            $statusIuran = $this->All_model->getIuranWhereId($id_iuran)['status'];
+
+            if ($this->All_model->getIuranWhereId($id_iuran) > 0 && $this->All_model->getIuranWhereId($id_iuran)['status'] == '0') {
+                if ($this->All_model->updateAtivasiIuran($id_iuran)) {
+                    $this->session->set_flashdata('berhasil', 'Diaktivasi');
+                    redirect("krs/viewMintaBukti");
+                } else {
+                    $this->session->set_flashdata('gagal', 'Diaktivasi, Terjadi Masalah');
+                    redirect('krs/viewMintaBukti');
+                }
+            } else if ($this->All_model->getIuranWhereId($id_iuran) > 0 && $this->All_model->getIuranWhereId($id_iuran)['status'] == '1') {
+                if ($this->All_model->updateAtivasiIuran($id_iuran)) {
+                    $this->session->set_flashdata('berhasil', 'Dinonaktivasi');
+                    redirect("krs/viewMintaBukti");
+                } else {
+                    $this->session->set_flashdata('gagal', 'Dinonaktivasi, Terjadi Masalah');
+                    redirect('krs/viewMintaBukti');
+                }
+            } else {
+                show_404();
+            }
+        }
+    }
+    // End Edit Aktivasi Iuran
+
+    // Start tambah Iuran
+    public function simpanIuran()
+    {
+
+        $this->load->model('All_model');
+        $id = $_SESSION['user_id'];
+        $where = array('user_id' => $id);
+        $data = [
+            'tahun_ajaran' => $this->input->post('tahun_ajaran'),
+            'semester' => $this->input->post('semester'),
+            'status' => 1,
+        ];
+        $this->All_model->insertIuran($data);
+        redirect("Krs/viewMintaBukti");
+    }
+    // End tambah Iuran
+
+    public function viewBukti($id_iuran)
+    {
+        $this->data['title'] = "KRS - Data Bukti Pembayaran";
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $status = $this->input->post('validStatus');
+        if ($status  == NULL) {
+            $data['bukti'] = $this->All_model->getDataBuktiPembayaran($id_iuran)->result();
+        } else {
+            $data['bukti'] = $this->All_model->getBuktiByStatus([$id_iuran, $status])->result();
+        }
+        $this->load->view("admin/master/header", $this->data);
+        $this->load->view("admin/page/krs/admin/validasiMahasiswa", $data);
+        $this->load->view("admin/master/footer", $this->data);
+    }
+    // End Admin Site validasi bukti Pembayaran Iuran
+
+    // Start Admin Site Lihat data Pembayaran Iuran
+    public function viewMintaBukti()
+    {
+        $this->load->model('All_model');
+        $this->data['title'] = "KRS - Data Iuran";
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $id = $_SESSION['user_id'];
+        $data['iuran'] = $this->All_model->getAllIuran()->result_array();
+
+        $this->load->view("admin/master/header", $this->data);
+        $this->load->view("admin/page/krs/admin/mintaBukti", $data);
+        $this->load->view("admin/master/footer", $this->data);
+    }
+
+    public function viewDetailBukti($id_bukti)
+    {
+        $this->data['title'] = "KRS - Data Mahasiswa";
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
 
             $this->load->model('All_model');
 
-            // $mahasiswa[] = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
-            $mahasiswa['value'] = $this->All_model->getByIdData($id_bukti)->result();
+        $mahasiswa['value'] = $this->All_model->getDataPembayaran($id_bukti)->row_array();
+        $this->load->view("admin/master/header", $this->data);
+        $this->load->view("admin/page/krs/dosen/detailBukti", $mahasiswa);
+        $this->load->view("admin/master/footer", $this->data);
+    }
 
-            $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/dosen/detailBukti", $mahasiswa);
-            $this->load->view("admin/master/footer", $this->data);
-        }
-    }
-    // End Detail Bukti Dosen
-    // Start Lihat Bukti
-    public function lihatBukti($id_form)
+    public function tolakBukti($id_bukti)
     {
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+        $this->load->model('All_model');
+        // $this->All_model->deleteBuktiPembayaranWhereId($id_bukti);
+
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('/');
         } else {
-            $this->data['title'] = "KRS - Data Mahasiswa";
-            $this->data['active'] = "11";
-            $this->data['flip'] = "false";
-            $this->data['ckeditor'] = "krs";
-            $id = $_SESSION['user_id'];
-            $this->data['group'] = $this->ion_auth_model->getGroup($id);
-            $where = array('user_id' => $id);
-            $dosen_id['pa_id'] = $this->All_model->findDosen($where)->result_array();
-            $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
-            $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
-            $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
-            $mahasiswa['value'] = $this->All_model->filteredData($id_form, $find)->result();
-            $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $mahasiswa);
-            $this->load->view("admin/master/footer", $this->data);
+            $result = $this->All_model->getDataPembayaran($id_bukti)->row_array();
+            if ($this->All_model->getDataPembayaran($id_bukti)->row_array() > 0) {
+                if ($this->All_model->deleteBukti($id_bukti)) {
+                    $this->session->set_flashdata('berhasil', 'Ditolak');
+                    redirect("krs/viewMintaBukti");
+                } else {
+                    $this->session->set_flashdata('gagal', 'Ditolak, Terjadi Masalah');
+                    redirect('krs/viewMintaBukti');
+                }
+            } else {
+                show_404();
+            }
         }
     }
-    // End Lihat Bukti
-    // Start Filter Bukti
-    public function filterBukti()
+
+    public function validasiBukti($id_bukti)
     {
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+        $this->load->model('All_model');
+
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('/');
         } else {
-            $this->data['title'] = "KRS - Data Mahasiswa";
-            $this->data['active'] = "11";
-            $this->data['flip'] = "false";
-            $this->data['ckeditor'] = "krs";
-            $id = $_SESSION['user_id'];
-            $this->data['group'] = $this->ion_auth_model->getGroup($id);
-            $where = array('user_id' => $id);
-            $dosen_id['pa_id'] = $this->All_model->findDosen($where)->result_array();
-            $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
-            $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
-            $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
-            $keyword = $this->input->post('select');
-            $this->data['id_forms'] = $this->input->post('select');
-            $this->data['value'] = $this->All_model->filteredData($keyword, $find)->result();
-            $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $this->data);
-            $this->load->view("admin/master/footer", $this->data);
+            $param = $this->All_model->getDataPembayaran($id_bukti)->row_array()['id_iuran'];
+
+            if ($this->All_model->getDataPembayaran($id_bukti)->row_array() > 0) {
+                if ($this->All_model->terimaBukti($id_bukti)) {
+                    $this->session->set_flashdata('berhasil', 'Divalidasi');
+                    redirect("krs/viewBukti/" . $param);
+                } else {
+                    $this->session->set_flashdata('gagal', 'Divalidasi, Terjadi Masalah');
+                    redirect('krs/viewBukti/' .  $param);
+                }
+            } else {
+                show_404();
+            }
+
         }
     }
+    // End Admin Site Lihat data Pembayaran Iuran
 }
