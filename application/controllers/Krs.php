@@ -1133,18 +1133,75 @@ class Krs extends CI_Controller
         $this->data['ckeditor'] = "krs";
         $id = $_SESSION['user_id'];
 
-        var_dump($id_bukti);
         $this->data['group'] = $this->ion_auth_model->getGroup($id);
 
         $this->load->model('All_model');
 
 
         $mahasiswa['value'] = $this->All_model->getDataPembayaran($id_bukti)->row_array();
-        print_r($mahasiswa['value']);
-        die;
         $this->load->view("admin/master/header", $this->data);
         $this->load->view("admin/page/krs/dosen/detailBukti", $mahasiswa);
         $this->load->view("admin/master/footer", $this->data);
+    }
+
+    public function tolakBukti($id_bukti)
+    {
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+        $this->load->model('All_model');
+        // $this->All_model->deleteBuktiPembayaranWhereId($id_bukti);
+
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('/');
+        } else {
+            $result = $this->All_model->getDataPembayaran($id_bukti)->row_array();
+            if ($this->All_model->getDataPembayaran($id_bukti)->row_array() > 0) {
+                if ($this->All_model->deleteBukti($id_bukti)) {
+                    $this->session->set_flashdata('berhasil', 'Ditolak');
+                    redirect("krs/viewMintaBukti");
+                } else {
+                    $this->session->set_flashdata('gagal', 'Ditolak, Terjadi Masalah');
+                    redirect('krs/viewMintaBukti');
+                }
+            } else {
+                show_404();
+            }
+        }
+    }
+
+    public function validasiBukti($id_bukti)
+    {
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+        $this->load->model('All_model');
+
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('/');
+        } else {
+            $param = $this->All_model->getDataPembayaran($id_bukti)->row_array()['id_iuran'];
+
+            if ($this->All_model->getDataPembayaran($id_bukti)->row_array() > 0) {
+                if ($this->All_model->terimaBukti($id_bukti)) {
+                    $this->session->set_flashdata('berhasil', 'Divalidasi');
+                    redirect("krs/viewBukti/" . $param);
+                } else {
+                    $this->session->set_flashdata('gagal', 'Divalidasi, Terjadi Masalah');
+                    redirect('krs/viewBukti/' .  $param);
+                }
+            } else {
+                show_404();
+            }
+        }
     }
     // End Admin Site Lihat data Pembayaran Iuran
 }

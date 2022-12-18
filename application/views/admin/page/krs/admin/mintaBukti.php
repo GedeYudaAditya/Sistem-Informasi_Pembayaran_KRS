@@ -16,7 +16,7 @@
       <div class="card mb-4">
         <div class="card-body px-0 pt-4 pb-2">
           <div class="table-responsive">
-            <table class="table align-items-center text-center">
+            <table class="table align-items-center text-center" id="tableInformasi">
               <thead>
                 <tr class="fw-bold">
                   <td class="col-1">No</td>

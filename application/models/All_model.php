@@ -3216,6 +3216,7 @@ class All_model extends CI_Model
 	{
 		$this->db->insert('s6_iuran', $data);
 	}
+
 	public function getAllIuran()
 	{
 		$this->db->select('*');
@@ -3230,12 +3231,14 @@ class All_model extends CI_Model
 
 	public function updateAtivasiIuran($idIuran)
 	{
-		$query = array(
-			'status' => 1
-		);
-		$this->db->where('status', 1);
-		$this->db->update('s6_iuran', array('status' => 0));
-		return $this->db->where('id =' . $idIuran)->update('s6_iuran', $query);
+		$data = $this->db->get_where('s6_iuran', array("id" => $idIuran))->row_array();
+
+		$this->db->where('id !=' . $idIuran)->update('s6_iuran', array('status' => 0));
+		if ($data['status'] == 0) {
+			return $this->db->where('id =' . $idIuran)->update('s6_iuran', array('status' => 1));
+		} else {
+			return $this->db->where('id =' . $idIuran)->update('s6_iuran', array('status' => 0));
+		}
 	}
 
 	public function getDataBuktiPembayaran($where)
@@ -3265,6 +3268,15 @@ class All_model extends CI_Model
 		$this->db->from('s6_data_pembayaran');
 		$this->db->where('id', $where);
 		return $this->db->get();
+	}
+
+	public function deleteBukti($where)
+	{
+		return $this->db->delete('s6_data_pembayaran', array('id' => $where));
+	}
+	public function terimaBukti($where)
+	{
+		return $this->db->where('id =' . $where)->update('s6_data_pembayaran', array('valid' => 1));
 	}
 	// Admin site End - Marsell
 }

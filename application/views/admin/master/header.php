@@ -209,7 +209,7 @@
 							</li>
 						<?php endif; ?>
 
-						<!-- Menu Untuk User Dosen Sistem KRS -->
+						<!-- Menu Untuk User Bendahara Sistem KRS -->
 						<?php if ($group[0]['group_id'] == "10") { ?>
 							<!-- Heading -->
 							<div class="sidebar-heading">

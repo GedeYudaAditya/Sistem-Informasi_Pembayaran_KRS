@@ -27,7 +27,7 @@
         </div>
         <div class="card-body px-0 pt-2 pb-2">
           <div class="table-responsive">
-            <table class="table align-items-center">
+            <table id="tableInformasi" class="table align-items-center">
               <thead>
                 <tr class="fw-bold">
                   <td>No</td>
@@ -113,8 +113,8 @@
                                 </div>
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Terima</button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Tolak</button>
+                                <a class="btn btn-primary" href="<?= base_url(); ?>krs/validasiBukti/<?= $b->id; ?>">Terima</a>
+                                <a class="btn btn-danger" href="<?= base_url(); ?>krs/tolakBukti/<?= $b->id; ?>">Tolak</a>
                               </div>
                             </div>
                           </div>
