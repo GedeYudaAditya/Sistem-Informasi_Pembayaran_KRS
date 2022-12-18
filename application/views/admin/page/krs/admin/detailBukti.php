@@ -25,7 +25,6 @@
                       </b></p>
 
                     <iframe class="container-fluid" height="300" type="text/html" src="<?php echo base_url('assets/upload/Folder_krs/'); ?><?php echo $value[0]->file_path ?>" frameborder="0"></iframe>
-
                     <div class="d-flex justify-content-center p-3">
                       <button type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">
                         <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewValidasiMahasiswa') ?>">

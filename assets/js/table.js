@@ -1,59 +1,62 @@
 $(document).ready(function () {
-	$('#tableKepengurusan').DataTable({
-		"order": [[3, "desc"]]
+	$("#tableKepengurusan").DataTable({
+		order: [[3, "desc"]],
 	});
 });
 $(document).ready(function () {
-	$('#tableDetailBerkas').DataTable({
-		"order": [[4, "desc"]]
+	$("#tableDetailBerkas").DataTable({
+		order: [[4, "desc"]],
 	});
 });
 $(document).ready(function () {
-	$('#tableKategoriBerkas').DataTable({
-		"order": [[3, "desc"]]
+	$("#tableKategoriBerkas").DataTable({
+		order: [[3, "desc"]],
 	});
 });
 $(document).ready(function () {
-	$('#tableLanding').DataTable();
+	$("#tableLanding").DataTable();
 });
 
 $(document).ready(function () {
-	$('#tableInformasi').DataTable({
-		"order": [[0, "desc"]]
-	});
-});
-
-$(document).ready(function () {
-	$('#tableRepo').DataTable({
-		"order": [[5, "desc"]]
+	$("#tableInformasi").DataTable({
+		order: [[0, "desc"]],
 	});
 });
 
 $(document).ready(function () {
-	$('#tableLomba').DataTable();
-});
-$(document).ready(function () {
-	$('#tableKandidat').DataTable();
-});
-$(document).ready(function () {
-	$('#tableKategori').DataTable();
-});
-$(document).ready(function () {
-	$('#tableJadwalHari').DataTable();
-});
-$(document).ready(function () {
-	$('#tableHari').DataTable();
-});
-$(document).ready(function () {
-	$('#tableSponsor').DataTable();
-});
-$(document).ready(function () {
-	$('#tableKegiatan').DataTable();
-});
-$(document).ready(function () {
-	$('#tableUser').DataTable();
+	$("#tableRepo").DataTable({
+		order: [[5, "desc"]],
+	});
 });
 
+$(document).ready(function () {
+	$("#tableLomba").DataTable();
+});
+$(document).ready(function () {
+	$("#tableKandidat").DataTable();
+});
+$(document).ready(function () {
+	$("#tableKategori").DataTable();
+});
+$(document).ready(function () {
+	$("#tableJadwalHari").DataTable();
+});
+$(document).ready(function () {
+	$("#tableHari").DataTable();
+});
+$(document).ready(function () {
+	$("#tableSponsor").DataTable();
+});
+$(document).ready(function () {
+	$("#tableKegiatan").DataTable();
+});
+$(document).ready(function () {
+	$("#tableUser").DataTable();
+});
 
-
-
+//belum terdeteksi masih error
+$(document).ready(function () {
+	$("#tableBuktiIuran").DataTable({
+		order: [[0, "asc"]],
+	});
+});

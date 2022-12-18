@@ -9,19 +9,12 @@
         <div class="row px-4 d-flex flex-md-row justify-content-between align-items-center">
           <h5 class="col-4 col-md-3 py-2 text-dark user-select-none font-weight-bold">Validasi Bukti Iuran</h5>
           <div class="col-8  form-group justify-content-end input-group ">
-            <form class="d-flex py-2  align-items-center" action="<?php echo base_url(); ?>krs/lihatBukti/10" method="post" enctype="multipart/form">
+            <form class="d-flex py-2  align-items-center" action="" method="post" enctype="multipart/form">
               <select name="select" class="custom-select mx-1" id="inputGroupSelect01">
                 <option selected disabled>Select Dosen</option>
-                <option value='1'>Pak Ardwi</option>
-                <option value='2'>Pak Wiguna</option>
-                <option value='3'>Pak Surya</option>
-              </select>
-              <select name="select" class="custom-select mx-1" id="inputGroupSelect01">
-                <option selected disabled>Semester</option>
-                <option value='1'>1</option>
-                <option value='3'>3</option>
-                <option value='5'>5</option>
-                <option value='7'>7</option>
+                <option value='1'>Dosen 1</option>
+                <option value='2'>Dosen 2</option>
+                <option value='3'>Dosen 3</option>
               </select>
               <select class="custom-select mx-1" name="validStatus" id="validStatus">
                 <option selected disabled>Select Status</option>
@@ -34,7 +27,7 @@
         </div>
         <div class="card-body px-0 pt-2 pb-2">
           <div class="table-responsive">
-            <table class="table align-items-center">
+            <table id="tableInformasi" class="table align-items-center">
               <thead>
                 <tr class="fw-bold">
                   <td>No</td>
@@ -48,7 +41,6 @@
               <tbody>
                 <?php $i = 1 ?>
                 <?php foreach ($bukti as $b) : ?>
-
                   <tr>
                     <td>
                       <?php if ($i > 9) : ?>
@@ -83,11 +75,50 @@
                     </td>
                     <td>
                       <div>
-                        <button type="button" class="btn btn-sm btn-primary">
-                          <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewDetailBukti/' . $mhs->id) ?>">
-                            Lihat Detail
-                          </a>
+                        <button type="button" data-toggle="modal" data-target="#detail_data_pembayaran<?= $b->id; ?>" class="btn btn-sm btn-primary">
+                          Lihat Detail
                         </button>
+                        <div class="modal fade" id="detail_data_pembayaran<?= $b->id; ?>" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Detail Bukti Pembayaran</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    <h6>Nama</h6>
+                                    <h6>NIM</h6>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <h6>:<?= $b->nama_mhs; ?></h6>
+                                    <h6>:<?= $b->nim; ?></h6>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    <h6>File bukti:</h6>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <p class="text-sm-left">:<?= $b->bukti; ?></p>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-sm-12">
+                                    <img class="img-fluid" src="<?= base_url(); ?>assets/img/test/test-bukti.jpg" alt="">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <a class="btn btn-primary" href="<?= base_url(); ?>krs/validasiBukti/<?= $b->id; ?>">Terima</a>
+                                <a class="btn btn-danger" href="<?= base_url(); ?>krs/tolakBukti/<?= $b->id; ?>">Tolak</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </td>
                   </tr>
