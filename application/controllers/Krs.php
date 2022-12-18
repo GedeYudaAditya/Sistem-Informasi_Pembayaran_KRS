@@ -448,13 +448,14 @@ class Krs extends CI_Controller
 
         $nim = $this->input->post('nim');
 
-        $this->load->model('All_model');
-        $data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
-        $data['mhs'] = $this->All_model->getMahasiswaById($nim);
-        $data['tahun'] = $this->All_model->getThn();
-        $data['updated_info'] = $this->All_model->infos();
+        // $this->load->model('All_model');
+        // $data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
+        // $data['mhs'] = $this->All_model->getMahasiswaById($nim);
+        // $data['tahun'] = $this->All_model->getThn();
+        // $data['updated_info'] = $this->All_model->infos();
 
         $data['title'] = "Home";
+
         $this->load->view("guest/krs/master/header", $data);
         $this->load->view("guest/krs/page/index");
         $this->load->view("guest/krs/master/footer", $data);
@@ -993,47 +994,9 @@ class Krs extends CI_Controller
     }
     // End memvalidkanBukti
 
-
-    // // Start View Form Buat Bukti
-    // public function viewFormBuatBukti()
-    // {
-    //     $this->data['title'] = "KRS - Data Mahasiswa";
-    //     $this->data['active'] = "11";
-    //     $this->data['flip'] = "false";
-    //     $this->data['ckeditor'] = "krs";
-    //     $id = $_SESSION['user_id'];
-    //     $this->data['group'] = $this->ion_auth_model->getGroup($id);
-    //     $this->load->model('All_model');
-
-    //     $this->load->view("admin/master/header", $this->data);
-    //     $this->load->view("admin/page/krs/dosen/formBuatBukti");
-    //     $this->load->view("admin/master/footer", $this->data);
-    // }
-    // // End View Form Buat Bukti
-
-    // Start Detail Bukti Dosen
-    // public function viewDetailBukti($id_bukti)
-    // {
-    //     $this->data['title'] = "KRS - Data Mahasiswa";
-    //     $this->data['active'] = "11";
-    //     $this->data['flip'] = "false";
-    //     $this->data['ckeditor'] = "krs";
-    //     $id = $_SESSION['user_id'];
-    //     $this->data['group'] = $this->ion_auth_model->getGroup($id);
-
-    //     $this->load->model('All_model');
-
-    //     // $mahasiswa[] = $this->All_model->getMahasiswaByUserId($id)['id_mhs'];
-    //     $mahasiswa['value'] = $this->All_model->getByIdData($id_bukti)->result();
-    //     print_r($mahasiswa['value']);
-    //     die;
-    //     $this->load->view("admin/master/header", $this->data);
-    //     $this->load->view("admin/page/krs/dosen/detailBukti", $mahasiswa);
-    //     $this->load->view("admin/master/footer", $this->data);
-    // }
-    // End Detail Bukti Dosen
-    // Start Lihat Bukti
-    public function lihatBukti($id_form)
+    // ********** START Backend User Dosen ***************** //
+    // Start Lihat Mahasiswa
+    public function listMahasiswa()
     {
         $this->data['title'] = "KRS - Data Mahasiswa";
         $this->data['active'] = "11";
@@ -1041,49 +1004,16 @@ class Krs extends CI_Controller
         $this->data['ckeditor'] = "krs";
         $id = $_SESSION['user_id'];
         $this->data['group'] = $this->ion_auth_model->getGroup($id);
-        $where = array('user_id' => $id);
-        $dosen_id['pa_id'] = $this->All_model->findDosen($where)->result_array();
-        $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
-        $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
-        $status = $this->input->post('validStatus');
-        if ($status != NULL) {
-            $mahasiswa['value'] = $this->All_model->getBuktiByStatus($status)->result();
-            $mahasiswa['selected'] = $status;
-        } else {
-            $mahasiswa['value'] = $this->All_model->filteredData($id_form, $find)->result();
-        }
-        $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
-        var_dump($status);
+
+        $this->load->model('Krs_model');
+        $this->data['mahasiswa'] = $this->Krs_model->getValidMahasiswaThisSemester();
+
         $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $mahasiswa);
-        $this->load->view("admin/master/footer", $this->data);
-    }
-    public function lihatBuktiByFilter()
-    {
-        $this->data['title'] = "KRS - Data Mahasiswa";
-        $this->data['active'] = "11";
-        $this->data['flip'] = "false";
-        $this->data['ckeditor'] = "krs";
-        $id = $_SESSION['user_id'];
-        $this->data['group'] = $this->ion_auth_model->getGroup($id);
-        $where = array('user_id' => $id);
-        $dosen_id['pa_id'] = $this->All_model->findDosen($where)->result_array();
-        $find['pa_id'] = $dosen_id['pa_id'][0]['id'];
-        $dosen_id = $this->All_model->findDosen($where)->result_array()[0]['id'];
-        $this->data['formBukti'] = $this->All_model->formBuktiDosen($dosen_id);
-        $status = $this->input->post('validStatus');
-        var_dump($status);
-        $mahasiswa['value'] = $this->All_model->getBuktiByStatus($status)->result();
-        // var_dump($mahasiswa['value']);
-        $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/dosen/validasiMahasiswa", $mahasiswa);
+        $this->load->view("admin/page/krs/dosen/index", $this->data);
         $this->load->view("admin/master/footer", $this->data);
     }
     // End Lihat Bukti
-
-
-
-
+    // ********** END Backend User Dosen ***************** //
 
     // Admin Site validasi bukti Pembayaran Iuran
 

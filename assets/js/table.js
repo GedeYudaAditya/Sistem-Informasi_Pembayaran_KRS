@@ -60,3 +60,10 @@ $(document).ready(function () {
 		order: [[0, "asc"]],
 	});
 });
+
+// Table Untuk Sistem IURAN KRS
+$(document).ready(function () {
+	$("#tableListMahasiswa").DataTable({
+		order: [[0, "asc"]],
+	});
+});

@@ -15,10 +15,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Krs_Model extends CI_Model
 {
-    public function getKrs()
+    public function getValidMahasiswaThisSemester()
     {
-        $this->db->select('*');
-        // $this->db->from('...');
-
+        $this->db->select('nama_mhs, nim, angkatan, prodi');
+        $this->db->from('s6_data_pembayaran');
+        $query = $this->db->get()->result();
+        return $query;
     }
 }

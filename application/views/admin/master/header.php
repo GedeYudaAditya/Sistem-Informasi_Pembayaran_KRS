@@ -217,16 +217,10 @@
 	                        </div>
 	                        <!-- Nav Item - Pages Collapse Menu -->
 	                        <li class="nav-item">
-	                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDosen" aria-expanded="true" aria-controls="collapseDosen">
+	                            <a class="nav-link" href="<?= base_url() ?>/krs/listMahasiswa">
 	                                <i class="fas fa-hotel"></i>
-	                                <i><span class="text-warning">Validasi Iuran KRS</span></i>
+	                                <i><span class="text-warning">Data Mahasiswa</span></i>
 	                            </a>
-	                            <div id="collapseDosen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-	                                <div class="bg-white py-2 collapse-inner rounded">
-	                                    <h6 class="collapse-header">Daftar Fitur:</h6>
-	                                    <a class="collapse-item" href="<?= base_url('krs/viewValidasiMahasiswa') ?>"><i class="fas fa-user-check mr-2"></i>Validasi Mahasiswa</a>
-	                                    <a class="collapse-item" href="<?= base_url('krs/viewMintaBukti') ?>"><i class="fas fa-edit mr-1"></i> Minta Bukti</a>
-	                                </div>
 	                        </li>
 	                    <?php } ?>
 
