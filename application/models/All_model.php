@@ -3187,7 +3187,7 @@ class All_model extends CI_Model
 		$this->db->update('s6_bukti', $valid);
 	}
 
-	
+
 
 	public function formBuktiDosen($id_dosen)
 	{
@@ -3221,6 +3221,21 @@ class All_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('s6_iuran');
 		return $this->db->get();
+	}
+
+	public function getIuranWhereId($where)
+	{
+		return $this->db->where('id=' . $where)->get('s6_iuran')->row_array();
+	}
+
+	public function updateAtivasiIuran($idIuran)
+	{
+		$query = array(
+			'status' => 1
+		);
+		$this->db->where('status', 1);
+		$this->db->update('s6_iuran', array('status' => 0));
+		return $this->db->where('id =' . $idIuran)->update('s6_iuran', $query);
 	}
 
 	public function getDataBuktiPembayaran($where)

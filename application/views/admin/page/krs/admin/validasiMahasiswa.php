@@ -12,14 +12,9 @@
             <form class="d-flex py-2  align-items-center" action="" method="post" enctype="multipart/form">
               <select name="select" class="custom-select mx-1" id="inputGroupSelect01">
                 <option selected disabled>Select Dosen</option>
-                <option value='1'>Pak Ardwi</option>
-                <option value='2'>Pak Wiguna</option>
-                <option value='3'>Pak Surya</option>
-              </select>
-              <select name="select" class="custom-select mx-1" id="inputGroupSelect01">
-                <option selected disabled>Semester</option>
-                <option value='genap'>Genap</option>
-                <option value='ganjil'>Ganjil</option>
+                <option value='1'>Dosen 1</option>
+                <option value='2'>Dosen 2</option>
+                <option value='3'>Dosen 3</option>
               </select>
               <select class="custom-select mx-1" name="validStatus" id="validStatus">
                 <option selected disabled>Select Status</option>

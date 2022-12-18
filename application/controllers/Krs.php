@@ -1038,6 +1038,38 @@ class Krs extends CI_Controller
     }
     // End View Form Buat Iuran
 
+
+    // Start Edit Aktivasi Iuran
+    public function editAktivasiIuran($id_iuran)
+    {
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs/viewMintaBukti');
+        } else {
+            $statusIuran = $this->All_model->getIuranWhereId($id_iuran)['status'];
+
+            if ($this->All_model->getIuranWhereId($id_iuran) > 0 && $this->All_model->getIuranWhereId($id_iuran)['status'] == '0') {
+                if ($this->All_model->updateAtivasiIuran($id_iuran)) {
+                    $this->session->set_flashdata('berhasil', 'Diaktivasi');
+                    redirect("krs/viewMintaBukti");
+                } else {
+                    $this->session->set_flashdata('gagal', 'Diaktivasi, Terjadi Masalah');
+                    redirect('krs/viewMintaBukti');
+                }
+            } else if ($this->All_model->getIuranWhereId($id_iuran) > 0 && $this->All_model->getIuranWhereId($id_iuran)['status'] == '1') {
+                if ($this->All_model->updateAtivasiIuran($id_iuran)) {
+                    $this->session->set_flashdata('berhasil', 'Dinonaktivasi');
+                    redirect("krs/viewMintaBukti");
+                } else {
+                    $this->session->set_flashdata('gagal', 'Dinonaktivasi, Terjadi Masalah');
+                    redirect('krs/viewMintaBukti');
+                }
+            } else {
+                show_404();
+            }
+        }
+    }
+    // End Edit Aktivasi Iuran
+
     // Start tambah Iuran
     public function simpanIuran()
     {

@@ -49,7 +49,21 @@
                       </div>
                     </td>
                     <td>
-                      <button class="btn btn-sm btn-success">Active</button>
+                      <?php if ($bukti['status'] == 1) { ?>
+                        <a href="<?= base_url() ?>krs/editAktivasiIuran/<?= $bukti['id'] ?>" class="btn btn-success btn-sm btn-icon-split mb-4">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-check"></i>
+                          </span>
+                          <span class="text">Aktif</span>
+                        </a>
+                      <?php } else { ?>
+                        <a href="<?= base_url() ?>krs/editAktivasiIuran/<?= $bukti['id'] ?>" class="btn btn-secondary btn-sm btn-icon-split mb-4">
+                          <span class="icon text-white-50">
+                            <i class="fas fa-check"></i>
+                          </span>
+                          <span class="text">Nonaktif</span>
+                        </a>
+                      <?php } ?>
                     </td>
                     <td>
                       <div>
