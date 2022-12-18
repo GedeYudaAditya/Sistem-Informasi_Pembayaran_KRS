@@ -3187,10 +3187,7 @@ class All_model extends CI_Model
 		$this->db->update('s6_bukti', $valid);
 	}
 
-	public function insertFormBukti($data)
-	{
-		$this->db->insert('s6_form_bukti', $data);
-	}
+	
 
 	public function formBuktiDosen($id_dosen)
 	{
@@ -3215,6 +3212,10 @@ class All_model extends CI_Model
 
 
 	// Admin site Start - Marsell
+	public function insertIuran($data)
+	{
+		$this->db->insert('s6_iuran', $data);
+	}
 	public function getAllIuran()
 	{
 		$this->db->select('*');

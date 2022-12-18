@@ -2,9 +2,9 @@
   <!-- Start Btn Buat Form Bukti -->
   <div>
     <button type="button" class="btn btn-info ">
-      <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewFormBuatBukti') ?>">
+      <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/buat_iuran') ?>">
         <span class="pr-2"><i class="fas fa-plus"></i></span>
-        Tambah Form Iuran
+        Tambah Iuran
       </a>
     </button>
   </div>
@@ -16,15 +16,14 @@
       <div class="card mb-4">
         <div class="card-body px-0 pt-4 pb-2">
           <div class="table-responsive">
-            <table class="table align-items-center">
+            <table class="table align-items-center text-center">
               <thead>
                 <tr class="fw-bold">
                   <td class="col-1">No</td>
-                  <td class="col-3">Judul</td>
                   <td class="col-2">Tahun Ajaran</td>
                   <td class="col-2">Semester</td>
-                  <!-- <td class="col-2">Expired_Date</td> -->
-                  <td class="col-2">Lihat Semua Bukti</td>
+                  <td class="col-2">Aktif</td>
+                  <td class="col-2">Bukti Pembayaran Iuran</td>
                 </tr>
               </thead>
               <tbody>
@@ -38,11 +37,7 @@
                         <p>0<?= $i++ ?></p>
                       <?php endif; ?>
                     </td>
-                    <td>
-                      <div>
-                        <p>Bukti Iuran Mahasiswa <?= $bukti['tahun_ajaran'] ?></p>
-                      </div>
-                    </td>
+
                     <td>
                       <div>
                         <p><?= $bukti['tahun_ajaran'] ?>/ <?= $bukti['tahun_ajaran'] + 1 ?></p>
@@ -54,8 +49,11 @@
                       </div>
                     </td>
                     <td>
+                      <button class="btn btn-sm btn-success">Active</button>
+                    </td>
+                    <td>
                       <div>
-                        <button type="button" class="btn btn-primary"><a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url() ?>krs/viewBukti/<?php echo $bukti['id'] ?>">Lihat Bukti</a>
+                        <button type="button" class="btn btn-primary"><a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url() ?>krs/viewBukti/<?php echo $bukti['id'] ?>">Lihat <i class="far fa-eye"></i></a>
 
                         </button>
                       </div>

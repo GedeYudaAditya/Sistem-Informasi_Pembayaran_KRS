@@ -79,10 +79,11 @@ $route['mahasiswa/bukti/(:any)'] = 'assets/upload/Folder_krs/$1';
 // nama route yang dipanggil = controller/method
 $route['krs/validasi_mahasiswa'] = 'krs/viewValidasiMahasiswa';
 $route['krs/minta_bukti'] = 'krs/viewMintaBukti';
-$route['krs/buat_bukti'] = 'krs/viewFormBuatBukti';
 $route['krs/detail_bukti'] = 'krs/viewDetailBukti';
+$route['krs/buat_bukti'] = 'krs/viewFormBuatBukti';
 
 // Routes Bendahara
 // nama route yang dipanggil = controller/method
+$route['krs/buat_iuran'] = 'krs/tambahIuran';
 $route['krs/validasi_mahasiswa'] = 'krs/viewValidasiMahasiswa';
 $route['krs/minta_bukti'] = 'krs/viewMintaBukti';

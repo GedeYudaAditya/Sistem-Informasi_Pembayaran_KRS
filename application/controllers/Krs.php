@@ -898,22 +898,22 @@ class Krs extends CI_Controller
     // }
     // End View MintaBukti
 
-    public function tambahFormPengajuan()
-    {
+    // public function tambahFormPengajuan()
+    // {
 
-        $this->load->model('All_model');
-        $id = $_SESSION['user_id'];
-        $where = array('user_id' => $id);
-        $dosen_id = $this->All_model->findDosen($where)->result_array();
-        $data = [
-            'expire_date' => $this->input->post('expire_date'),
-            'tahun' => $this->input->post('tahun'),
-            'semester' => $this->input->post('semester'),
-            'dosen_id' => $dosen_id[0]['id'],
-        ];
-        $this->All_model->insertFormBukti($data);
-        redirect("Krs/viewMintaBukti");
-    }
+    //     $this->load->model('All_model');
+    //     $id = $_SESSION['user_id'];
+    //     $where = array('user_id' => $id);
+    //     $dosen_id = $this->All_model->findDosen($where)->result_array();
+    //     $data = [
+    //         'expire_date' => $this->input->post('expire_date'),
+    //         'tahun' => $this->input->post('tahun'),
+    //         'semester' => $this->input->post('semester'),
+    //         'dosen_id' => $dosen_id[0]['id'],
+    //     ];
+    //     $this->All_model->insertFormBukti($data);
+    //     redirect("Krs/viewMintaBukti");
+    // }
 
 
     // Start memvalidkanBukti
@@ -928,22 +928,22 @@ class Krs extends CI_Controller
     // End memvalidkanBukti
 
 
-    // Start View Form Buat Bukti
-    public function viewFormBuatBukti()
-    {
-        $this->data['title'] = "KRS - Data Mahasiswa";
-        $this->data['active'] = "11";
-        $this->data['flip'] = "false";
-        $this->data['ckeditor'] = "krs";
-        $id = $_SESSION['user_id'];
-        $this->data['group'] = $this->ion_auth_model->getGroup($id);
-        $this->load->model('All_model');
+    // // Start View Form Buat Bukti
+    // public function viewFormBuatBukti()
+    // {
+    //     $this->data['title'] = "KRS - Data Mahasiswa";
+    //     $this->data['active'] = "11";
+    //     $this->data['flip'] = "false";
+    //     $this->data['ckeditor'] = "krs";
+    //     $id = $_SESSION['user_id'];
+    //     $this->data['group'] = $this->ion_auth_model->getGroup($id);
+    //     $this->load->model('All_model');
 
-        $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/dosen/formBuatBukti");
-        $this->load->view("admin/master/footer", $this->data);
-    }
-    // End View Form Buat Bukti
+    //     $this->load->view("admin/master/header", $this->data);
+    //     $this->load->view("admin/page/krs/dosen/formBuatBukti");
+    //     $this->load->view("admin/master/footer", $this->data);
+    // }
+    // // End View Form Buat Bukti
 
     // Start Detail Bukti Dosen
     // public function viewDetailBukti($id_bukti)
@@ -1016,10 +1016,48 @@ class Krs extends CI_Controller
     // End Lihat Bukti
 
 
+
+
+
     // Admin Site validasi bukti Pembayaran Iuran
+
+    // Start View Form Buat Iuran
+    public function tambahIuran()
+    {
+        $this->data['title'] = "KRS - Tambah Iuran";
+        $this->data['active'] = "11";
+        $this->data['flip'] = "false";
+        $this->data['ckeditor'] = "krs";
+        $id = $_SESSION['user_id'];
+        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        $this->load->model('All_model');
+
+        $this->load->view("admin/master/header", $this->data);
+        $this->load->view("admin/page/krs/admin/formIuran");
+        $this->load->view("admin/master/footer", $this->data);
+    }
+    // End View Form Buat Iuran
+
+    // Start tambah Iuran
+    public function simpanIuran()
+    {
+
+        $this->load->model('All_model');
+        $id = $_SESSION['user_id'];
+        $where = array('user_id' => $id);
+        $data = [
+            'tahun_ajaran' => $this->input->post('tahun_ajaran'),
+            'semester' => $this->input->post('semester'),
+            'status' => 1,
+        ];
+        $this->All_model->insertIuran($data);
+        redirect("Krs/viewMintaBukti");
+    }
+    // End tambah Iuran
+
     public function viewBukti($id_iuran)
     {
-        $this->data['title'] = "KRS - Data Mahasiswa";
+        $this->data['title'] = "KRS - Data Bukti Pembayaran";
         $this->data['active'] = "11";
         $this->data['flip'] = "false";
         $this->data['ckeditor'] = "krs";
@@ -1041,17 +1079,14 @@ class Krs extends CI_Controller
     public function viewMintaBukti()
     {
         $this->load->model('All_model');
-        $this->data['title'] = "KRS - Data Mahasiswa";
+        $this->data['title'] = "KRS - Data Iuran";
         $this->data['active'] = "11";
         $this->data['flip'] = "false";
         $this->data['ckeditor'] = "krs";
         $id = $_SESSION['user_id'];
         $this->data['group'] = $this->ion_auth_model->getGroup($id);
         $id = $_SESSION['user_id'];
-
         $data['iuran'] = $this->All_model->getAllIuran()->result_array();
-        var_dump($data['iuran']);
-        // die;
 
         $this->load->view("admin/master/header", $this->data);
         $this->load->view("admin/page/krs/admin/mintaBukti", $data);

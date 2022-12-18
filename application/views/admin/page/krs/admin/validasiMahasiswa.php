@@ -80,11 +80,50 @@
                     </td>
                     <td>
                       <div>
-                        <button type="button" class="btn btn-sm btn-primary">
-                          <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewDetailBukti/' . $b->id) ?>">
-                            Lihat Detail
-                          </a>
+                        <button type="button" data-toggle="modal" data-target="#detail_data_pembayaran<?= $b->id; ?>" class="btn btn-sm btn-primary">
+                          Lihat Detail
                         </button>
+                        <div class="modal fade" id="detail_data_pembayaran<?= $b->id; ?>" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Detail Bukti Pembayaran</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    <h6>Nama</h6>
+                                    <h6>NIM</h6>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <h6>:<?= $b->nama_mhs; ?></h6>
+                                    <h6>:<?= $b->nim; ?></h6>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-sm-4">
+                                    <h6>File bukti:</h6>
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <p class="text-sm-left">:<?= $b->bukti; ?></p>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-sm-12">
+                                    <img class="img-fluid" src="<?= base_url(); ?>assets/img/test/test-bukti.jpg" alt="">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Terima</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Tolak</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </td>
                   </tr>

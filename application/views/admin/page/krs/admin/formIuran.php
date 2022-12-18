@@ -1,11 +1,11 @@
 <!-- Start Container Fluid -->
 <div class="container-fluid">
 
-  <h3 class="text-center font-weight-bold">Membuat Form Bukti Iuran Mahasiswa</h3>
+  <h3 class="text-center font-weight-bold">Buat Iuran Baru</h3>
 
   <div class="row d-flex justify-content-center">
     <div class="col-12 col-md-8">
-      <form action="<?= base_url(); ?>krs/tambahFormPengajuan" method="POST">
+      <form action="<?= base_url(); ?>krs/simpanIuran" method="POST">
         <div class="form-group col-12 mt-4 pl-4">
           <label for="expireDate">Batas Akhir</label>
           <input type="date" class="form-control" name="expire_date" id="expireDate" autocomplete="off">
@@ -17,16 +17,12 @@
             <label class="d-block pl-3" for="expireDate">Tahun Ajaran</label>
             <div class="form-group input-group mb-3 d-flex">
               <div class="col-12 col-md-5 input-group mb-3">
-                <!-- <select class="custom-select " id="inputTahunDepan" onchange="inputTahunDosen()">
-                  <option selected disabled>Pilih Tahun</option>
-                  <option value="2019">2019</option>
-                    <option value="2020">2020</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-
-                </select> -->
-                <input type="number" placeholder="Tahun" class="form-control" id="inputTahunDepan" name="tahun" onchange="inputTahunDosen()">
+                <!-- <input type="number" placeholder="Tahun" class="form-control" id="inputTahunDepan" name="tahun" onchange="inputTahunDosen()"> -->
+                <input type="number" placeholder="YYYY" min="1999" max="2023" name="tahun_ajaran" id="tahun_ajaran">
+                <script>
+                  document.querySelector("input[type=number]")
+                    .oninput = e => console.log(new Date(e.target.valueAsNumber, 0, 1))
+                </script>
               </div>
               <div class="d-none d-md-block col-md-1" style="font-size: 25px;">/</div>
               <input id="inputTahunBelakang" class="col-12 col-md-5 form-control " type="number" placeholder="..." readonly>
@@ -41,18 +37,6 @@
               var option = elinputTahunDepan;
 
               const elinputTahunBelakang = document.getElementById('inputTahunBelakang');
-
-              // if (option.value === '2019') {
-              //   elinputTahunBelakang.value = '2020';
-              // } else if (option.value === '2020') {
-              //   elinputTahunBelakang.value = '2021';
-              // } else if (option.value === '2021') {
-              //   elinputTahunBelakang.value = '2022';
-              // } else if (option.value === '2022') {
-              //   elinputTahunBelakang.value = '2023';
-              // } else if (option.value === '2023') {
-              //   elinputTahunBelakang.value = '2024';
-              // }
 
               elinputTahunBelakang.value = parseInt(option.value) + 1;
 
