@@ -48,6 +48,7 @@
               <tbody>
                 <?php $i = 1 ?>
                 <?php foreach ($bukti as $b) : ?>
+
                   <tr>
                     <td>
                       <?php if ($i > 9) : ?>

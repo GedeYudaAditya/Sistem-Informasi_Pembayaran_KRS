@@ -47,7 +47,7 @@ const checkProdi = () => {
 }
 
 if (document.getElementById('email_undiksha') != null) {
-	document.getElementById('email_undiksha').onkeyup = function () {
+	document.getElementById('email_undiksha').onchange = function () {
 		let email = document.getElementById('email_undiksha').value;
 		let strArray = email.split("@");
 		if (strArray[1] != "") {
