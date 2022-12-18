@@ -1,10 +1,12 @@
 <div class="container-fluid">
   <!-- Start Btn Buat Form Bukti -->
   <div>
-    <a class="btn btn-info font-weight-bolder" href="<?= base_url('krs/viewFormBuatBukti') ?>">
-      <span class="pr-2"><i class="fas fa-plus"></i></span>
-      Buat Form Bukti
-    </a>
+    <button type="button" class="btn btn-info ">
+      <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewFormBuatBukti') ?>">
+        <span class="pr-2"><i class="fas fa-plus"></i></span>
+        Tambah Form Iuran
+      </a>
+    </button>
   </div>
   <!-- End Btn Buat Form Bukti -->
 
@@ -58,7 +60,9 @@
                     </td>
                     <td>
                       <div>
-                        <a class="btn btn-primary font-weight-bolder" href="<?= base_url() ?>/krs/lihatBukti/<?php echo $bukti['id_form'] ?>">Lihat Bukti</a>
+                        <button type="button" class="btn btn-primary"><a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url() ?>/krs/lihatBukti/<?php echo $bukti['id_form'] ?>">Lihat Bukti</a>
+
+                        </button>
                       </div>
                     </td>
                   </tr>

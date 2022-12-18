@@ -6,20 +6,29 @@
   <div class="row">
     <div class="col-12">
       <div class="card mb-4">
-        <div class="row py-2 px-4 d-flex flex-column flex-md-row align-items-center">
-          <h5 class="col-12 col-md-3 py-3 text-dark user-select-none font-weight-bold">Validasi Bukti Iuran</h5>
-          <div class="col-6"></div>
-          <div class="col-12 col-md-3 form-group input-group">
-            <form action="<?php echo base_url(); ?>krs/filterBukti" method="post" enctype="multipart/form">
-              <div class="row">
-                <select name="select" class="col-8 custom-select" id="inputGroupSelect01">
-                  <option <?= $id_forms === NULL ? 'selected' : '' ?> disabled>Pilih Tahun Ajaran</option>
-                  <?php foreach ($formBukti as $bukti) : ?>
-                    <option <?= $id_forms == $bukti['id_form'] ? 'selected' : '' ?> value="<?php echo $bukti['id_form'] ?>"><?php echo $bukti['semester'] ?> <?php echo $bukti['tahun'] ?>/<?php echo $bukti['tahun'] + 1 ?></option>
-                  <?php endforeach; ?>
-                </select>
-                <button type="submit" class="col-4 btn btn-primary">Filter</button>
-              </div>
+        <div class="row px-4 d-flex flex-md-row justify-content-between align-items-center">
+          <h5 class="col-4 col-md-3 py-2 text-dark user-select-none font-weight-bold">Validasi Bukti Iuran</h5>
+          <div class="col-8  form-group justify-content-end input-group ">
+            <form class="d-flex py-2  align-items-center" action="<?php echo base_url(); ?>krs/lihatBukti/10" method="post" enctype="multipart/form">
+              <select name="select" class="custom-select mx-1" id="inputGroupSelect01">
+                <option selected disabled>Select Dosen</option>
+                <option value='1'>Pak Ardwi</option>
+                <option value='2'>Pak Wiguna</option>
+                <option value='3'>Pak Surya</option>
+              </select>
+              <select name="select" class="custom-select mx-1" id="inputGroupSelect01">
+                <option selected disabled>Semester</option>
+                <option value='1'>1</option>
+                <option value='3'>3</option>
+                <option value='5'>5</option>
+                <option value='7'>7</option>
+              </select>
+              <select class="custom-select mx-1" name="validStatus" id="validStatus">
+                <option selected disabled>Select Status</option>
+                <option value='1'>Tervalidasi</option>
+                <option value='0'>Belum tervalidasi</option>
+              </select>
+              <button type="submit" class="btn btn-primary">Filter</button>
             </form>
           </div>
         </div>
@@ -37,10 +46,9 @@
                 </tr>
               </thead>
               <tbody>
-                <?php
-                $i = 1;
-                ?>
-                <?php foreach ($value as $mhs) : ?>
+                <?php $i = 1 ?>
+                <?php foreach ($bukti as $b) : ?>
+
                   <tr>
                     <td>
                       <?php if ($i > 9) : ?>
@@ -51,35 +59,35 @@
                     </td>
                     <td>
                       <div>
-                        <p><?php echo $mhs->first_name ?></p>
+                        <p><?php echo $b->nama_mhs ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <p><?php echo $mhs->last_name ?></p>
+                        <p><?php echo $b->nim ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <p><?php echo $mhs->prodi ?></p>
+                        <p><?php echo $b->prodi ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <?php if ($mhs->valid === NULL) : ?>
-                          <p class="text-warning">Belum Divalidasi</p>
-                        <?php elseif ($mhs->valid === '0') : ?>
-                          <p class="text-danger">Ditolak</p>
-                        <?php elseif ($mhs->valid === '1') : ?>
-                          <p class="text-success">Sudah Divalidasi</p>
+                        <?php if ($b->valid == 0) : ?>
+                          <p class="text-danger">Belum tervalidasi</p>
+                        <?php elseif ($b->valid == 1) : ?>
+                          <p class="text-success">Tervalidasi</p>
                         <?php endif; ?>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <a class="btn btn-primary font-weight-bolder" href="<?= base_url('krs/viewDetailBukti/' . $mhs->id) ?>">
-                          Lihat Detail
-                        </a>
+                        <button type="button" class="btn btn-sm btn-primary">
+                          <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/viewDetailBukti/' . $mhs->id) ?>">
+                            Lihat Detail
+                          </a>
+                        </button>
                       </div>
                     </td>
                   </tr>
