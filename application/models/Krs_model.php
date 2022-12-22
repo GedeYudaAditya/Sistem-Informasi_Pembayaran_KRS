@@ -35,6 +35,7 @@ class Krs_Model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('s6_iuran');
+        $this->db->order_by("id", "desc");
         return $this->db->get();
     }
 

@@ -56,7 +56,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
 	$("#tableIuran").DataTable({
-		order: [[3, "asc"]],
+		order: [[2, "desc"]],
 	});
 });
 
