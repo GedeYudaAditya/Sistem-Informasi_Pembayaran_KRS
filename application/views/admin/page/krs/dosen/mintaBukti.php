@@ -40,12 +40,12 @@
                     </td>
                     <td>
                       <div>
-                        <p>Bukti Iuran Mahasiswa <?= $bukti['tahun'] ?>/ <?= $bukti['tahun'] + 1 ?></p>
+                        <p>Bukti Iuran Mahasiswa <?= $bukti['tahun'] ?>/<?= $bukti['tahun'] + 1 ?></p>
                       </div>
                     </td>
                     <td>
                       <div>
-                        <p><?= $bukti['tahun'] ?>/ <?= $bukti['tahun'] + 1 ?></p>
+                        <p><?= $bukti['tahun'] ?>/<?= $bukti['tahun'] + 1 ?></p>
                       </div>
                     </td>
                     <td>

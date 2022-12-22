@@ -1,30 +1,30 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
     <?php if ($this->session->flashdata('message')) : ?>
-    <div class="modal fade" id="modalInfoLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content ">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Selamat Datang, <span class="text-primary">
-                            <?= ucfirst($group[0]['first_name']); ?></span></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="mb-5">Login Berhasil, Semoga Harimu Menyenangkan :)<br>
-                        Mohon jaga username dan password Anda <br>
-                        ~ Admin HMJ TI Undiksha
-                    </p>
-                    <hr>
-                    <p class="text-center text-primary" style="font-size: 14px;">SSO HMJ Undiksha
-                        2.<?= date('Y') % 3 ?>.<?= date('Y') * date('m') / 5 ?>
-                        -
-                        Blockchain <br></p>
+        <div class="modal fade" id="modalInfoLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Selamat Datang, <span class="text-primary">
+                                <?= ucfirst($group[0]['first_name']); ?></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="mb-5">Login Berhasil, Semoga Harimu Menyenangkan :)<br>
+                            Mohon jaga username dan password Anda <br>
+                            ~ Admin HMJ TI Undiksha
+                        </p>
+                        <hr>
+                        <p class="text-center text-primary" style="font-size: 14px;">SSO HMJ Undiksha
+                            2.<?= date('Y') % 3 ?>.<?= date('Y') * date('m') / 5 ?>
+                            -
+                            Blockchain <br></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     <?php endif; ?>
     <!-- Page Heading -->
 
@@ -121,11 +121,28 @@
             </div>
         </div>
     </div>
+    <?php if ($group[0]['nama_pilihan'] == 'Mahasiswa') : ?>
+        <?php if ($this->All_model->getMahasiswaByUserId($_SESSION['user_id'])['pa_id'] === NULL) : ?>
+            <?php
+            $pa_ids = $this->All_model->getMahasiswaByUserId($_SESSION['user_id'])['pa_id'];
+            ?>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        Sebelum melakukan upload bukti pembayaran, dimohonkan untuk <strong>memilih Dosen PA</strong>
+                        terlebih dahulu. Lanjut ke <a href="<?= base_url(); ?>krs/pilihPA"> menu pilih dosen PA</a>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
     <!-- Collapsable Card Example -->
     <div class="card shadow mb-4">
         <!-- Card Header - Accordion -->
-        <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button"
-            aria-expanded="true" aria-controls="collapseCardExample">
+        <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
             <h6 class="m-0 font-weight-bold text-primary">Selamat Datang User <?= ucfirst($group[0]['first_name']); ?>
             </h6>
         </a>
@@ -134,15 +151,11 @@
             <div class="card-body">
                 <p> Sistem Informasi Manajemen Satu Pintu (SSO) HMJ TI Undiksha, Berikut Informasi Anda :</p>
                 <ul>
-                    <li>Username Anda Adalah <span
-                            class="m-0 font-weight-bold text-primary"><?= $group[0]['email']; ?></span></li>
-                    <li>NIM Anda Adalah <span
-                            class="m-0 font-weight-bold text-primary"><?= ucfirst($group[0]['last_name']); ?></span>
+                    <li>Username Anda Adalah <span class="m-0 font-weight-bold text-primary"><?= $group[0]['email']; ?></span></li>
+                    <li>NIM Anda Adalah <span class="m-0 font-weight-bold text-primary"><?= ucfirst($group[0]['last_name']); ?></span>
                     </li>
-                    <li>No Telepon/WA Anda Adalah <span
-                            class="m-0 font-weight-bold text-primary"><?= ucfirst($group[0]['phone']); ?></span></li>
-                    <li>Anda Login Sebagai <span
-                            class="m-0 font-weight-bold text-primary"><?= ucfirst($group[0]['nama_pilihan']); ?></span>
+                    <li>No Telepon/WA Anda Adalah <span class="m-0 font-weight-bold text-primary"><?= ucfirst($group[0]['phone']); ?></span></li>
+                    <li>Anda Login Sebagai <span class="m-0 font-weight-bold text-primary"><?= ucfirst($group[0]['nama_pilihan']); ?></span>
                     </li>
                 </ul>
                 <p>Jaga Selalu Username dan Password Anda</p>

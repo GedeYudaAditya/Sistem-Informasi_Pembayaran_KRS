@@ -298,8 +298,8 @@ class Eors extends CI_Controller
         $this->data['thn_2019'] = $this->All_model->getAllPendaftarTahun($date - 1, $id_kegiatan);
         $this->data['thn_2020'] = $this->All_model->getAllPendaftarTahun($date, $id_kegiatan);
         $this->load->view('admin/page/eors/ajax-data', $this->data);
-            // END SETTING CHART PENDAFTARAN
-        
+        // END SETTING CHART PENDAFTARAN
+
     }
     public function administrator($data = '')
     {
@@ -857,8 +857,9 @@ class Eors extends CI_Controller
                             // End Content Email
                             if ($this->send_mail($data_email, $template, $email)) {
                                 if ($this->All_model->updateJumlahPeserta($jumlah_peserta, $id_kegiatan)) {
-                                    $this->session->set_flashdata('berhasil', 'Dikirim, Pendaftaran Berhasil. Bukti Pendaftaran Telah Dikirim Melalui Email, Silahkan Cek Inbox atau Spam');
-                                    redirect('eors/daftar_sekarang/' . urldecode($data));
+                                    $this->session->set_flashdata('berhasil', 'Ditambahkan, data anda telah masuk ke sistem kami.');
+                                    // $this->session->set_flashdata('berhasil', 'Dikirim, Pendaftaran Berhasil. Bukti Pendaftaran Telah Dikirim Melalui Email, Silahkan Cek Inbox atau Spam');
+                                    // redirect('eors/daftar_sekarang/' . urldecode($data));
                                 } else {
                                     $this->session->set_flashdata('gagal', 'Tidak Terkirim, Error Server');
                                     redirect('eors/daftar_sekarang/' . urldecode($data));
@@ -886,18 +887,22 @@ class Eors extends CI_Controller
     // Function Send Mail Token
     public function send_mail($data = "", $template = "", $to_email = "")
     {
-        $this->load->library('encrypt');
-        $message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $template, $data, TRUE);
-        $this->email->clear();
-        $this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
-        $this->email->to($to_email);
-        $this->email->subject($this->config->item('site_title', 'ion_auth') . ' - Pengiriman Bukti Pendaftaran Kegiatan');
-        $this->email->message($message);
-        $this->email->set_newline("\r\n");
-        if ($this->email->send()) {
-            return TRUE;
-        } else {
-            echo $this->email->print_debugger();
-        }
+        $this->session->set_flashdata('berhasil', 'Ditambahkan, data anda telah masuk ke sistem kami.');
+        $this->load->view("guest/eors/page/information", $data);
+        return true;
+
+        // $this->load->library('encrypt');
+        // $message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $template, $data, TRUE);
+        // $this->email->clear();
+        // $this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
+        // $this->email->to($to_email);
+        // $this->email->subject($this->config->item('site_title', 'ion_auth') . ' - Pengiriman Bukti Pendaftaran Kegiatan');
+        // $this->email->message($message);
+        // $this->email->set_newline("\r\n");
+        // if ($this->email->send()) {
+        //     return TRUE;
+        // } else {
+        //     echo $this->email->print_debugger();
+        // }
     }
 }
