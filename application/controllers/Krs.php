@@ -1199,4 +1199,35 @@ class Krs extends CI_Controller
         }
     }
     // End Admin Site Lihat data Pembayaran Iuran
+    // Start Mahasiswa Page 
+    public function checkNim()
+    {
+        $this->load->model('Krs_model');
+        $nim = $this->input->post('nim');
+        $data['mhs'] = $this->Krs_model->findMahasiswaNim($nim);
+        $data['nim'] = $nim;
+        $this->load->view("guest/krs/master/header");
+        $this->load->view("guest/krs/page/index", $data);
+        $this->load->view("guest/krs/master/footer");
+    }
+    public function createPembayaran()
+    {
+        $this->load->model('Krs_model');
+        $nama = $this->input->post('nama');
+        $nim = $this->input->post('nim');
+        $prodi = $this->input->post('prodi');
+        $angkatan = $this->input->post('angkatan');
+        $file = $this->input->post('file');
+        $mhs = [
+            'nama_mhs' => $nama,
+            'nim' => $nim,
+            'prodi' => $prodi,
+            'angkatan' => $angkatan,
+            'bukti' => $file
+        ];
+        $this->Krs_model->storePembayaran($mhs);
+        $this->load->view("guest/krs/master/header");
+        $this->load->view("guest/krs/page/index");
+        $this->load->view("guest/krs/master/footer");
+    }
 }
