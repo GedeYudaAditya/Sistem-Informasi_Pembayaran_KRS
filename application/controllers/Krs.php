@@ -1217,7 +1217,22 @@ class Krs extends CI_Controller
         $nim = $this->input->post('nim');
         $prodi = $this->input->post('prodi');
         $angkatan = $this->input->post('angkatan');
+
         $file = $this->input->post('file');
+        // if (!empty($file)) {
+        //     // Set preference 
+        //     $config['upload_path'] = 'uploads/';
+        //     $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
+        //     $config['max_size'] = '100'; // max_size in kb 
+
+        //     // Load upload library 
+        //     $this->load->library('upload', $config);
+
+
+        // } else {
+        //     $data['response'] = 'failed';
+        // }
+
         $mhs = [
             'nama_mhs' => $nama,
             'nim' => $nim,
