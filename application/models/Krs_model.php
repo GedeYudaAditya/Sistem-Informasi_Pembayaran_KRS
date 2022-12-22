@@ -25,4 +25,16 @@ class Krs_Model extends CI_Model
         $query = $this->db->get()->result();
         return $query;
     }
+    public function findMahasiswaNim($nim)
+    {
+        $this->db->select('*');
+        $this->db->from('s6_data_pembayaran');
+        $this->db->where('nim', $nim);
+        $query = $this->db->get()->result_array();
+        return $query;
+    }
+    public function storePembayaran($mhs)
+    {
+        $this->db->insert('s6_data_pembayaran', $mhs);
+    }
 }

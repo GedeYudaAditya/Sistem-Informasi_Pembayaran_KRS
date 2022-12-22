@@ -14,11 +14,12 @@
                                         kami</a></u></b>.</i></p>
                 </div>
             </div>
+
             <div class="col-12 col-md-8 col-lg-5">
                 <!-- Contact Box -->
                 <div class="contact-box bg-white text-center rounded p-4 p-sm-5 mt-5 mt-lg-0 shadow-lg">
                     <!-- Contact Form -->
-                    <form id="contact-form" method="POST" action="">
+                    <form id="contact-form" method="POST" action="<?= base_url() ?>krs/checkNim">
                         <div class="contact-top">
                             <h3 class="contact-title">Cek Pembayaran KRS</h3>
                             <h5 class="text-secondary fw-3 py-3 mb-3">Silakan masukkan NIM anda untuk mengecek status
@@ -98,29 +99,56 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data" action="<?= base_url(); ?>krs/createPembayaran">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="nama">Nama</label>
                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Anda" required="required">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" onkeyup="checkProdi()">
                         <label for="nim">NIM</label>
-                        <input type="text" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM Anda" required="required">
+                        <input type="text" id="nim" pattern="[0-9]*" minlength="10" maxlength="10" class="form-control" name="nim" placeholder="NIM Mahasiswa" required="required">
                     </div>
                     <div class="form-group">
-                        <label for="Prodi">Prodi</label>
-                        <input type="text" class="form-control" id="prodi" name="prodi" placeholder="Masukkan Prodi Anda" required="required">
+                        <label for="prodi">Prodi</label>
+                        <select name="prodi" id="prodi" class="form-control" required>
+                            <option value="" disabled selected hidden>Prodi Mahasiswa</option>
+                            <option value="PTI">Pendidikan Teknik Informatika</option>
+                            <option value="MI">Teknologi Rekayasa Perangkat Lunak</option>
+                            <option value="SI">Sistem Informasi</option>
+                            <option value="ILKOM">Ilmu Komputer</option>
+                        </select>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="angkatan">Angkatan</label>
                         <input type="text" class="form-control" id="angkatan" name="angkatan" placeholder="Masukkan Angkatan Anda" required="required">
+                    </div> -->
+                    <div class="form-group">
+                        <label for="angkatan">Angkatan</label>
+                        <input type="text" id="angkatan" pattern="[0-9]*" minlength="4" maxlength="4" class="form-control" name="angkatan" placeholder="Angkatan" required="required">
+                        <!-- <select name="angkatan" id="angkatan" class="form-control" required>
+                            <option value="" disabled selected hidden>Angkatan</option>
+                            <option value="19">2019</option>
+                            <option value="20">2020</option>
+                            <option value="21">2021</option>
+                            <option value="22">2022</option>
+                        </select> -->
+                    </div>
+                    <div class="form-group">
+                        <label for="pa">Pembimbing Akademik</label>
+                        <select name="pa" id="pa" class="form-control" required>
+                            <option value="" disabled selected hidden>Pembimbing Akademik</option>
+                            <option value="1">Dummy</option>
+                            <option value="2">Dummy</option>
+                            <option value="3">Dummy</option>
+                            <option value="4">Dummy</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="file">File Bukti Pembayaran Iuran HMJ</label>
-                        <input type="file" class="form-control" id="file" name="file" placeholder="Upload Berkas anda" required="required">
+                        <input type="file" class="form-control" id="file" name="file" placeholder="Upload Berkas anda ">
                     </div>
-                    <div class="modal-footer d-flex justify-content-center">
+                    <div class=" modal-footer d-flex justify-content-center">
                         <button type="submit" id="upload-form" name="upload-form" class="btn btn-sm btn-primary">Submit</button>
                     </div>
                 </div>
@@ -158,53 +186,51 @@ function submitForm() {
 <!-- ***** Modal Start ***** -->
 <?php if ($this->input->post('submit') !== NULL) : ?>
     <?php if (!empty($mhs)) : ?>
-        <?php if (!empty($dtMhs)) : ?>
-            <?php $ada = false; ?>
-            <?php foreach ($dtMhs as $m) : ?>
-                <?php if ($m['tahun'] == $this->input->post('tahun') && $m['smtr'] == $this->input->post('semester')) : ?>
-                    <?php if ($m['status'] == "Lunas") : ?>
-                        <script>
-                            setTimeout(function() {
-                                Swal.fire(
-                                    '<?= $mhs[0]['nama'] ?>\n<?= $mhs[0]['nim'] ?>',
-                                    'Telah membayar iuran KRS Tahun <?= $this->input->post('tahun') ?> Semester <?= $this->input->post('semester') ?>',
-                                    'success'
-                                )
-                            }, 100);
-                        </script>
-                        <?php $ada = true; ?>
-                    <?php elseif ($m['status'] == "Belum Bayar") : ?>
-                        <script>
-                            setTimeout(function() {
-                                Swal.fire(
-                                    '<?= $mhs[0]['nama'] ?>\n<?= $mhs[0]['nim'] ?>',
-                                    'Belum membayar iuran KRS Tahun <?= $this->input->post('tahun') ?> Semester <?= $this->input->post('semester') ?>',
-                                    'warning'
-                                )
-                            }, 100);
-                        </script>
-                        <?php $ada = true; ?>
-                    <?php endif; ?>
-                <?php endif; ?>
-            <?php endforeach; ?>
-            <?php if (!$ada) : ?>
-                <script>
-                    setTimeout(function() {
-                        Swal.fire(
-                            'Maaf :(',
-                            'Mahasiswa sudah terdaftar dalam sistem, namun belum memiliki riwayat pembayaran KRS',
-                            'error'
-                        )
-                    }, 100);
-                </script>
-            <?php endif; ?>
+
+        <?php $ada = false; ?>
+        <?php if ($mhs[0]['valid'] == 1) : ?>
+            <script>
+                setTimeout(function() {
+                    Swal.fire(
+                        '<?= $mhs[0]['nama_mhs'] ?>\n<?= $mhs[0]['nim'] ?>',
+                        'Telah membayar iuran KRS dan sudah tervalidasi',
+                        'success'
+                    )
+                }, 100);
+            </script>
+            <?php $ada = true; ?>
+        <?php elseif ($mhs[0]['valid'] == 0) : ?>
+            <script>
+                setTimeout(function() {
+                    Swal.fire(
+                        '<?= $mhs[0]['nama_mhs'] ?>\n<?= $mhs[0]['nim'] ?>',
+                        'Telah membayar iuran KRS, Menunggu untuk divalidasi ',
+                        'warning'
+                    )
+                }, 100);
+            </script>
+            <?php $ada = true; ?>
         <?php endif; ?>
+
+
+        <?php if (!$ada) : ?>
+            <script>
+                setTimeout(function() {
+                    Swal.fire(
+                        'Maaf :(',
+                        'Mahasiswa sudah terdaftar dalam sistem, namun belum memiliki riwayat pembayaran KRS',
+                        'error'
+                    )
+                }, 100);
+            </script>
+        <?php endif; ?>
+
     <?php else : ?>
         <script>
             setTimeout(function() {
                 Swal.fire(
                     'Maaf :(',
-                    'Mahasiswa belum terdaftar dalam sistem. Pastikan anda memasukkan NIM anda dengan benar!',
+                    'Mahasiswa dengan NIM <?php echo ($nim) ?>, Belum membayar iuran KRS ',
                     'error'
                 )
             }, 100);
@@ -212,3 +238,14 @@ function submitForm() {
     <?php endif; ?>
 <?php endif; ?>
 <!-- ***** Modal End ***** -->
+<?php if ($this->input->post('upload-form') !== NULL) : ?>
+    <script>
+        setTimeout(function() {
+            Swal.fire(
+                '<?= $this->input->post('nama') ?>\n<?= $this->input->post('nim') ?>',
+                'Data Telah ditambahkan',
+                'success'
+            )
+        }, 100);
+    </script>
+<?php endif; ?>
