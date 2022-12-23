@@ -25,9 +25,9 @@
             </form>
           </div>
         </div>
-        <div class="card-body px-0 pt-2 pb-2">
+        <div class="card-body px-2 pt-2 pb-2">
           <div class="table-responsive">
-            <table id="tableInformasi" class="table align-items-center">
+            <table id="tableBuktiIuran" class="table align-items-center">
               <thead>
                 <tr class="fw-bold">
                   <td>No</td>
