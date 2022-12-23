@@ -15,11 +15,44 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Krs_Model extends CI_Model
 {
-    public function getKrs()
+    public function getValidMahasiswaThisSemester()
+    {
+        $this->db->select('nama_mhs, nim, angkatan, prodi');
+        $this->db->from('s6_data_pembayaran');
+        $this->db->join('s6_iuran', 's6_data_pembayaran.id_iuran = s6_iuran.id');
+        $this->db->where('s6_iuran.status=1');
+        $this->db->where('s6_data_pembayaran.`valid`=1');
+        $query = $this->db->get()->result();
+        return $query;
+    }
+    public function findMahasiswaNim($nim)
     {
         $this->db->select('*');
-        // $this->db->from('...');
-
+        $this->db->from('s6_data_pembayaran');
+        $this->db->where('nim', $nim);
+        $query = $this->db->get()->result_array();
+        return $query;
+    }
+    public function loadDosen()
+    {
+        $this->db->select('*');
+        $this->db->from('users_groups');
+        $this->db->join('users', 'users_groups.user_id = users.id');
+        $this->db->where('group_id', 9);
+        $query = $this->db->get()->result_array();
+        return $query;
+    }
+    public function storePembayaran($mhs)
+    {
+        $this->db->insert('s6_data_pembayaran', $mhs);
+    }
+    public function findActiveIuran()
+    {
+        $this->db->select('id');
+        $this->db->from('s6_iuran');
+        $this->db->where('status', 1);
+        $query = $this->db->get()->result_array();
+        return $query;
     }
 
     // Admin site Start - Marsell
