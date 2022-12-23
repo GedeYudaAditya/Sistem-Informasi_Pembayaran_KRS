@@ -53,11 +53,11 @@
                                     Cek Data
                                 </button>
                                 <div class="mt-3">
-                                    <h6 class="text-secondary fw-3 py-3"> Belum pernah mengupload form? <br>
+                                    <!-- <h6 class="text-secondary fw-3 py-3"> Belum pernah mengupload form? <br>
                                         <?php /* <a href="<?= base_url() ?>krs/Upload_Form" class=" text-underline"> */ ?>
                                         <a data-target="#upload-form" data-toggle="modal" href="#upload-form">
                                             <u>Silahkan klik disini</u></a>
-                                    </h6>
+                                    </h6> -->
                                 </div>
                                 <!--
                                 <div class=" form-group">
@@ -138,10 +138,9 @@
                         <label for="pa">Pembimbing Akademik</label>
                         <select name="pa" id="pa" class="form-control" required>
                             <option value="" disabled selected hidden>Pembimbing Akademik</option>
-                            <option value="1">Dummy</option>
-                            <option value="2">Dummy</option>
-                            <option value="3">Dummy</option>
-                            <option value="4">Dummy</option>
+                            <?php foreach ($dosen as $d) : ?>
+                                <option value="<?= $d["id"] ?>"><?= $d["first_name"] ?> - <?= $d["last_name"] ?> </option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -228,17 +227,44 @@ function submitForm() {
     <?php else : ?>
         <script>
             setTimeout(function() {
-                Swal.fire(
-                    'Maaf :(',
-                    'Mahasiswa dengan NIM <?php echo ($nim) ?>, Belum membayar iuran KRS ',
-                    'error'
-                )
+                Swal.fire({
+                    title: 'Maaf :(',
+                    icon: 'error',
+                    html: 'Mahasiswa dengan NIM <?= $this->input->post('nim') ?> Silahkan mengisi form dengan mengklik tombol <strong>Tambah Form</strong> dibawah',
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    cancelButtonText: 'Batal',
+                    confirmButtonText: 'Tambah Form',
+
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let myModal = new bootstrap.Modal(document.getElementById('upload-form'), {});
+                        myModal.show();
+                    }
+                })
             }, 100);
         </script>
     <?php endif; ?>
 <?php endif; ?>
 <!-- ***** Modal End ***** -->
+<?php $exist = null ?>
+<?php $exist = $isExist ?>
+<?php if ($exist == 1) : ?>
+    <script>
+        setTimeout(function() {
+            Swal.fire(
+                ':( ',
+                'NIM dengan <?= $this->input->post('nim') ?> sudah ada, silahkan masukkan data dengan benar ',
+                'error'
+            )
+
+        }, 100);
+    </script>
+<?php endif; ?>
+
 <?php if ($this->input->post('upload-form') !== NULL) : ?>
+
     <script>
         setTimeout(function() {
             Swal.fire(
