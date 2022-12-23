@@ -1205,7 +1205,9 @@ class Krs extends CI_Controller
         $this->load->model('Krs_model');
         $nim = $this->input->post('nim');
         $data['mhs'] = $this->Krs_model->findMahasiswaNim($nim);
+        $data['dosen'] = $this->Krs_model->loadDosen();
         $data['nim'] = $nim;
+        $data['isExist'] = $this->session->flashdata('exist');
         $this->load->view("guest/krs/master/header");
         $this->load->view("guest/krs/page/index", $data);
         $this->load->view("guest/krs/master/footer");
@@ -1213,36 +1215,52 @@ class Krs extends CI_Controller
     public function createPembayaran()
     {
         $this->load->model('Krs_model');
-        $nama = $this->input->post('nama');
+        $data['isExist'] = null;
         $nim = $this->input->post('nim');
+        if (!empty($this->Krs_model->findMahasiswaNim($nim))) {
+            $this->session->set_flashdata('exist', 1);
+            redirect('krs/checkNim/');
+        }
+        $nama = $this->input->post('nama');
         $prodi = $this->input->post('prodi');
         $angkatan = $this->input->post('angkatan');
+        $dosen = $this->input->post('pa');
+        $file = $_FILES['file'];
+        $id_iuran = $this->Krs_model->findActiveIuran();
 
-        $file = $this->input->post('file');
-        // if (!empty($file)) {
-        //     // Set preference 
-        //     $config['upload_path'] = 'uploads/';
-        //     $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
-        //     $config['max_size'] = '100'; // max_size in kb 
+        if (!empty($file)) {
+            // Set preference 
+            $config['upload_path'] = './assets/upload/Folder_krs';
+            $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
+            $config['max_size'] = '1000'; // max_size in kb 
+            $config['file_name'] = $_FILES['file']['name'];
 
-        //     // Load upload library 
-        //     $this->load->library('upload', $config);
+            // Load upload library 
+            $this->load->library('upload', $config);
+            if (!$this->upload->do_upload('file')) {
+                // Get data about the file
 
+                $data['response'] = 'failed';
+            } else {
 
-        // } else {
-        //     $data['response'] = 'failed';
-        // }
+                $uploadData = $this->upload->data('file_name');
+            }
+        } else {
+            $data['response'] = 'failed';
+        }
 
         $mhs = [
             'nama_mhs' => $nama,
             'nim' => $nim,
             'prodi' => $prodi,
             'angkatan' => $angkatan,
-            'bukti' => $file
+            'bukti' => $file['name'],
+            'id_dosen' => $dosen,
+            'id_iuran' => $id_iuran[0]["id"]
         ];
         $this->Krs_model->storePembayaran($mhs);
         $this->load->view("guest/krs/master/header");
-        $this->load->view("guest/krs/page/index");
+        $this->load->view("guest/krs/page/index", $data);
         $this->load->view("guest/krs/master/footer");
     }
 }

@@ -33,8 +33,25 @@ class Krs_Model extends CI_Model
         $query = $this->db->get()->result_array();
         return $query;
     }
+    public function loadDosen()
+    {
+        $this->db->select('*');
+        $this->db->from('users_groups');
+        $this->db->join('users', 'users_groups.user_id = users.id');
+        $this->db->where('group_id', 9);
+        $query = $this->db->get()->result_array();
+        return $query;
+    }
     public function storePembayaran($mhs)
     {
         $this->db->insert('s6_data_pembayaran', $mhs);
+    }
+    public function findActiveIuran()
+    {
+        $this->db->select('id');
+        $this->db->from('s6_iuran');
+        $this->db->where('status', 1);
+        $query = $this->db->get()->result_array();
+        return $query;
     }
 }
