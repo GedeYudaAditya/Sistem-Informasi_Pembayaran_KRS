@@ -14,9 +14,9 @@
   <div class="row my-4">
     <div class="col-12">
       <div class="card mb-4">
-        <div class="card-body px-0 pt-4 pb-2">
+        <div class="card-body px-4 pt-4 pb-2">
           <div class="table-responsive">
-            <table class="table align-items-center text-center" id="tableInformasi">
+            <table class="table align-items-center px-1 text-center" id="tableIuran">
               <thead>
                 <tr class="fw-bold">
                   <td class="col-1">No</td>

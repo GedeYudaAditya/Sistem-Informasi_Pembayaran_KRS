@@ -2,7 +2,10 @@
 <footer class="sticky-footer bg-light">
    <div class="container my-auto p-3">
       <div class="copyright text-center my-auto d-flex justify-content-between">
-         <span>Last Updated : <?= $updated_info[0]['info'] ?></span>
+         <span>Last Updated :
+            <?php //$updated_info[0]['info'] 
+            ?>
+         </span>
          <span>Copyright &copy; HMJ TI Undiksha <?= date('Y') ?></span>
       </div>
    </div>

@@ -54,16 +54,12 @@ $(document).ready(function () {
 	$("#tableUser").DataTable();
 });
 
-//belum terdeteksi masih error
 $(document).ready(function () {
-	$("#tableBuktiIuran").DataTable({
-		order: [[0, "asc"]],
+	$("#tableIuran").DataTable({
+		order: [[2, "desc"]],
 	});
 });
 
-// Table Untuk Sistem IURAN KRS
 $(document).ready(function () {
-	$("#tableListMahasiswa").DataTable({
-		order: [[0, "asc"]],
-	});
+	$("#tableBuktiIuran").DataTable();
 });

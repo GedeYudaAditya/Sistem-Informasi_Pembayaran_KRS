@@ -3230,7 +3230,10 @@ class All_model extends CI_Model
 	// Admin site Start - Marsell
 	public function insertIuran($data)
 	{
-		$this->db->insert('s6_iuran', $data);
+		// reset aktivasi iuran lain
+		$this->db->where('status = ' . 1)->update('s6_iuran', array('status' => 0));
+		// insert iuran baru
+		return $this->db->insert('s6_iuran', $data);
 	}
 
 	public function getAllIuran()
