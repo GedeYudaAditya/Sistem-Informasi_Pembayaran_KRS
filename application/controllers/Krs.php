@@ -939,6 +939,7 @@ class Krs extends CI_Controller
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
             redirect('krs/viewMintaBukti');
         } else {
+            $this->load->model('Krs_Model');
             $statusIuran = $this->Krs_Model->getIuranWhereId($id_iuran)['status'];
 
             if ($this->Krs_Model->getIuranWhereId($id_iuran) > 0 && $this->Krs_Model->getIuranWhereId($id_iuran)['status'] == '0') {
