@@ -5,8 +5,8 @@
             <!-- Welcome Intro Start -->
             <div class="col-12 col-lg-7">
                 <div class="welcome-intro">
-                    <h1 class="text-white">KRS Checker HMJ-TI</h1>
-                    <p class="text-white my-4 text-justify">KRS Checker merupakan suatu layanan sistem infomasi dari HMJ
+                    <h1 class="text-white">Iuran Checker HMJ-TI</h1>
+                    <p class="text-white my-4 text-justify">Iuran Checker merupakan suatu layanan sistem infomasi dari HMJ
                         TI dalam memudahkan mahasiswa atau dosen pada ruang lingkup Jurusan Teknik Informatika untuk
                         mencari data terkait pembayaran KRS disetiap semester. <br><br><i>Catatan : Sistem ini masih
                             dalam pengembangan, jika terdapat hal yang tidak lazim atau menurut Anda data yang
@@ -21,9 +21,9 @@
                     <!-- Contact Form -->
                     <form id="contact-form" method="POST" action="<?= base_url() ?>krs/checkNim">
                         <div class="contact-top">
-                            <h3 class="contact-title">Cek Pembayaran KRS</h3>
+                            <h3 class="contact-title">Cek Pembayaran Iuran</h3>
                             <h5 class="text-secondary fw-3 py-3 mb-3">Silakan masukkan NIM anda untuk mengecek status
-                                pembayaran KRS</h5>
+                                pembayaran Iuran</h5>
                         </div>
                         <div class="row">
                             <div class="col-12">
@@ -53,11 +53,11 @@
                                     Cek Data
                                 </button>
                                 <div class="mt-3">
-                                    <!-- <h6 class="text-secondary fw-3 py-3"> Belum pernah mengupload form? <br>
-                                        <?php /* <a href="<?= base_url() ?>krs/Upload_Form" class=" text-underline"> */ ?>
+                                    <h6 class="text-secondary fw-3 py-3"> Belum pernah mengupload form? <br>
+
                                         <a data-target="#upload-form" data-toggle="modal" href="#upload-form">
                                             <u>Silahkan klik disini</u></a>
-                                    </h6> -->
+                                    </h6>
                                 </div>
                                 <!--
                                 <div class=" form-group">
@@ -185,45 +185,57 @@ function submitForm() {
 <!-- ***** Modal Start ***** -->
 <?php if ($this->input->post('submit') !== NULL) : ?>
     <?php if (!empty($mhs)) : ?>
+        <?php if ($mhs[0]['is_rejected'] == 0) : ?>
+            <?php $ada = false; ?>
+            <?php if ($mhs[0]['valid'] == 1) : ?>
+                <script>
+                    setTimeout(function() {
+                        Swal.fire(
+                            '<?= $mhs[0]['nama_mhs'] ?>\n<?= $mhs[0]['nim'] ?>',
+                            'Telah membayar iuran KRS dan sudah tervalidasi',
+                            'success'
+                        )
+                    }, 100);
+                </script>
+                <?php $ada = true; ?>
+            <?php elseif ($mhs[0]['valid'] == 0) : ?>
+                <script>
+                    setTimeout(function() {
+                        Swal.fire(
+                            '<?= $mhs[0]['nama_mhs'] ?>\n<?= $mhs[0]['nim'] ?>',
+                            'Telah membayar iuran KRS, Menunggu untuk divalidasi ',
+                            'warning'
+                        )
+                    }, 100);
+                </script>
+                <?php $ada = true; ?>
+            <?php endif; ?>
 
-        <?php $ada = false; ?>
-        <?php if ($mhs[0]['valid'] == 1) : ?>
+
+            <?php if (!$ada) : ?>
+                <script>
+                    setTimeout(function() {
+                        Swal.fire(
+                            'Maaf :(',
+                            'Mahasiswa sudah terdaftar dalam sistem, namun belum memiliki riwayat pembayaran KRS',
+                            'error'
+                        )
+                    }, 100);
+                </script>
+            <?php endif; ?>
+        <?php else : ?>
             <script>
                 setTimeout(function() {
-                    Swal.fire(
-                        '<?= $mhs[0]['nama_mhs'] ?>\n<?= $mhs[0]['nim'] ?>',
-                        'Telah membayar iuran KRS dan sudah tervalidasi',
-                        'success'
-                    )
+                    Swal.fire({
+
+                        icon: 'error',
+                        title: 'Maaf :(',
+                        html: 'Bukti Pembayaran Iuran <strong>ditolak</strong>, mohon untuk menghubungi Contact Person dibawah',
+                        footer: ' <strong> CP: +62 857-9209-9705 (Bendahara 1)</strong>',
+                    })
                 }, 100);
             </script>
-            <?php $ada = true; ?>
-        <?php elseif ($mhs[0]['valid'] == 0) : ?>
-            <script>
-                setTimeout(function() {
-                    Swal.fire(
-                        '<?= $mhs[0]['nama_mhs'] ?>\n<?= $mhs[0]['nim'] ?>',
-                        'Telah membayar iuran KRS, Menunggu untuk divalidasi ',
-                        'warning'
-                    )
-                }, 100);
-            </script>
-            <?php $ada = true; ?>
         <?php endif; ?>
-
-
-        <?php if (!$ada) : ?>
-            <script>
-                setTimeout(function() {
-                    Swal.fire(
-                        'Maaf :(',
-                        'Mahasiswa sudah terdaftar dalam sistem, namun belum memiliki riwayat pembayaran KRS',
-                        'error'
-                    )
-                }, 100);
-            </script>
-        <?php endif; ?>
-
     <?php else : ?>
         <script>
             setTimeout(function() {
@@ -247,7 +259,6 @@ function submitForm() {
         </script>
     <?php endif; ?>
 <?php endif; ?>
-<!-- ***** Modal End ***** -->
 <?php $exist = null ?>
 <?php $exist = $isExist ?>
 <?php if ($exist == 1) : ?>
@@ -255,7 +266,7 @@ function submitForm() {
         setTimeout(function() {
             Swal.fire(
                 ':( ',
-                'NIM dengan <?= $this->input->post('nim') ?> sudah ada, silahkan masukkan data dengan benar ',
+                'NIM yang anda masukkan sudah ada, silahkan masukkan data dengan benar ',
                 'error'
             )
 
@@ -275,3 +286,4 @@ function submitForm() {
         }, 100);
     </script>
 <?php endif; ?>
+<!-- ***** Modal End ***** -->
