@@ -4,11 +4,11 @@
   <h3 class="text-center font-weight-bold">Buat Iuran Baru</h3>
 
   <div class="row d-flex justify-content-center">
-    <div class="col-12 col-md-8">
+    <div class="col-12 bg-danger  col-md-8">
       <form action="<?= base_url(); ?>krs/simpanIuran" method="POST">
 
 
-        <div class="d-md-flex justify-content-between pt-4">
+        <div class="d-md-flex  justify-content-between pt-4">
           <!-- Start Input Tahun Ajaran -->
           <div class="col-12 col-md-6">
             <label class="d-block pl-3" for="expireDate">Tahun Ajaran</label>
@@ -45,7 +45,6 @@
           <!-- Start Input Semester -->
           <div class="col-12 col-md-6">
             <div>
-              <label class="d-block " for="expireDate">Semester</label>
               <div class="form-group input-group mb-3">
                 <select class="custom-select d-block" name="semester" id="inputGroupSelect01">
                   <option selected disabled>Pilih Semester</option>
