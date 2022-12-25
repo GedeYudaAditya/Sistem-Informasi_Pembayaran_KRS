@@ -448,11 +448,11 @@ class Krs extends CI_Controller
 
         $nim = $this->input->post('nim');
 
-        $this->load->model('All_model');
-        $data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
-        $data['mhs'] = $this->All_model->getMahasiswaById($nim);
-        $data['tahun'] = $this->All_model->getThn();
-        $data['updated_info'] = $this->All_model->infos();
+        // $this->load->model('All_model');
+        // $data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
+        // $data['mhs'] = $this->All_model->getMahasiswaById($nim);
+        // $data['tahun'] = $this->All_model->getThn();
+        // $data['updated_info'] = $this->All_model->infos();
 
         $data['title'] = "Home";
 
@@ -1197,7 +1197,7 @@ class Krs extends CI_Controller
         }
     }
     // End Admin Site Lihat data Pembayaran Iuran
-    // Start Mahasiswa Page 
+    // Start Mahasiswa Page
     public function checkNim()
     {
         $this->load->model('Krs_model');
@@ -1227,13 +1227,13 @@ class Krs extends CI_Controller
         $id_iuran = $this->Krs_model->findActiveIuran();
 
         if (!empty($file)) {
-            // Set preference 
+            // Set preference
             $config['upload_path'] = './assets/upload/Folder_krs';
             $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
-            $config['max_size'] = '1000'; // max_size in kb 
+            $config['max_size'] = '1000'; // max_size in kb
             $config['file_name'] = $_FILES['file']['name'];
 
-            // Load upload library 
+            // Load upload library
             $this->load->library('upload', $config);
             if (!$this->upload->do_upload('file')) {
                 // Get data about the file
