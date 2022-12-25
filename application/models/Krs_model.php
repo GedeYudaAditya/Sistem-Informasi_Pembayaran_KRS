@@ -15,16 +15,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Krs_Model extends CI_Model
 {
-    public function getValidMahasiswaThisSemester()
+    /*
+    * Method untuk mengambil data mahasiswa berdasarkan
+    * data iuran dan data dosen
+    * @params <int> id dari dosen
+    */
+    public function getValidMahasiswaThisSemester($id_dosen)
     {
         $this->db->select('nama_mhs, nim, angkatan, prodi');
         $this->db->from('s6_data_pembayaran');
         $this->db->join('s6_iuran', 's6_data_pembayaran.id_iuran = s6_iuran.id');
+        $this->db->join('users', 's6_data_pembayaran.id_dosen = users.id');
         $this->db->where('s6_iuran.status=1');
         $this->db->where('s6_data_pembayaran.`valid`=1');
+        $this->db->where('s6_data_pembayaran.id_dosen=' . $id_dosen);
         $query = $this->db->get()->result();
         return $query;
     }
+
     public function findMahasiswaNim($nim)
     {
         $this->db->select('*');
@@ -108,7 +116,7 @@ class Krs_Model extends CI_Model
         $this->db->where("s6_data_pembayaran.valid", $where[1]);
         return $this->db->get();
     }
-    // filter 
+    // filter
 
     public function getDataPembayaran($where)
     {

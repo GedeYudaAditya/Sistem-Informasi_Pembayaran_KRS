@@ -63,3 +63,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 	$("#tableBuktiIuran").DataTable();
 });
+
+$(document).ready(function () {
+	$("#tableListMahasiswa").DataTable();
+});
