@@ -1069,8 +1069,10 @@ class Krs extends CI_Controller
     public function simpanIuran()
     {
         $this->load->model('Krs_Model');
+        $tahunDepan = $this->input->post("inputTahunDepan");
+        $tahunBelakang = $this->input->post("inputTahunBelakang");
         $data = [
-            'tahun_ajaran' => $this->input->post('tahun_ajaran'),
+            'tahun_ajaran' => $tahunDepan . "/" . $tahunBelakang,
             'semester' => $this->input->post('semester'),
             'status' => 1,
         ];

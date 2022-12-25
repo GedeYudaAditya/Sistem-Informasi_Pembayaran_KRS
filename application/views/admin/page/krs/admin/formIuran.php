@@ -4,7 +4,7 @@
   <h3 class="text-center font-weight-bold">Buat Iuran Baru</h3>
 
   <div class="row d-flex justify-content-center">
-    <div class="col-12 bg-danger  col-md-8">
+    <div class="col-12 col-md-8">
       <form action="<?= base_url(); ?>krs/simpanIuran" method="POST">
 
 
@@ -14,7 +14,7 @@
             <label class="d-block pl-3" for="expireDate">Tahun Ajaran</label>
             <div class="form-group input-group mb-3 d-flex">
               <div class="col-12 col-md-5 input-group mb-3">
-                <input type="number" placeholder="Tahun" class="form-control" id="inputTahunDepan" name="tahun_ajaran" onchange="inputTahunDosen()">
+                <input type="number" placeholder="Tahun" class="form-control" id="inputTahunDepan" name="inputTahunDepan" onchange="inputTahunDosen()">
                 <!-- <input type="number" placeholder="YYYY" min="1999" max="2023" name="tahun_ajaran" id="tahun_ajaran">
                 <script>
                   document.querySelector("input[type=number]")
@@ -22,14 +22,14 @@
                 </script> -->
               </div>
               <div class="d-none d-md-block col-md-1" style="font-size: 25px;">/</div>
-              <input id="inputTahunBelakang" class="col-12 col-md-5 form-control " type="number" placeholder="..." readonly>
+              <input id="inputTahunBelakang" name="inputTahunBelakang" class="col-12 col-md-5 form-control " type="number" placeholder="..." readonly>
             </div>
           </div>
           <!-- End Input Tahun Ajaran -->
 
           <!-- Start Interaktif Dosen memilih Tahun di input depan otomatis tahun belakang menyesuaikan  -->
           <script>
-            const inputTahunDosen = () => {
+            const inputTahunAjaran = () => {
               var elinputTahunDepan = document.getElementById('inputTahunDepan');
               var option = elinputTahunDepan;
 
@@ -38,7 +38,7 @@
               elinputTahunBelakang.value = parseInt(option.value) + 1;
 
             };
-            inputTahunDosen();
+            inputTahunAjaran();
           </script>
           <!--End Interaktif Dosen memilih Tahun di input depan otomatis tahun belakang menyesuaikan  -->
 
@@ -46,7 +46,7 @@
           <div class="col-12 col-md-6">
             <div>
               <div class="form-group input-group mb-3">
-                <select class="custom-select d-block" name="semester" id="inputGroupSelect01">
+                <select class="custom-select" name="semester" id="inputGroupSelect01">
                   <option selected disabled>Pilih Semester</option>
                   <option value="ganjil">Ganjil</option>
                   <option value="genap">Genap</option>
