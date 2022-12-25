@@ -108,7 +108,8 @@
                                 </div>
                                 <div class="row">
                                   <div class="col-sm-12">
-                                    <img class="img-fluid" src="<?= base_url(); ?>assets/img/test/test-bukti.jpg" alt="">
+                                    <!--Note: nama file masih procsess -->
+                                    <img class="img-fluid" src="<?= base_url(); ?>assets/img/upload/Folder_krs/<?= $b->nim; ?>" alt="<?= $b->nim; ?>">
                                   </div>
                                 </div>
                               </div>
