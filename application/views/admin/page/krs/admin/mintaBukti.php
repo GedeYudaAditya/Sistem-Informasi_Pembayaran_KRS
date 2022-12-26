@@ -40,7 +40,7 @@
 
                     <td>
                       <div>
-                        <p><?= $bukti['tahun_ajaran'] ?>/ <?= $bukti['tahun_ajaran'] + 1 ?></p>
+                        <p><?= $bukti['tahun_ajaran'] ?></p>
                       </div>
                     </td>
                     <td>

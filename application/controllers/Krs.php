@@ -7,112 +7,7 @@ class Krs extends CI_Controller
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
             redirect('krs/home');
         } else {
-            $this->data['title'] = "KRS - Data Akun Mahasiswa";
-            $this->data['active'] = "11";
-            $id = $_SESSION['user_id'];
-            $this->data['flip'] = "false";
-            $this->data['ckeditor'] = "krs";
-
-            $this->data['group'] = $this->ion_auth_model->getGroup($id);
-            $this->load->model('All_model');
-            $data['th'] = $this->All_model->getThn();
-            $data['info'] = $this->All_model->infos();
-            unset($_SESSION['flash']);
-            //var_dump($data['info']);
-            if (empty($data['info'])) {
-                $data = [
-                    'id-info' => 1,
-                    'info' => 'Data update kosong',
-                    'ket' => 'Tidak ada yang di ubah sebelumnya'
-                ];
-                $this->All_model->defaultInfo($data);
-                $data['info'] = $this->All_model->infos();
-                $data['infos'] = false;
-            } else {
-                $data['infos'] = true;
-            }
-            $data['prodis'] = [
-                [
-                    'id' => 'PTI',
-                    'prodi' => 'Pendidikan Teknik Informatika'
-                ],
-                [
-                    'id' => 'SI',
-                    'prodi' => 'Sistem Informatika'
-                ],
-                [
-                    'id' => 'ILKOM',
-                    'prodi' => 'Ilmu Komputer'
-                ],
-                [
-                    'id' => 'MI',
-                    'prodi' => 'Manajemen Informasi'
-                ]
-            ];
-
-            //var_dump($this->All_model->getingAll());
-            $data['siswa'] = $this->All_model->getingAll();
-            $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/index", $data);
-            $this->load->view("admin/master/footer", $this->data);
-        }
-    }
-
-    public function tambah_Mahasiswa()
-    {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
-        } else {
-            $this->data['title'] = "KRS - Tambah Data Mahasiswa";
-            $this->data['active'] = "11";
-            $id = $_SESSION['user_id'];
-            $this->data['flip'] = "false";
-            $this->data['ckeditor'] = "krs";
-
-            unset($_SESSION['sukses']);
-            $this->load->model('All_model');
-            $data['th'] = $this->All_model->getThn();
-            $data['prodis'] = [
-                [
-                    'id' => 'PTI',
-                    'prodi' => 'Pendidikan Teknik Informatika'
-                ],
-                [
-                    'id' => 'SI',
-                    'prodi' => 'Sistem Informatika'
-                ],
-                [
-                    'id' => 'ILKOM',
-                    'prodi' => 'Ilmu Komputer'
-                ],
-                [
-                    'id' => 'MI',
-                    'prodi' => 'Manajemen Informasi'
-                ]
-            ];
-            $this->data['group'] = $this->ion_auth_model->getGroup($id);
-
-            $this->load->view("admin/master/header", $this->data);
-            $this->load->view("admin/page/krs/tambah", $data);
-            $this->load->view("admin/master/footer", $this->data);
-
-            if ($this->input->post('submit') === '') {
-
-                if ($this->All_model->addData() && $this->All_model->addSmtr()) {
-                    $info = [
-                        'id-info' => 1,
-                        'info' => date('j F Y'),
-                        'ket' => date('G \: i \: s')
-                    ];
-                    $this->All_model->updInfo($info);
-                    unset($_SESSION['flash']);
-                    $this->session->set_flashdata('sukses', 'Ditambahkan');
-                    redirect('krs');
-                } else {
-                    $this->session->set_flashdata('flash', 'Gagal ditambahkan');
-                    redirect('krs/tambah_Mahasiswa');
-                }
-            }
+            redirect('sso_hmj');
         }
     }
 
@@ -448,11 +343,11 @@ class Krs extends CI_Controller
 
         $nim = $this->input->post('nim');
 
-        $this->load->model('All_model');
-        $data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
-        $data['mhs'] = $this->All_model->getMahasiswaById($nim);
-        $data['tahun'] = $this->All_model->getThn();
-        $data['updated_info'] = $this->All_model->infos();
+        // $this->load->model('All_model');
+        // $data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
+        // $data['mhs'] = $this->All_model->getMahasiswaById($nim);
+        // $data['tahun'] = $this->All_model->getThn();
+        // $data['updated_info'] = $this->All_model->infos();
 
         $data['title'] = "Home";
 
@@ -998,19 +893,23 @@ class Krs extends CI_Controller
     // Start Lihat Mahasiswa
     public function listMahasiswa()
     {
-        $this->data['title'] = "KRS - Data Mahasiswa";
-        $this->data['active'] = "11";
-        $this->data['flip'] = "false";
-        $this->data['ckeditor'] = "krs";
-        $id = $_SESSION['user_id'];
-        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs/home');
+        } else {
+            $this->data['title'] = "KRS - Data Mahasiswa";
+            $this->data['active'] = "11";
+            $this->data['flip'] = "false";
+            $this->data['ckeditor'] = "krs";
+            $id = $_SESSION['user_id'];
+            $this->data['group'] = $this->ion_auth_model->getGroup($id);
 
-        $this->load->model('Krs_model');
-        $this->data['mahasiswa'] = $this->Krs_model->getValidMahasiswaThisSemester();
+            $this->load->model('Krs_model');
+            $this->data['mahasiswa'] = $this->Krs_model->getValidMahasiswaThisSemester($id);
 
-        $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/dosen/index", $this->data);
-        $this->load->view("admin/master/footer", $this->data);
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/dosen/index", $this->data);
+            $this->load->view("admin/master/footer", $this->data);
+        }
     }
     // End Lihat Bukti
     // ********** END Backend User Dosen ***************** //
@@ -1040,6 +939,7 @@ class Krs extends CI_Controller
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
             redirect('krs/viewMintaBukti');
         } else {
+            $this->load->model('Krs_Model');
             $statusIuran = $this->Krs_Model->getIuranWhereId($id_iuran)['status'];
 
             if ($this->Krs_Model->getIuranWhereId($id_iuran) > 0 && $this->Krs_Model->getIuranWhereId($id_iuran)['status'] == '0') {
@@ -1069,8 +969,10 @@ class Krs extends CI_Controller
     public function simpanIuran()
     {
         $this->load->model('Krs_Model');
+        $tahunDepan = $this->input->post("inputTahunDepan");
+        $tahunBelakang = $this->input->post("inputTahunBelakang");
         $data = [
-            'tahun_ajaran' => $this->input->post('tahun_ajaran'),
+            'tahun_ajaran' => $tahunDepan . "/" . $tahunBelakang,
             'semester' => $this->input->post('semester'),
             'status' => 1,
         ];
@@ -1197,68 +1099,78 @@ class Krs extends CI_Controller
         }
     }
     // End Admin Site Lihat data Pembayaran Iuran
-    // Start Mahasiswa Page 
+    // Start Mahasiswa Page
     public function checkNim()
     {
+        $this->data['title'] = "Iuran HMJ TI";
         $this->load->model('Krs_model');
         $nim = $this->input->post('nim');
         $data['mhs'] = $this->Krs_model->findMahasiswaNim($nim);
         $data['dosen'] = $this->Krs_model->loadDosen();
         $data['nim'] = $nim;
         $data['isExist'] = $this->session->flashdata('exist');
-        $this->load->view("guest/krs/master/header");
+        $this->load->view("guest/krs/master/header", $this->data);
         $this->load->view("guest/krs/page/index", $data);
         $this->load->view("guest/krs/master/footer");
     }
     public function createPembayaran()
     {
-        $this->load->model('Krs_model');
-        $data['isExist'] = null;
-        $nim = $this->input->post('nim');
-        if (!empty($this->Krs_model->findMahasiswaNim($nim))) {
-            $this->session->set_flashdata('exist', 1);
-            redirect('krs/checkNim/');
-        }
-        $nama = $this->input->post('nama');
-        $prodi = $this->input->post('prodi');
-        $angkatan = $this->input->post('angkatan');
-        $dosen = $this->input->post('pa');
-        $file = $_FILES['file'];
-        $id_iuran = $this->Krs_model->findActiveIuran();
-
-        if (!empty($file)) {
-            // Set preference 
-            $config['upload_path'] = './assets/upload/Folder_krs';
-            $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
-            $config['max_size'] = '1000'; // max_size in kb 
-            $config['file_name'] = $_FILES['file']['name'];
-
-            // Load upload library 
-            $this->load->library('upload', $config);
-            if (!$this->upload->do_upload('file')) {
-                // Get data about the file
-
-                $data['response'] = 'failed';
-            } else {
-
-                $uploadData = $this->upload->data('file_name');
-            }
+        if (($this->input->post('name') !== null)) {
+            redirect('krs/home');
         } else {
-            $data['response'] = 'failed';
-        }
+            $this->load->model('Krs_model');
+            $data['isExist'] = null;
+            $nim = $this->input->post('nim');
+            if (!empty($this->Krs_model->findMahasiswaNim($nim))) {
+                $this->session->set_flashdata('exist', 1);
+                redirect('krs/checkNim/');
+            }
+            $nama = htmlspecialchars($this->input->post('nama'));
+            $prodi = $this->input->post('prodi');
+            $angkatan = $this->input->post('angkatan');
+            $dosen = $this->input->post('pa');
+            $file = $_FILES['file'];
+            $id_iuran = $this->Krs_model->findActiveIuran();
+            $date = new DateTime();
+            $namafile = md5($date->format('Y-m-d H:i:s'));
 
-        $mhs = [
-            'nama_mhs' => $nama,
-            'nim' => $nim,
-            'prodi' => $prodi,
-            'angkatan' => $angkatan,
-            'bukti' => $file['name'],
-            'id_dosen' => $dosen,
-            'id_iuran' => $id_iuran[0]["id"]
-        ];
-        $this->Krs_model->storePembayaran($mhs);
-        $this->load->view("guest/krs/master/header");
-        $this->load->view("guest/krs/page/index", $data);
-        $this->load->view("guest/krs/master/footer");
+            if (!empty($file)) {
+                // Set preference
+                $config['upload_path'] = './assets/upload/Folder_krs';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif|pdf';
+                $config['max_size'] = '1000'; // max_size in kb
+                $config['file_name'] = $namafile;
+
+                // Load upload library
+                $this->load->library('upload', $config);
+                if (!$this->upload->do_upload('file')) {
+                    // Get data about the file
+
+                    $data['response'] = 'failed';
+                } else {
+                    // unlink('./assets/upload/Folder_krs'. $bukti);
+                    $uploadData = $this->upload->data('file_name');
+                }
+            } else {
+                $data['response'] = 'failed';
+            }
+
+            // mengambil extension dari file
+            $fileWithExt = explode('.', $file['name']);
+
+            $mhs = [
+                'nama_mhs' => $nama,
+                'nim' => $nim,
+                'prodi' => $prodi,
+                'angkatan' => $angkatan,
+                'bukti' => $namafile . '.' . $fileWithExt[1],
+                'id_dosen' => $dosen,
+                'id_iuran' => $id_iuran[0]["id"]
+            ];
+            $this->Krs_model->storePembayaran($mhs);
+            $this->load->view("guest/krs/master/header");
+            $this->load->view("guest/krs/page/index", $data);
+            $this->load->view("guest/krs/master/footer");
+        }
     }
 }
