@@ -260,18 +260,20 @@ function submitForm() {
     <?php endif; ?>
 <?php endif; ?>
 <?php $exist = null ?>
-<?php $exist = $isExist ?>
-<?php if ($exist == 1) : ?>
-    <script>
-        setTimeout(function() {
-            Swal.fire(
-                ':( ',
-                'NIM yang anda masukkan sudah ada, silahkan masukkan data dengan benar ',
-                'error'
-            )
+<?php if (isset($isExist)) : ?>
+    <?php $exist = $isExist ?>
+    <?php if ($exist == 1) : ?>
+        <script>
+            setTimeout(function() {
+                Swal.fire(
+                    ':( ',
+                    'NIM yang anda masukkan sudah ada, silahkan masukkan data dengan benar ',
+                    'error'
+                )
 
-        }, 100);
-    </script>
+            }, 100);
+        </script>
+    <?php endif; ?>
 <?php endif; ?>
 
 <?php if ($this->input->post('upload-form') !== NULL) : ?>

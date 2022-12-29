@@ -1,13 +1,16 @@
 <div class="container-fluid">
   <!-- Start Btn Buat Form Bukti -->
-  <div>
-    <button type="button" class="btn btn-info ">
-      <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/buat_iuran') ?>">
-        <span class="pr-2"><i class="fas fa-plus"></i></span>
-        Tambah Iuran
-      </a>
-    </button>
-  </div>
+  <form action="<?= base_url() ?>krs/printCSVAll" class="" method="post">
+    <div class="row justify-content-between w-100 mx-0 px-3">
+      <button type="button" class="btn btn-info col-2">
+        <a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url('krs/buat_iuran') ?>">
+          <span class="pr-2"><i class="fas fa-plus"></i></span>
+          Tambah Iuran
+        </a>
+      </button>
+      <button type="submit" class="btn btn-success col-2" name="export"><i class="fa fa-download" aria-hidden="true"></i></button>
+    </div>
+  </form>
   <!-- End Btn Buat Form Bukti -->
 
   <!-- Start  Table -->
@@ -67,9 +70,7 @@
                     </td>
                     <td>
                       <div>
-                        <button type="button" class="btn btn-primary"><a class="text-decoration-none text-white font-weight-bolder" href="<?= base_url() ?>krs/viewBukti/<?php echo $bukti['id'] ?>">Lihat <i class="far fa-eye"></i></a>
-
-                        </button>
+                        <a class="btn btn-primary text-decoration-none text-white font-weight-bolder" href="<?= base_url() ?>krs/viewBukti/<?php echo $bukti['id'] ?>">Lihat <i class="far fa-eye"></i></a>
                       </div>
                     </td>
                   </tr>
