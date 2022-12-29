@@ -14,7 +14,7 @@
             <label class="d-block pl-3" for="Tahun">Tahun Ajaran</label>
             <div class="form-group input-group mb-3 d-flex">
               <div class="col-12 col-md-5 input-group mb-3">
-                <input type="number" placeholder="Tahun" class="form-control" id="inputTahunDepan" name="inputTahunDepan" onchange="inputTahunDosen()">
+                <input type="number" placeholder="Tahun" class="form-control" id="inputTahunDepan" name="inputTahunDepan" onchange="inputTahunAjaran()">
               </div>
               <div class="d-none d-md-block col-md-1" style="font-size: 25px;">/</div>
               <input id="inputTahunBelakang" name="inputTahunBelakang" class="col-12 col-md-5 form-control " type="number" placeholder="..." readonly>

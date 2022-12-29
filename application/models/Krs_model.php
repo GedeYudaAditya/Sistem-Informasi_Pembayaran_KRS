@@ -114,6 +114,17 @@ class Krs_Model extends CI_Model
         $this->db->join('s6_data_pembayaran', 's6_iuran.id=s6_data_pembayaran.id_iuran');
         $this->db->where("s6_iuran.id", $where[0]);
         $this->db->where("s6_data_pembayaran.valid", $where[1]);
+        $this->db->where("s6_data_pembayaran.is_rejected", 0);
+        return $this->db->get();
+    }
+
+    public function getBuktiByStatusUnvalid($where)
+    {
+        $this->db->select('*');
+        $this->db->from('s6_iuran');
+        $this->db->join('s6_data_pembayaran', 's6_iuran.id=s6_data_pembayaran.id_iuran');
+        $this->db->where("s6_iuran.id", $where[0]);
+        $this->db->where("s6_data_pembayaran.is_rejected", $where[1]);
         return $this->db->get();
     }
     // filter
@@ -126,14 +137,42 @@ class Krs_Model extends CI_Model
         return $this->db->get();
     }
 
+    public function updateBukti($where)
+    {
+        return $this->db->where('id =' . $where)->update('s6_data_pembayaran', array('valid' => 0, 'is_rejected' => 1));
+    }
+
     public function deleteBukti($where)
     {
         return $this->db->delete('s6_data_pembayaran', array('id' => $where));
     }
+
     public function terimaBukti($where)
     {
         return $this->db->where('id =' . $where)->update('s6_data_pembayaran', array('valid' => 1));
     }
     // Admin site End - Marsell
 
+    // Yuda - CSV Export
+    public function printCSV()
+    {
+        $this->db->select('nama_mhs, nim, prodi, angkatan, concat(first_name) as nama_dosen, valid, is_rejected, tahun_ajaran, bukti');
+        $this->db->from('s6_data_pembayaran');
+        $this->db->join('s6_iuran', 's6_iuran.id=s6_data_pembayaran.id_iuran');
+        $this->db->join('users', 'users.id=s6_data_pembayaran.id_dosen');
+        $this->db->where('status', 1);
+
+        return $this->db->get()->result_array();
+    }
+
+    public function printCSVAll()
+    {
+        $this->db->select('nama_mhs, nim, prodi, angkatan, concat(first_name) as nama_dosen, valid, is_rejected, tahun_ajaran, bukti');
+        $this->db->from('s6_data_pembayaran');
+        $this->db->join('s6_iuran', 's6_iuran.id=s6_data_pembayaran.id_iuran');
+        $this->db->join('users', 'users.id=s6_data_pembayaran.id_dosen');
+        // $this->db->where('status', 1);
+
+        return $this->db->get()->result_array();
+    }
 }

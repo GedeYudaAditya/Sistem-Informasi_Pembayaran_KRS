@@ -5,7 +5,7 @@ class Krs extends CI_Controller
     public function index()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             redirect('sso_hmj');
         }
@@ -14,7 +14,7 @@ class Krs extends CI_Controller
     public function getUbah($nim, $th, $smtr)
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->data['title'] = "KRS - Update Data Mahasiswa";
             $this->data['active'] = "11";
@@ -55,7 +55,7 @@ class Krs extends CI_Controller
     public function ubahData($id, $th, $smtr)
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             if ($this->input->post('submit') === '') {
                 // var_dump($this->All_model->updSmtr($id, $th, $smtr));
@@ -83,7 +83,7 @@ class Krs extends CI_Controller
     public function tambah_tahun()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->data['title'] = "KRS - Tambah Tahun";
             $this->data['active'] = "11";
@@ -127,7 +127,7 @@ class Krs extends CI_Controller
     public function ubahTahun($tahun)
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->data['title'] = "KRS - Ubah Tahun";
             $this->data['active'] = "11";
@@ -173,7 +173,7 @@ class Krs extends CI_Controller
     public function hapus_thn($id)
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->load->model('All_model');
             $this->All_model->delThn($id);
@@ -190,7 +190,7 @@ class Krs extends CI_Controller
     public function hapus_smtr($id)
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->load->model('All_model');
             $this->All_model->delSmtr($id);
@@ -207,20 +207,101 @@ class Krs extends CI_Controller
     public function printCSV()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             if (isset($_POST['export'])) {
-                $this->load->model('All_model');
-                $isi = $this->All_model->printCSV();
+                $this->load->model('Krs_model');
+                $this->load->helper('Krs_helper');
+                $isi = $this->Krs_model->printCSV();
+
+                // var_dump($isi);
+                // $length = count($isi);
+                $data = [];
+
+                foreach ($isi as $key => $value) {
+                    if ($value['valid'] == 1 && $value['is_rejected'] == 0) {
+                        $value['valid'] = 'Valid';
+                    } else if ($value['valid'] == 0 && $value['is_rejected'] == 0) {
+                        $value['valid'] = 'Belum di Validasi';
+                    } else {
+                        $value['valid'] = 'Ditolak';
+                    }
+
+                    $data[$key] = [
+                        'nim' => $value['nim'],
+                        'nama_mhs' => $value['nama_mhs'],
+                        'prodi' => $value['prodi'],
+                        'semester' => getSemesterFromAngkatan($value['angkatan']),
+                        'valid' => $value['valid'],
+                        'nama_dosen' => $value['nama_dosen'] == null ? 'Belum Ada' : $value['nama_dosen'],
+                        'tahun_ajaran' => $value['tahun_ajaran'],
+                        'file' => $value['bukti'] == null ? 'Belum Ada' : base_url('assets/upload/Folder_krs/' . $value['bukti'])
+                    ];
+                }
+
+                // var_dump($data);
+                // die;
 
                 $date = date('j F Y');
                 $time = date('G\^i\^s');
                 header('Content-Type: text/csv; charset=utf-8');
                 header('Content-Disposition: attachment; filename=DataPembayaran_' . $date . '_' . $time . '.csv');
                 $output = fopen("php://output", "w");
-                fputcsv($output, array('NIM', 'Nama', 'Prodi', 'Semester', 'Status', 'Tahun'));
+                fputcsv($output, array('NIM', 'Nama', 'Prodi', 'Semester', 'Status', 'Dosen PA', 'Tahun Ajaran', 'File'));
 
-                foreach ($isi as $row) {
+                foreach ($data as $row) {
+                    fputcsv($output, $row);
+                }
+                fclose($output);
+            }
+        }
+    }
+
+    public function printCSVAll()
+    {
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs/checkNim');
+        } else {
+            if (isset($_POST['export'])) {
+                $this->load->model('Krs_model');
+                $this->load->helper('Krs_helper');
+                $isi = $this->Krs_model->printCSVAll();
+
+                // var_dump($isi);
+                // $length = count($isi);
+                $data = [];
+                foreach ($isi as $key => $value) {
+                    if ($value['valid'] == 1 && $value['is_rejected'] == 0) {
+                        $value['valid'] = 'Valid';
+                    } else if ($value['valid'] == 0 && $value['is_rejected'] == 0) {
+                        $value['valid'] = 'Belum divalidasi';
+                    } else {
+                        $value['valid'] = 'Ditolak';
+                    }
+
+                    $data[$key] = [
+                        'nim' => $value['nim'],
+                        'nama_mhs' => $value['nama_mhs'],
+                        'prodi' => $value['prodi'],
+                        'semester' => getSemesterFromAngkatan($value['angkatan']),
+                        'valid' => $value['valid'],
+                        'nama_dosen' => $value['nama_dosen'] == null ? 'Belum Ada' : $value['nama_dosen'],
+                        'tahun_ajaran' => $value['tahun_ajaran'],
+                        'file' => $value['bukti'] == null ? 'Belum Ada' : base_url('assets/upload/Folder_krs/' . $value['bukti'])
+                    ];
+                }
+
+                // var_dump($data);
+                // die;
+
+                $date = date('j F Y');
+                $time = date('G\^i\^s');
+                header('Content-Type: text/csv; charset=utf-8');
+                header('Content-Disposition: attachment; filename=SemuaDataPembayaran_' . $date . '_' . $time . '.csv');
+                $output = fopen("php://output", "w");
+                fputcsv($output, array('NIM', 'Nama', 'Prodi', 'Semester', 'Status', 'Dosen PA', 'Tahun Ajaran', 'File'));
+
+                foreach ($data as $row) {
                     fputcsv($output, $row);
                 }
                 fclose($output);
@@ -231,7 +312,7 @@ class Krs extends CI_Controller
     public function importCSV()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             if (isset($_POST['input'])) {
 
@@ -295,66 +376,66 @@ class Krs extends CI_Controller
     // }
 
     // BAGIAN CLIENT SIDE
-    public function Home()
-    {
-        // if ($this->ion_auth->logged_in() || $this->ion_auth->in_group(krs)) {
-        //     redirect('sso_hmj', 'refresh');
-        // } else {
+    // public function Home()
+    // {
+    // if ($this->ion_auth->logged_in() || $this->ion_auth->in_group(krs)) {
+    //     redirect('sso_hmj', 'refresh');
+    // } else {
 
-        //     $this->data['title'] = $this->lang->line('login_heading');
+    //     $this->data['title'] = $this->lang->line('login_heading');
 
-        //     // validate form input
-        //     $this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
-        //     $this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
+    //     // validate form input
+    //     $this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
+    //     $this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
 
-        //     if ($this->form_validation->run() === TRUE) {
-        //         // check to see if the user is logging in
-        //         // check for "remember me"
-        //         $remember = (bool) $this->input->post('remember');
+    //     if ($this->form_validation->run() === TRUE) {
+    //         // check to see if the user is logging in
+    //         // check for "remember me"
+    //         $remember = (bool) $this->input->post('remember');
 
-        //         if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
-        //             //if the login is successful
-        //             //redirect them back to the home page
-        //             $this->session->set_flashdata('message', $this->ion_auth->messages());
-        //             redirect('sso_hmj', 'refresh');
-        //         } else {
-        //             // if the login was un-successful
-        //             // redirect them back to the login page
-        //             $this->session->set_flashdata('message', $this->ion_auth->errors());
-        //             redirect('login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
-        //         }
-        //     } else {
-        // the user is not logging in so display the login page
-        // set the flash data error message if there is one
-        // $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+    //         if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
+    //             //if the login is successful
+    //             //redirect them back to the home page
+    //             $this->session->set_flashdata('message', $this->ion_auth->messages());
+    //             redirect('sso_hmj', 'refresh');
+    //         } else {
+    //             // if the login was un-successful
+    //             // redirect them back to the login page
+    //             $this->session->set_flashdata('message', $this->ion_auth->errors());
+    //             redirect('login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+    //         }
+    //     } else {
+    // the user is not logging in so display the login page
+    // set the flash data error message if there is one
+    // $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
-        // $this->data['identity'] = [
-        //     'name' => 'identity',
-        //     'id' => 'identity',
-        //     'type' => 'text',
-        //     'value' => $this->form_validation->set_value('identity'),
-        // ];
+    // $this->data['identity'] = [
+    //     'name' => 'identity',
+    //     'id' => 'identity',
+    //     'type' => 'text',
+    //     'value' => $this->form_validation->set_value('identity'),
+    // ];
 
-        // $this->data['password'] = [
-        //     'name' => 'password',
-        //     'id' => 'password',
-        //     'type' => 'password',
-        // ];
+    // $this->data['password'] = [
+    //     'name' => 'password',
+    //     'id' => 'password',
+    //     'type' => 'password',
+    // ];
 
-        $nim = $this->input->post('nim');
+    // $nim = $this->input->post('nim');
 
-        // $this->load->model('All_model');
-        // $data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
-        // $data['mhs'] = $this->All_model->getMahasiswaById($nim);
-        // $data['tahun'] = $this->All_model->getThn();
-        // $data['updated_info'] = $this->All_model->infos();
+    // $this->load->model('All_model');
+    // $data['dtMhs'] = $this->All_model->getSmtrWithTahunKRS($nim);
+    // $data['mhs'] = $this->All_model->getMahasiswaById($nim);
+    // $data['tahun'] = $this->All_model->getThn();
+    // $data['updated_info'] = $this->All_model->infos();
 
-        $data['title'] = "Home";
+    //     $data['title'] = "Home";
 
-        $this->load->view("guest/krs/master/header", $data);
-        $this->load->view("guest/krs/page/index");
-        $this->load->view("guest/krs/master/footer", $data);
-    }
+    //     $this->load->view("guest/krs/master/header", $data);
+    //     $this->load->view("guest/krs/page/index");
+    //     $this->load->view("guest/krs/master/footer", $data);
+    // }
 
     // public function Upload_Form () {
     //     $data['updated_info'] = $this->All_model->infos();
@@ -369,7 +450,7 @@ class Krs extends CI_Controller
     public function mahasiswa()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->data['title'] = "KRS - Data Mahasiswa";
             $this->data['active'] = "11";
@@ -428,7 +509,7 @@ class Krs extends CI_Controller
     public function tambah_Mahasiswa_Krs()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
 
             $this->data['title'] = "KRS - Tambah Data Mahasiswa";
@@ -511,7 +592,7 @@ class Krs extends CI_Controller
     public function update_data_mahasiswa($mhs_id)
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->data['title'] = "KRS - Update Data Mahasiswa";
             $this->data['active'] = "11";
@@ -566,7 +647,7 @@ class Krs extends CI_Controller
     public function simpan_data()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $id = $this->input->post('id');
             $nama = $this->input->post('nama');
@@ -601,7 +682,7 @@ class Krs extends CI_Controller
     public function halaman_bukti()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->data['title'] = "KRS - Bukti Pembayaran";
             $this->data['active'] = "11";
@@ -657,7 +738,7 @@ class Krs extends CI_Controller
     public function pilih_validasi()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->load->library('form_validation');
             $this->load->model('All_model');
@@ -693,7 +774,7 @@ class Krs extends CI_Controller
     public function upload_bukti($id_form)
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->load->model('All_model');
 
@@ -732,7 +813,7 @@ class Krs extends CI_Controller
     public function simpan_bukti()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->load->model('All_model');
 
@@ -889,12 +970,14 @@ class Krs extends CI_Controller
     }
     // End memvalidkanBukti
 
+    // Yang Baru #New
+
     // ********** START Backend User Dosen ***************** //
     // Start Lihat Mahasiswa
     public function listMahasiswa()
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->data['title'] = "KRS - Data Mahasiswa";
             $this->data['active'] = "11";
@@ -919,16 +1002,20 @@ class Krs extends CI_Controller
     // Start View Form Buat Iuran
     public function tambahIuran()
     {
-        $this->data['title'] = "KRS - Tambah Iuran";
-        $this->data['active'] = "11";
-        $this->data['flip'] = "false";
-        $this->data['ckeditor'] = "krs";
-        $id = $_SESSION['user_id'];
-        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs/checkNim');
+        } else {
+            $this->data['title'] = "KRS - Tambah Iuran";
+            $this->data['active'] = "11";
+            $this->data['flip'] = "false";
+            $this->data['ckeditor'] = "krs";
+            $id = $_SESSION['user_id'];
+            $this->data['group'] = $this->ion_auth_model->getGroup($id);
 
-        $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/admin/formIuran");
-        $this->load->view("admin/master/footer", $this->data);
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/admin/formIuran");
+            $this->load->view("admin/master/footer", $this->data);
+        }
     }
     // End View Form Buat Iuran
 
@@ -937,7 +1024,7 @@ class Krs extends CI_Controller
     public function editAktivasiIuran($id_iuran)
     {
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('krs/viewMintaBukti');
+            redirect('krs/checkNim');
         } else {
             $this->load->model('Krs_Model');
             $statusIuran = $this->Krs_Model->getIuranWhereId($id_iuran)['status'];
@@ -968,133 +1055,168 @@ class Krs extends CI_Controller
     // Start tambah Iuran
     public function simpanIuran()
     {
-        $this->load->model('Krs_Model');
-        $tahunDepan = $this->input->post("inputTahunDepan");
-        $tahunBelakang = $this->input->post("inputTahunBelakang");
-        $data = [
-            'tahun_ajaran' => $tahunDepan . "/" . $tahunBelakang,
-            'semester' => $this->input->post('semester'),
-            'status' => 1,
-        ];
-        $this->Krs_Model->insertIuran($data);
-        redirect("Krs/viewMintaBukti");
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs/checkNim');
+        } else {
+            $this->load->model('Krs_Model');
+            $tahunDepan = $this->input->post("inputTahunDepan");
+            $tahunBelakang = $this->input->post("inputTahunBelakang");
+            $data = [
+                'tahun_ajaran' => $tahunDepan . "/" . $tahunBelakang,
+                'semester' => htmlspecialchars($this->input->post('semester')),
+                'status' => 1,
+            ];
+            $this->Krs_Model->insertIuran($data);
+            redirect("Krs/viewMintaBukti");
+        }
     }
     // End tambah Iuran
 
     public function viewBukti($id_iuran)
     {
-        $this->data['title'] = "KRS - Data Bukti Pembayaran";
-        $this->data['active'] = "11";
-        $this->data['flip'] = "false";
-        $this->data['ckeditor'] = "krs";
-        $id = $_SESSION['user_id'];
-        $this->data['group'] = $this->ion_auth_model->getGroup($id);
-
-        $status = $this->input->post('validStatus');
-        $this->load->model('Krs_Model');
-
-        if ($status  == NULL) {
-            $data['bukti'] = $this->Krs_Model->getDataBuktiPembayaran($id_iuran)->result();
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs/checkNim');
         } else {
-            $data['bukti'] = $this->Krs_Model->getBuktiByStatus([$id_iuran, $status])->result();
+            $this->data['title'] = "KRS - Data Bukti Pembayaran";
+            $this->data['active'] = "11";
+            $this->data['flip'] = "false";
+            $this->data['ckeditor'] = "krs";
+            $id = $_SESSION['user_id'];
+            $this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+            $status = $this->input->post('validStatus');
+            $this->load->model('Krs_Model');
+
+            if ($status  == NULL) {
+                $data['bukti'] = $this->Krs_Model->getDataBuktiPembayaran($id_iuran)->result();
+                // redirect("krs/viewBukti/" . $id_iuran);
+            } else if ($status == 'none') {
+                $data['bukti'] = $this->Krs_Model->getDataBuktiPembayaran($id_iuran)->result();
+                // redirect("krs/viewBukti/" . $id_iuran);
+            } else if ($status == 'tolak') {
+                $data['bukti'] = $this->Krs_Model->getBuktiByStatusUnvalid([$id_iuran, 1])->result();
+                // redirect("krs/viewBukti/" . $id_iuran);
+            } else {
+                $data['bukti'] = $this->Krs_Model->getBuktiByStatus([$id_iuran, $status])->result();
+                // redirect("krs/viewBukti/" . $id_iuran);
+            }
+
+            // unset($_POST['validStatus']);
+
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/admin/validasiMahasiswa", $data);
+            $this->load->view("admin/master/footer", $this->data);
         }
-        $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/admin/validasiMahasiswa", $data);
-        $this->load->view("admin/master/footer", $this->data);
     }
     // End Admin Site validasi bukti Pembayaran Iuran
 
     // Start Admin Site Lihat data Pembayaran Iuran
     public function viewMintaBukti()
     {
-        $this->data['title'] = "KRS - Data Iuran";
-        $this->data['active'] = "11";
-        $this->data['flip'] = "false";
-        $this->data['ckeditor'] = "krs";
-        $id = $_SESSION['user_id'];
-        $this->data['group'] = $this->ion_auth_model->getGroup($id);
-        $id = $_SESSION['user_id'];
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs/checkNim');
+        } else {
+            $this->data['title'] = "KRS - Data Iuran";
+            $this->data['active'] = "11";
+            $this->data['flip'] = "false";
+            $this->data['ckeditor'] = "krs";
+            $id = $_SESSION['user_id'];
+            $this->data['group'] = $this->ion_auth_model->getGroup($id);
+            $id = $_SESSION['user_id'];
 
-        $this->load->model('Krs_Model');
-        $data['iuran'] = $this->Krs_Model->getAllIuran()->result_array();
-        $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/admin/mintaBukti", $data);
-        $this->load->view("admin/master/footer", $this->data);
+            $this->load->model('Krs_Model');
+            $data['iuran'] = $this->Krs_Model->getAllIuran()->result_array();
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/admin/mintaBukti", $data);
+            $this->load->view("admin/master/footer", $this->data);
+        }
     }
 
     public function viewDetailBukti($id_bukti)
     {
-        $this->data['title'] = "KRS - Data Mahasiswa";
-        $this->data['active'] = "11";
-        $this->data['flip'] = "false";
-        $this->data['ckeditor'] = "krs";
-        $id = $_SESSION['user_id'];
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+            redirect('krs/checkNim');
+        } else {
+            $this->data['title'] = "KRS - Data Mahasiswa";
+            $this->data['active'] = "11";
+            $this->data['flip'] = "false";
+            $this->data['ckeditor'] = "krs";
+            $id = $_SESSION['user_id'];
 
-        $this->data['group'] = $this->ion_auth_model->getGroup($id);
+            $this->data['group'] = $this->ion_auth_model->getGroup($id);
 
-        $this->load->model('Krs_Model');
+            $this->load->model('Krs_Model');
 
-        $data_pembayaran['value'] = $this->Krs_Model->getDataPembayaran($id_bukti)->row_array();
-        $this->load->view("admin/master/header", $this->data);
-        $this->load->view("admin/page/krs/dosen/detailBukti", $data_pembayaran);
-        $this->load->view("admin/master/footer", $this->data);
+            $data_pembayaran['value'] = $this->Krs_Model->getDataPembayaran($id_bukti)->row_array();
+            $this->load->view("admin/master/header", $this->data);
+            $this->load->view("admin/page/krs/dosen/detailBukti", $data_pembayaran);
+            $this->load->view("admin/master/footer", $this->data);
+        }
     }
 
     public function tolakBukti($id_bukti)
     {
-        $this->data['active'] = "11";
-        $this->data['flip'] = "false";
-        $this->data['ckeditor'] = "krs";
-        $id = $_SESSION['user_id'];
-
-        $this->data['group'] = $this->ion_auth_model->getGroup($id);
-
-        $this->load->model('Krs_Model');
-
-        $param = $this->Krs_Model->getDataPembayaran($id_bukti)->row_array()['id_iuran'];
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('/');
+            redirect('krs/checkNim');
         } else {
-            if ($this->Krs_Model->getDataPembayaran($id_bukti)->row_array() > 0) {
-                if ($this->Krs_Model->deleteBukti($id_bukti)) {
-                    $this->session->set_flashdata('berhasil', 'Ditolak');
-                    redirect("krs/viewBukti/" . $param);
-                } else {
-                    $this->session->set_flashdata('gagal', 'Ditolak, Terjadi Masalah');
-                    redirect('krs/viewBukti/' . $param);
-                }
+            $this->data['active'] = "11";
+            $this->data['flip'] = "false";
+            $this->data['ckeditor'] = "krs";
+            $id = $_SESSION['user_id'];
+
+            $this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+            $this->load->model('Krs_Model');
+
+            $param = $this->Krs_Model->getDataPembayaran($id_bukti)->row_array()['id_iuran'];
+            if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+                redirect('/');
             } else {
-                show_404();
+                if ($this->Krs_Model->getDataPembayaran($id_bukti)->row_array() > 0) {
+                    if ($this->Krs_Model->updateBukti($id_bukti)) {
+                        $this->session->set_flashdata('berhasil', 'Ditolak');
+                        redirect("krs/viewBukti/" . $param);
+                    } else {
+                        $this->session->set_flashdata('gagal', 'Ditolak, Terjadi Masalah');
+                        redirect('krs/viewBukti/' . $param);
+                    }
+                } else {
+                    show_404();
+                }
             }
         }
     }
 
     public function validasiBukti($id_bukti)
     {
-        $this->data['active'] = "11";
-        $this->data['flip'] = "false";
-        $this->data['ckeditor'] = "krs";
-        $id = $_SESSION['user_id'];
-
-        $this->data['group'] = $this->ion_auth_model->getGroup($id);
-
-        $this->load->model('Krs_Model');
-
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
-            redirect('/');
+            redirect('krs/checkNim');
         } else {
-            $param = $this->Krs_Model->getDataPembayaran($id_bukti)->row_array()['id_iuran'];
+            $this->data['active'] = "11";
+            $this->data['flip'] = "false";
+            $this->data['ckeditor'] = "krs";
+            $id = $_SESSION['user_id'];
 
-            if ($this->Krs_Model->getDataPembayaran($id_bukti)->row_array() > 0) {
-                if ($this->Krs_Model->terimaBukti($id_bukti)) {
-                    $this->session->set_flashdata('berhasil', 'Divalidasi');
-                    redirect("krs/viewBukti/" . $param);
-                } else {
-                    $this->session->set_flashdata('gagal', 'Divalidasi, Terjadi Masalah');
-                    redirect('krs/viewBukti/' .  $param);
-                }
+            $this->data['group'] = $this->ion_auth_model->getGroup($id);
+
+            $this->load->model('Krs_Model');
+
+            if (!$this->ion_auth->logged_in() || !$this->ion_auth->in_group(krs)) {
+                redirect('/');
             } else {
-                show_404();
+                $param = $this->Krs_Model->getDataPembayaran($id_bukti)->row_array()['id_iuran'];
+
+                if ($this->Krs_Model->getDataPembayaran($id_bukti)->row_array() > 0) {
+                    if ($this->Krs_Model->terimaBukti($id_bukti)) {
+                        $this->session->set_flashdata('berhasil', 'Divalidasi');
+                        redirect("krs/viewBukti/" . $param);
+                    } else {
+                        $this->session->set_flashdata('gagal', 'Divalidasi, Terjadi Masalah');
+                        redirect('krs/viewBukti/' .  $param);
+                    }
+                } else {
+                    show_404();
+                }
             }
         }
     }
@@ -1107,16 +1229,18 @@ class Krs extends CI_Controller
         $nim = $this->input->post('nim');
         $data['mhs'] = $this->Krs_model->findMahasiswaNim($nim);
         $data['dosen'] = $this->Krs_model->loadDosen();
+        // var_dump($data['dosen']);
         $data['nim'] = $nim;
         $data['isExist'] = $this->session->flashdata('exist');
         $this->load->view("guest/krs/master/header", $this->data);
         $this->load->view("guest/krs/page/index", $data);
         $this->load->view("guest/krs/master/footer");
     }
+
     public function createPembayaran()
     {
         if (($this->input->post('name') !== null)) {
-            redirect('krs/home');
+            redirect('krs/checkNim');
         } else {
             $this->load->model('Krs_model');
             $data['isExist'] = null;
@@ -1126,9 +1250,9 @@ class Krs extends CI_Controller
                 redirect('krs/checkNim/');
             }
             $nama = htmlspecialchars($this->input->post('nama'));
-            $prodi = $this->input->post('prodi');
-            $angkatan = $this->input->post('angkatan');
-            $dosen = $this->input->post('pa');
+            $prodi = htmlspecialchars($this->input->post('prodi'));
+            $angkatan = htmlspecialchars($this->input->post('angkatan'));
+            $dosen = htmlspecialchars($this->input->post('pa'));
             $file = $_FILES['file'];
             $id_iuran = $this->Krs_model->findActiveIuran();
             $date = new DateTime();
