@@ -190,11 +190,11 @@ function submitForm() {
             <?php if ($mhs[0]['valid'] == 1) : ?>
                 <script>
                     setTimeout(function() {
-                        Swal.fire(
-                            '<?= $mhs[0]['nama_mhs'] ?>\n<?= $mhs[0]['nim'] ?>',
-                            'Telah membayar iuran KRS dan sudah tervalidasi',
-                            'success'
-                        )
+                        Swal.fire({
+                            title: '<?= $mhs[0]['nama_mhs'] ?>\n<?= $mhs[0]['nim'] ?>',
+                            html: 'Telah membayar iuran KRS dan sudah tervalidasi',
+                            icon: 'success'
+                        })
                     }, 100);
                 </script>
                 <?php $ada = true; ?>
