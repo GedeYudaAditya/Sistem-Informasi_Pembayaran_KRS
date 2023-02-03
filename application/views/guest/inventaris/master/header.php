@@ -70,11 +70,20 @@
 				<nav>
 					<ul class="navbar-nav" id="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link" href="<?= base_url() ?>">Permintaan</a>
+							<a class="nav-link" href="<?= base_url() ?>inventaris/home">Home</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="<?= base_url() ?>web/inventaris">[Profil]</a>
-						</li>
+						<?php if (!isset($_SESSION['Inv_Login'])) : ?>
+							<li class="nav-item">
+								<button type="button" class="nav-link bg-transparent border border-0" data-toggle="modal" data-target="#modalLogin">Login</button>
+							</li>
+						<?php else : ?>
+							<li class="nav-item">
+								<a class="nav-link" href="<?= base_url() ?>inventaris/lihatPermintaan">Daftar Permintaan</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="<?= base_url() ?>inventaris/invlogout">Logout</a>
+							</li>
+						<?php endif; ?>
 						<!-- <li class="nav-item">
                                             <a class="nav-link" href="<?= base_url() ?>web/repositori">Repositori</a>
                                         </li> -->
