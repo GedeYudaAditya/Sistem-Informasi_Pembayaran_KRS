@@ -2885,6 +2885,29 @@ class All_model extends CI_Model
 		return $this->db->get()->result_array();
 	}
 
+	public function allDataDetailPinjamDikonfirmasi($id)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_tomany');
+		$this->db->join('s7_inv_peminjaman', 's7_inv_tomany.idPeminjaman = s7_inv_peminjaman.idPeminjaman');
+		$this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang');
+		$this->db->join('s7_inv_kategori', 's7_inv_kategori.idKategori = s7_inv_barang.idKategori');
+		$this->db->where('s7_inv_peminjaman.idPeminjaman', $id);
+		return $this->db->get()->result_array();
+	}
+
+	public function allDataDetailKembali($id)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_tomany');
+		$this->db->join('s7_inv_peminjaman', 's7_inv_tomany.idPeminjaman = s7_inv_peminjaman.idPeminjaman');
+		$this->db->join('s7_inv_barang', 's7_inv_tomany.kodeBarang = s7_inv_barang.kodeBarang');
+		$this->db->join('s7_inv_kategori', 's7_inv_kategori.idKategori = s7_inv_barang.idKategori');
+
+		$this->db->where('s7_inv_peminjaman.idPeminjaman', $id);
+		return $this->db->get()->result_array();
+	}
+
 	public function allDataEditPesanan($id, $user)
 	{
 		$this->db->select('*');

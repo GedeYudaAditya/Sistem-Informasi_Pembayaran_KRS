@@ -67,3 +67,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 	$("#tableListMahasiswa").DataTable();
 });
+
+$(document).ready(function () {
+	$("#dataTable2").DataTable();
+});

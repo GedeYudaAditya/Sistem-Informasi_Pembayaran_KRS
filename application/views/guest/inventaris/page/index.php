@@ -64,7 +64,7 @@ foreach ($banyakBarang as $b) {
 ?>
 
 <section class="container" id="inventaris">
-	<nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg shadow-sm">
+	<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-lg shadow-sm">
 		<div class="container-fluid">
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -92,177 +92,254 @@ foreach ($banyakBarang as $b) {
 				</button>
 			</form>
 		</div>
-	</nav>
-	<main class="row" style="padding: 7rem 0 3.5rem 0;">
-		<div class="col-8 row" style="max-height:300px">
-			<?php
-			$no = 0;
-			$baik = 0;
-			$sedang = 0;
-			$rusak = 0;
-			foreach ($barang as $item) : ?>
-				<?php
-				if ($item['keadaanBarang'] == 'Baik') {
-					$baik += $item['banyakBarang'];
-				} else if ($item['keadaanBarang'] == 'Kurang Baik') {
-					$sedang += $item['banyakBarang'];
-				} else {
-					$rusak += $item['banyakBarang'];
-				}
-				?>
-				<div class="col-4 mb-5">
-					<div class="card glass" style="width: 14rem;">
-						<img src="<?= base_url() . "assets/upload/Folder_inventaris/" . $item['gambar'] ?>" class="card-img-top" alt="Card Image">
-						<div class="icon card-body">
-							<div class="" style="min-height:150px;">
-								<h5 class="card-title"><?= $item['namaBarang'] ?> </h5>
-								<p><span class="badge badge-<?php if ($item['hakBarang'] == 'Diperpinjamkan') {
-																echo 'success';
-															} else {
-																echo 'danger';
-															} ?>"><?= $item['hakBarang'] ?></span></p>
-								<p class="card-text"><?= $item['deskripsiBarang'] ?></p>
-							</div>
-							<hr>
-							<!-- <a href="#" class="btn-pinjam-inventaris">
-								<i class="fas fa-search"></i> Detail
-							</a> -->
-							<button type="button" class="btn btn-pinjam-inventaris btn-sm btn-icon-split" data-toggle="modal" data-target="#modalDetailBarang<?= $no ?>">
-								<span class="text-white-50">
-									<i class="fas fa-info-circle"></i>
-								</span>
-								<span class="text">Detail</span>
-							</button>
-						</div>
-					</div>
-				</div>
-				<!-- Modal -->
-				<div class="glassModal modal fade bd-example-modal-lg" id="modalDetailBarang<?= $no ?>" tabindex="-1" role="dialog" aria-labelledby="modalDetailBarangTitle" aria-hidden="true">
-					<div class="modal-dialog modal-lg" role="document">
-						<div class=" modal-content text-center">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLongTitle">Detail Barang</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<div class="badge badge-secondary m-2 p-2">
-									<i class="fas fa-box-open"></i>
-									Ketersediaan Barang <span class="badge badge-light p-1"><?= $item['banyakBarang'] - $item['barangDipinjam'] ?>/<?= $item['banyakBarang'] ?></span>
-								</div>
-								<div>
-									<img src="<?= base_url() . "assets/upload/Folder_inventaris/" . $item['gambar'] ?>" alt="Gambar Rusak atau Hilang">
-								</div>
-								<h3><?= $item['namaBarang'] ?></h3>
-								<div>Kode Barang : <?= $item['kodeBarang'] ?> | Merk : <?= $item['merk'] ?> | Tahun Pembelian : <?= $item['tahunPembelian'] ?></div>
-								<div>Kategori <?= $item['namaKategori'] ?></div>
-								<div>
-									<?php if ($item['hakBarang'] == 'Diperpinjamkan') : ?>
-										<b style="color: green;">Barang <?= $item['hakBarang'] ?></b>
-									<?php else : ?>
-										<b style="color: red;">Barang <?= $item['hakBarang'] ?></b>
-									<?php endif; ?>
-								</div>
-								<p class="mt-3 px-5"><?= $item['deskripsiBarang'] ?></p>
+	</nav> -->
+	<?php
+	$no = 0;
+	$baik = 0;
+	$sedang = 0;
+	$rusak = 0;
+
+	foreach ($barang as $b) {
+		if ($b['keadaanBarang'] == 'Baik') {
+			$baik += $b['banyakBarang'];
+		} else if ($b['keadaanBarang'] == 'Kurang Baik') {
+			$sedang += $b['banyakBarang'];
+		} else {
+			$rusak += $b['banyakBarang'];
+		}
+	}
+
+	$brB = $baik;
+	$baik = ($baik / $bBarang) * 100;
+	$brS = $sedang;
+	$sedang = ($sedang / $bBarang) * 100;
+	$brR = $rusak;
+	$rusak = ($rusak / $bBarang) * 100;
+	?>
+	<div class="row mt-3">
+		<div class="col-xl-4 col-sm-4 col-12 mb-3">
+			<div class="card">
+				<div class="card-body">
+					<div class="dash-widget-header">
+						<span class="dash-widget-icon bg-7">
+							<i class="fas fa-check"></i>
+						</span>
+						<div class="dash-count">
+							<div class="dash-title">Kondisi Baik</div>
+							<div class="dash-counts">
+								<p><?= $brB ?> Unit</p>
 							</div>
 						</div>
 					</div>
 				</div>
-			<?php
-				$no++;
-			endforeach; ?>
+			</div>
 		</div>
-		<div class="col-4">
-			<?php if ($this->session->flashdata('sukses')) : ?>
+		<div class="col-xl-4 col-sm-4 col-12 mb-3">
+			<div class="card">
+				<div class="card-body">
+					<div class="dash-widget-header">
+						<span class="dash-widget-icon bg-5">
+							<i class="fas fa-heart"></i>
+						</span>
+						<div class="dash-count">
+							<div class="dash-title">Kondisi Sedang</div>
+							<div class="dash-counts">
+								<p><?= $brS ?> Unit</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-4 col-sm-4 col-12 mb-3">
+			<div class="card">
+				<div class="card-body">
+					<div class="dash-widget-header">
+						<span class="dash-widget-icon bg-8">
+							<i class="fas fa-skull"></i>
+						</span>
+						<div class="dash-count">
+							<div class="dash-title">Kondisi Rusak</div>
+							<div class="dash-counts">
+								<p><?= $brR ?> Unit</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+			<h5 class="text-center mb-2">Presentase Barang</h5>
+			<!-- <div class="text-center mb-2">
+				<span class="badge badge-success">
+					<p class="text-center text-white">Baik</p>
+				</span>
+				<span class="badge badge-warning">
+					<p class="text-center text-white">Sedang</p>
+				</span>
+				<span class="badge badge-danger">
+					<p class="text-center text-white">Rusak</p>
+				</span>
+			</div> -->
+			<div class="progress">
+				<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="<?= $baik ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $baik ?>%"> <?= round($baik, 2) ?>% </div>
+				<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="<?= $sedang ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $sedang ?>%"> <?= round($sedang, 2) ?>% </div>
+				<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="<?= $rusak ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $rusak ?>%"> <?= round($rusak, 2) ?>% </div>
+			</div>
+		</div>
+	</div>
+
+	<form class="row justify-content-center mt-3">
+		<input class="form-search-inventaris col-9" type="search" placeholder="Search" aria-label="Search">
+		<div class="col-2">
+			<button class="btn-search-inventaris" type="submit" style="float: right;">
+				<i class="fas fa-search"></i>
+			</button>
+		</div>
+	</form>
+
+	<form action="<?= base_url() ?>inventaris/pinjam" method="post">
+		<main class="row my-3 justify-content-center flex-column-reverse flex-lg-row">
+			<?php if ($this->session->flashdata('gagal')) : ?>
 				<div class="col-md-12 text-center" style="width: 23rem;">
-					<div class="alert alert-success alert-dismissible fade show" role="alert">
-						Data <strong><?= $this->session->flashdata('sukses'); ?></strong>
+					<div class="alert alert-warning alert-dismissible fade show" role="alert">
+						<strong><?= $this->session->flashdata('gagal'); ?></strong>
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 				</div>
 			<?php endif; ?>
-			<div class="col-12 mb-5">
-				<div class="card" style="width: 23rem; background: rgb(174,90,231);
-background: linear-gradient(132deg, rgba(174,90,231,1) 0%, rgba(138,218,202,1) 50%, rgba(101,244,131,1) 100%);">
-					<div class="p-5">
-						<img src="<?= base_url() ?>/assets/img/sso-logo.ico" class="card-img-top" alt="Card Image">
-					</div>
-					<?php if (!isset($_SESSION['Inv_Login'])) : ?>
-						<div class="card-body">
-							<h3 class="card-title text-center">Login Untuk Meminjam</h3>
-							<form action="" method="POST">
-								<div class="card-text">
+			<div class="col-lg-9">
+				<div class="card-columns">
+					<?php
+					$no = 0;
+					$baik = 0;
+					$sedang = 0;
+					$rusak = 0;
+					foreach ($barang as $item) : ?>
+						<?php
+						if ($item['keadaanBarang'] == 'Baik') {
+							$baik += $item['banyakBarang'];
+						} else if ($item['keadaanBarang'] == 'Kurang Baik') {
+							$sedang += $item['banyakBarang'];
+						} else {
+							$rusak += $item['banyakBarang'];
+						}
+						?>
 
-									<div class="form-group">
-										<label for="exampleInputEmail1">Email address</label>
-										<input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-									</div>
-									<div class="form-group">
-										<label for="exampleInputPassword1">Password</label>
-										<input type="password" name="password" class="form-control" id="exampleInputPassword1">
-									</div>
-
-								</div>
-								<div class="text-center">
-									<button type="submit" name="submit" class="btn" style="background: linear-gradient(-47deg, #8731E8 0%, #4528DC 100%);">
-										<i class="fas fa-user"></i> Login
+						<div class="card card-barang">
+							<img src="<?= base_url() . "assets/upload/Folder_inventaris/" . $item['gambar'] ?>" class="card-img-top" alt="Card Image">
+							<div class="card-body" style="height: 150px;">
+								<h5 class="card-title text-nowrap overflow-hidden"><?= $item['namaBarang'] ?> </h5>
+								<p>
+									<?php if ($item['banyakBarang'] - $item['barangDipinjam'] != 0) : ?>
+										<span class="badge badge-<?php if ($item['hakBarang'] == 'Diperpinjamkan') {
+																		echo 'success';
+																	} else {
+																		echo 'danger';
+																	} ?>"><?= $item['hakBarang'] ?></span>
+									<?php else : ?>
+										<span class="badge badge-warning">Habis Dipinjam</span>
+									<?php endif; ?>
+								</p>
+								<p class="card-text"><?= $item['deskripsiBarang'] ?>
+								</p>
+								<!-- <a href="#" class="btn-pinjam-inventaris">
+									<i class="fas fa-search"></i> Detail
+								</a> -->
+							</div>
+							<div class="card-footer">
+								<div class="row justify-content-around justify-content-lg-center">
+									<button type="button" class="btn btn-pinjam-inventaris btn-sm btn-icon-split" data-toggle="modal" data-target="#modalDetailBarang<?= $no ?>">
+										<span class="text-white-50">
+											<i class="fas fa-info-circle"></i>
+										</span>
+										<!-- <span class="text">Detail</span> -->
 									</button>
-									<p>Anda tidak memiliki akun? <a href="<?= base_url() ?>inventaris/registration">buat di sini!</a></p>
-								</div>
-							</form>
-						</div>
-					<?php else : ?>
-						<div class="card-body">
-							<h3 class="card-title text-center">Anda Telah Login</h3>
-							<div class="container mb-3 glass">
-								<table>
-									<tr>
-										<th style="width: 80px;">Nama </th>
-										<th style="width: 10px;">:</th>
-										<td> <?= $_SESSION['Inv_card'][0]['nama'] ?></td>
-									</tr>
-									<tr>
-										<th style="width: 80px;">NIM </th>
-										<th style="width: 10px;">:</th>
-										<td> <?= $_SESSION['Inv_card'][0]['nim'] ?></td>
-									</tr>
-									<tr>
-										<th style="width: 80px;">Email </th>
-										<th style="width: 10px;">:</th>
-										<td> <?= $_SESSION['Inv_card'][0]['email'] ?></td>
-									</tr>
-								</table>
-							</div>
-							<h4 class="mb-2">Pilih Aksi :</h4>
-							<div class="row">
-								<div class="col-3">
-									<a class="btn btn-peminjaman button btn-success" style="background: linear-gradient(-47deg, #8731E8 0%, #4528DC 100%);" href="<?= base_url() ?>inventaris/pinjam">Pinjam</a>
-								</div>
-								<div class="col-3">
-									<a class="btn btn-peminjaman button" style="background: linear-gradient(-47deg, #8731E8 0%, #4528DC 100%);" href="<?= base_url() ?>inventaris/lihatPermintaan">Permintaan</a>
-								</div>
-								<div class="col-3 offset-2">
-									<a class="button btn-peminjaman btn-dangerti" href="<?= base_url() ?>inventaris/invlogout">Logout</a>
 
+									<?php if (!isset($_SESSION['Inv_Login'])) : ?>
+										<button <?= ($item['hakBarang'] == 'Diperpinjamkan' && $item['banyakBarang'] - $item['barangDipinjam'] != 0) ? '' : 'disabled' ?> type="button" class="col-6 offset-md-1 <?= ($item['hakBarang'] == 'Diperpinjamkan' && $item['banyakBarang'] - $item['barangDipinjam'] != 0) ? 'btn' : 'btnd' ?> p-2 tambah-btn" data-toggle="modal" data-target="#modalLogin">+</button>
+									<?php else : ?>
+										<label class="col-6 offset-md-1 <?= ($item['hakBarang'] == 'Diperpinjamkan' && $item['banyakBarang'] - $item['barangDipinjam'] != 0) ? 'btn' : 'btnd' ?> p-2 tambah-btn" id="check<?= $no ?>" for="defaultCheck<?= $no ?>">
+											<input hidden <?= ($item['hakBarang'] == 'Diperpinjamkan' && $item['banyakBarang'] - $item['barangDipinjam'] != 0) ? '' : 'disabled' ?> onclick="myClick()" class="col-2 input" type="checkbox" name="pilih[]" value="<?= $item['kodeBarang'] ?>" id="defaultCheck<?= $no ?>">
+											<span id="ubah<?= $no ?>" class="text ms-2" style="padding: 0px !important;">+</span>
+										</label>
+									<?php endif; ?>
 								</div>
 							</div>
 						</div>
-					<?php endif; ?>
+
+						<!-- Modal -->
+						<div class="glassModal modal fade bd-example-modal-lg" id="modalDetailBarang<?= $no ?>" tabindex="-1" role="dialog" aria-labelledby="modalDetailBarangTitle" aria-hidden="true">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class=" modal-content text-center">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle">Detail Barang</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<div class="badge badge-secondary m-2 p-2">
+											<i class="fas fa-box-open"></i>
+											Ketersediaan Barang <span class="badge badge-light p-1"><?= $item['banyakBarang'] - $item['barangDipinjam'] ?>/<?= $item['banyakBarang'] ?></span>
+										</div>
+										<div>
+											<img src="<?= base_url() . "assets/upload/Folder_inventaris/" . $item['gambar'] ?>" alt="Gambar Rusak atau Hilang">
+										</div>
+										<h3><?= $item['namaBarang'] ?></h3>
+										<div>Kode Barang : <?= $item['kodeBarang'] ?> | Merk : <?= $item['merk'] ?> | Tahun Pembelian : <?= $item['tahunPembelian'] ?></div>
+										<div>Kategori <?= $item['namaKategori'] ?></div>
+										<div>
+											<?php if ($item['banyakBarang'] - $item['barangDipinjam'] != 0) : ?>
+												<?php if ($item['hakBarang'] == 'Diperpinjamkan') : ?>
+													<b style="color: green;">Barang <?= $item['hakBarang'] ?></b>
+												<?php else : ?>
+													<b style="color: red;">Barang <?= $item['hakBarang'] ?></b>
+												<?php endif; ?>
+											<?php else : ?>
+												<b style="color: orange;">Barang Telah Habis Di Pinjam</b>
+											<?php endif; ?>
+										</div>
+										<p class="mt-3 px-5"><?= $item['deskripsiBarang'] ?></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					<?php
+						$no++;
+					endforeach; ?>
+
 				</div>
 			</div>
-			<?php
-			$brB = $baik;
-			$baik = ($baik / $bBarang) * 100;
-			$brS = $sedang;
-			$sedang = ($sedang / $bBarang) * 100;
-			$brR = $rusak;
-			$rusak = ($rusak / $bBarang) * 100;
-			?>
-			<div class="col-12 mb-5">
-				<div class="card p-3" style="width: 23rem;">
+			<div class="col-lg-3 my-3">
+				<!-- Slide Kategori Barang -->
+				<div class="container-fluid bg-light py-3 mb-3">
+					<h3>Kategori Barang</h3>
+					<hr>
+					<!-- Check Box Category -->
+
+					<?php foreach ($kategori as $item) : ?>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault<?= $item['idKategori'] ?>">
+							<label class="form-check-label" for="flexCheckDefault<?= $item['idKategori'] ?>">
+								<?= $item['namaKategori'] ?>
+							</label>
+						</div>
+					<?php endforeach; ?>
+
+				</div>
+
+				<div class="pilihan text-center">
+					<?php if (!isset($_SESSION['Inv_Login'])) : ?>
+						<button type="button" data-toggle="modal" data-target="#modalLogin" name="submit" class="btn p-2">Lanjut ke form peminjaman <i class="fa fa-paper-plane"></i></button>
+					<?php else : ?>
+						<button type="submit" name="submit" class="btn p-2">Lanjut ke form peminjaman <i class="fa fa-paper-plane"></i></button>
+					<?php endif; ?>
+				</div>
+				<!-- <div class="mb-5">
+				<div class="card p-3">
 					<div class="card-body">
 						<h3 class="card-title">Garis Besar</h3>
 						<hr>
@@ -281,7 +358,71 @@ background: linear-gradient(132deg, rgba(174,90,231,1) 0%, rgba(138,218,202,1) 5
 						<p class="card-text" style="color: blue;">Banyak Barang Seluruhnya : <b><?= $bBarang ?> Unit</b></p>
 					</div>
 				</div>
+			</div> -->
+			</div>
+		</main>
+	</form>
+
+	<!-- Modal -->
+	<div class="glassModal modal fade bd-example-modal-lg" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalDetailBarangTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class=" modal-content text-center">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body welcome-area bg-overlay text-white" style="height: fit-content !important;">
+					<div class="container">
+						<h3 class="text-center text-white">Login Untuk Meminjam</h3>
+						<form action="" method="POST">
+
+							<div class="form-group">
+								<label for="exampleInputEmail1">Email address</label>
+								<input type="email" name="email" class="form-control form-search-inventaris" id="exampleInputEmail1" aria-describedby="emailHelp">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Password</label>
+								<input type="password" name="password" class="form-control form-search-inventaris" id="exampleInputPassword1">
+							</div>
+
+							<div class="text-center">
+								<button type="submit" name="submit" class="btn" style="background: linear-gradient(-47deg, darkgreen 0%, lightgreen 100%);">
+									<i class="fas fa-user"></i> Login
+								</button>
+								<p class="text-white">Anda tidak memiliki akun? <a class="text-success" href="<?= base_url() ?>inventaris/registration">buat di sini!</a></p>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
-	</main>
+	</div>
 </section>
+
+<?php if (isset($_SESSION['Inv_Login'])) : ?>
+	<script>
+		var element = document.getElementById('check');
+		var allinput = document.getElementsByClassName('input');
+
+		function myClick() {
+			for (var i = 0; i < allinput.length; i++) {
+				if (allinput[i].checked) {
+					document.getElementById("check" + i).classList.add('tambah-btn-checked');
+					document.getElementById("check" + i).classList.remove('tambah-btn');
+					document.getElementById("ubah" + i).innerHTML = "-";
+				} else {
+					document.getElementById("check" + i).classList.add('tambah-btn');
+					document.getElementById("check" + i).classList.remove('tambah-btn-checked');
+					document.getElementById("ubah" + i).innerHTML = "+";
+				}
+			}
+		}
+
+
+		// function listener() {
+		// }
+		// setInterval(listener, 1000);
+	</script>
+<?php endif; ?>

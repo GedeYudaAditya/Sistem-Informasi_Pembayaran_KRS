@@ -340,7 +340,7 @@
  																</tr>
  															</thead>
  															<tbody>
- 																<?php $yangDipinjam = $this->All_model->allDataDetailPinjamTerima($p3['idPeminjaman']);
+ 																<?php $yangDipinjam = $this->All_model->allDataDetailPinjamDiterima($p3['idPeminjaman']);
 																	foreach ($yangDipinjam as $y) : ?>
  																	<tr>
  																		<th scope="row"><?= $y['kodeBarang'] ?></th>
@@ -459,7 +459,7 @@
  																</tr>
  															</thead>
  															<tbody>
- 																<?php $yangDipinjam = $this->All_model->allDataDetailPinjamTerima($p2['idPeminjaman']);
+ 																<?php $yangDipinjam = $this->All_model->allDataDetailKembali($p2['idPeminjaman']);
 																	foreach ($yangDipinjam as $y) : ?>
  																	<tr>
  																		<th scope="row"><?= $y['kodeBarang'] ?></th>

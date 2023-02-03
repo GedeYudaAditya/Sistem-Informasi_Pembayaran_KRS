@@ -404,6 +404,14 @@ class Inventaris extends CI_Controller
 	// User Sintax
 	public function home()
 	{
+		// $this->load->library('pagination');
+
+		// $config['base_url'] = base_url() . '/inventaris/home';
+		// $config['total_rows'] = count($this->All_model->allDataBarang());
+		// $config['per_page'] = 3;
+
+		// $this->pagination->initialize($config);
+
 		$this->data['title'] = "SI Inventaris - Home";
 		$this->data['search'] = false;
 		$this->load->model('All_model');
@@ -415,6 +423,7 @@ class Inventaris extends CI_Controller
 		$this->data['kategori'] = $this->All_model->allKategoriBarang();
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$this->form_validation->set_rules('password', 'Password', 'required');
+
 		if ($this->form_validation->run() == false) {
 			$this->load->view('guest/inventaris/master/header', $this->data);
 			$this->load->view('guest/inventaris/page/index', $this->data);
@@ -476,12 +485,13 @@ class Inventaris extends CI_Controller
 
 			if ($this->input->post('submit') === '' && $this->input->post('pilih', true) == null) {
 				$this->session->set_flashdata('gagal', 'Anda Harus Memilih Setidaknya Satu Barang');
+				redirect('inventaris/home');
 			}
 			// $this->form_validation->set_rules('pilih', 'Anda Harus Memilih Barang', 'required');
 			// if ($this->form_validation->run() == false) {
-			$this->load->view('guest/inventaris/master/header', $this->data);
-			$this->load->view('guest/inventaris/page/pinjam', $this->data);
-			$this->load->view('guest/inventaris/master/footer', $this->data);
+			// $this->load->view('guest/inventaris/master/header', $this->data);
+			// $this->load->view('guest/inventaris/page/pinjam', $this->data);
+			// $this->load->view('guest/inventaris/master/footer', $this->data);
 			// } else {
 
 			if ($this->input->post('submit') === '' && $this->input->post('pilih', true) != null) {

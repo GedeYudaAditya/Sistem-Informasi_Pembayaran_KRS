@@ -13,6 +13,8 @@
 	<!-- Favicon  -->
 	<link rel="icon" href="<?= base_url() ?>assets/img/logo/NAV.png" />
 
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+
 	<!-- ***** All CSS Files ***** -->
 	<link href="<?= base_url() ?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
 	<!-- Style css -->
@@ -21,6 +23,8 @@
 
 	<!-- Responsive css -->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/responsive.css" />
+
+	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
 
 
 </head>
@@ -47,6 +51,47 @@
 			</div>
 		</div>
 	</div>
+
+	<header class="navbar navbar-sticky navbar-expand-lg navbar-dark">
+		<div class="container position-relative">
+			<a class="navbar-brand" href="<?= base_url() ?>web/home">
+				<img class="navbar-brand-regular" src="<?= base_url() ?>assets/img/logo/NAV.png" alt="brand-logo" />
+				<img class="navbar-brand-sticky" src="<?= base_url() ?>assets/img/logo/NAV.png" alt="sticky brand-logo" />
+			</a>
+			<button class="navbar-toggler d-lg-none" type="button" data-toggle="navbarToggler" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="navbar-inner">
+				<!--  Mobile Menu Toggler -->
+				<button class="navbar-toggler d-lg-none" type="button" data-toggle="navbarToggler" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<nav>
+					<ul class="navbar-nav" id="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href="<?= base_url() ?>inventaris/home">Home</a>
+						</li>
+						<?php if (!isset($_SESSION['Inv_Login'])) : ?>
+							<li class="nav-item">
+								<button type="button" class="nav-link bg-transparent border border-0" data-toggle="modal" data-target="#modalLogin">Login</button>
+							</li>
+						<?php else : ?>
+							<li class="nav-item">
+								<a class="nav-link" href="<?= base_url() ?>inventaris/lihatPermintaan">Daftar Permintaan</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="<?= base_url() ?>inventaris/invlogout">Logout</a>
+							</li>
+						<?php endif; ?>
+						<!-- <li class="nav-item">
+                                            <a class="nav-link" href="<?= base_url() ?>web/repositori">Repositori</a>
+                                        </li> -->
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
 
 	<!--====== Scroll To Top Area Start ======-->
 	<div id="scrollUp" title="Scroll To Top">
