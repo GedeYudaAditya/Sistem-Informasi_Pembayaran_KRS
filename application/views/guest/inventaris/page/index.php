@@ -189,8 +189,8 @@ foreach ($banyakBarang as $b) {
 		</div>
 	</div>
 
-	<form class="row justify-content-center mt-3">
-		<input class="form-search-inventaris col-9" type="search" placeholder="Search" aria-label="Search">
+	<form class="row justify-content-center mt-3" method="POST" action="<?= base_url(); ?>Inventaris/search">
+		<input class="form-search-inventaris col-9" type="text" name="search_key" id="search_key" placeholder="Search" aria-label="Search">
 		<div class="col-2">
 			<button class="btn-search-inventaris" type="submit" style="float: right;">
 				<i class="fas fa-search"></i>

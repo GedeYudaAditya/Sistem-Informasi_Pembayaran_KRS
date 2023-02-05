@@ -708,4 +708,22 @@ class Inventaris extends CI_Controller
 			redirect('inventaris/lihatPermintaan');
 		}
 	}
+
+
+	//Marsel Start
+	public function search()
+	{
+		$this->data['banyakKategori'] = $this->All_model->countKategoriBarang();
+		$this->data['banyakBarang'] = $this->All_model->countDataBarang();
+		$this->data['banyakDipinjam'] = $this->All_model->countDataBarangDipinjam();
+		$this->data['kategori'] = $this->All_model->allKategoriBarang();
+
+		$keyword = $this->input->post('search_key');
+		$this->data['search'] = true;
+		$this->data['barang'] = $this->All_model->get_by_keyword($keyword);
+		$this->load->view('guest/inventaris/master/header', $this->data);
+		$this->load->view('guest/inventaris/page/index', $this->data);
+		$this->load->view('guest/inventaris/master/footer', $this->data);
+	}
+	//Marsel End
 }
