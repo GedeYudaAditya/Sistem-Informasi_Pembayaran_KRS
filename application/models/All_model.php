@@ -3072,6 +3072,20 @@ class All_model extends CI_Model
 	}
 
 
+	//marsel search
+	public function get_by_keyword($keyword)
+	{
+		$this->db->select('*');
+		$this->db->from('s7_inv_barang');
+		$this->db->like('namaBarang', $keyword);
+		$this->db->or_like('merk', $keyword);
+		$this->db->or_like('deskripsiBarang', $keyword);
+		$this->db->or_like('keadaanBarang', $keyword);
+		return $this->db->get()->result_array();
+	}
+	//marsel search
+
+
 	/*Method baru bagian KRS mahasiswa
 	Perbaruan -- Marchel
 	*/
