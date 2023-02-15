@@ -3077,6 +3077,8 @@ class All_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('s7_inv_barang');
+		$this->db->join('s7_inv_kategori', 's7_inv_barang.idKategori = s7_inv_kategori.idKategori');
+		$this->db->join('s1_hmj', 's7_inv_barang.idKepengurusan = s1_hmj.id_hmj');
 		$this->db->like('namaBarang', $keyword);
 		$this->db->or_like('merk', $keyword);
 		$this->db->or_like('deskripsiBarang', $keyword);

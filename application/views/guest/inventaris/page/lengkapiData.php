@@ -1,7 +1,7 @@
 <section id="home" class="section pt-5 bg-overlay d-flex align-items-center" style="background-image: url('<?= base_url() ?>assets/img/bg/welcome-bg.jpg');">
-    <div class="container">
+    <div class="container mt-5">
         <div class="row align-items-center justify-content-center">
-            <div class="col-12 col-lg-8">
+            <div class="col-12">
                 <div class="welcome-intro">
                     <h3 class="text-white">Lengkapi Data Peminjaman Barang</h3>
                 </div>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="row">
                             <?php foreach ($lookBarang as $p) : ?>
-                                <div class="form-group col-3">
+                                <div class="form-group col-12 col-md-3">
                                     <input type="text" name="kodeBarang[]" hidden value="<?= $p[0]['kodeBarang'] ?>">
                                     <label for="banyak<?= $p[0]['kodeBarang'] ?>"><b><?= $p[0]['namaBarang'] ?></b></label>
                                     <input value="<?php echo set_value('banyak'); ?>" type="number" min="1" max="<?= $p[0]['banyakBarang'] - $p[0]['barangDipinjam'] ?>" class="form-control kecil <?= (!(validation_errors() == '') && (form_error('banyak') != '')) ? 'is-invalid form-error' : ''; ?>" id="banyak<?= $p[0]['kodeBarang'] ?>" name="banyak[]" required>
@@ -74,11 +74,12 @@
                             </div>
                         <?php endif; ?>
 
-
-                        <div class="col-12">
-                            <button class="btn btn-reg-inv btn-glow icon w-100 mt-3 mt-sm-4" name="submit" type="submit" id="submit">
-                                Ajukan Permintaan
-                            </button>
+                        <div class="row justify-content-center">
+                            <div class="col-3">
+                                <button class="btn btn-reg-inv w-100 mt-3 mt-sm-4" name="submit" type="submit" id="submit">
+                                    Ajukan Permintaan
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
